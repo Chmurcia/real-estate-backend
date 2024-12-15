@@ -1,0 +1,25 @@
+package cloud.uwu.realestatebackend.entities.user.userEnum;
+
+public enum NotificationReferName {
+    PROFILE_COMMENT,
+    PROFILE_REPLY,
+    PROFILE_TRUST,
+    PROFILE_REVIEW,
+    PROFILE_BADGE,
+    PROFILE_FOLLOW,
+
+    PROPERTY_COMMENT,
+    PROPERTY_REPLY,
+    PROPERTY_LIKE,
+    PROPERTY_DISLIKE,
+    PROPERTY_TRUST,
+    PROPERTY_REVIEW,
+    PROPERTY_FAVORITE_CHANGE,
+
+    POST_COMMENT,
+    POST_LIKE,
+    POST_DISLIKE,
+
+    CHAT_MESSAGE,
+
+}
