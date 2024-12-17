@@ -7,7 +7,6 @@ import cloud.uwu.realestatebackend.entities.profile.ProfileSettings;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
 import cloud.uwu.realestatebackend.exceptions.NullException;
 import cloud.uwu.realestatebackend.mappers.profile.ProfileSettingsMapper;
-import cloud.uwu.realestatebackend.repositories.profile.ProfileRepository;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileSettingsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
