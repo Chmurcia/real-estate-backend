@@ -1,13 +1,8 @@
-package cloud.uwu.realestatebackend.dtos.user;
+package cloud.uwu.realestatebackend.dtos.user.user;
 
-import cloud.uwu.realestatebackend.entities.user.UserFlag;
-import cloud.uwu.realestatebackend.entities.user.UserNotification;
-import cloud.uwu.realestatebackend.entities.user.UserRole;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+
 import lombok.*;
 
 import java.util.UUID;
@@ -19,19 +14,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserDTO {
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email must be defined")
+    @Email(message = "Email must be valid")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Email must be defined")
     private String password;
 
-    @NotNull
-    private UUID userFlag;
-
-    @NotNull
-    private UUID userNotification;
-
-    @NotNull
-    private UUID userRole;
 }

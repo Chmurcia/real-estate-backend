@@ -1,44 +1,32 @@
-package cloud.uwu.realestatebackend.entities.user;
+package cloud.uwu.realestatebackend.dtos.user.userNotification;
 
-import cloud.uwu.realestatebackend.entities.user.userEnum.NotificationReferName;
+import cloud.uwu.realestatebackend.entities.user.userEnums.NotificationReferName;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserNotification {
-    @Id
-    @UuidGenerator
+public class UserNotificationResponseDTO {
+
     private UUID id;
 
-    @Version
-    private int version;
+    private UUID userId;
 
-    @OneToOne(mappedBy = "userNotification")
-    private User userId;
-
-    @NotBlank
     @Enumerated(EnumType.STRING)
     private NotificationReferName referName;
 
-    @NotNull
     private UUID referId;
 
-    @CreationTimestamp
+    private Boolean isSeen;
+
     private ZonedDateTime createdAt;
 
-    @UpdateTimestamp
     private ZonedDateTime updatedAt;
+
 }

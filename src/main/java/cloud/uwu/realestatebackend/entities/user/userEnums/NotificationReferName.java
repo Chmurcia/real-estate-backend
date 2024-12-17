@@ -1,4 +1,4 @@
-package cloud.uwu.realestatebackend.entities.user.userEnum;
+package cloud.uwu.realestatebackend.entities.user.userEnums;
 
 public enum NotificationReferName {
     PROFILE_COMMENT,

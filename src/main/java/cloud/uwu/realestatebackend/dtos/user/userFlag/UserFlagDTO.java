@@ -1,44 +1,25 @@
-package cloud.uwu.realestatebackend.entities.user;
+package cloud.uwu.realestatebackend.dtos.user.userFlag;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UuidGenerator;
 
-import java.time.ZonedDateTime;
 import java.util.UUID;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserFlag {
+public class UserFlagDTO {
 
-    @Id
-    @UuidGenerator
-    private UUID id;
-
-    @Version
-    private int version;
-
-    @OneToOne(mappedBy = "userFlag")
-    private User user;
-
-    @NotNull
+    @NotNull(message = "isVerified must be defined")
     private Boolean isVerified;
 
-    @NotNull
+    @NotNull(message = "isBanned must be defined")
     private Boolean isBanned;
 
-    @NotNull
+    @NotNull(message = "isMuted must be defined")
     private Boolean isMuted;
 
-    @CreationTimestamp
-    private ZonedDateTime createdAt;
 
-    @CreationTimestamp
-    private ZonedDateTime updatedAt;
 }

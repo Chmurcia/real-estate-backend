@@ -30,7 +30,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceIntegrationTest {
+class UserServiceUnitTests {
     @Mock
     private UserRepository userRepository;
 
@@ -63,32 +63,29 @@ class UserServiceIntegrationTest {
                 .userRole(UserRole.builder().id(UUID.randomUUID()).build())
                 .build();
 
-        UserFlagResponseDTO userFlagResponseDTO = UserFlagResponseDTO.builder()
-                .id(UUID.randomUUID())
-                .isVerified(false)
-                .isMuted(false)
-                .isBanned(false)
+        UserResponseDTO userResponseDTO = UserResponseDTO.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .userFlagId(user.getUserFlag().getId())
+                .userRoleId(user.getUserRole().getId())
                 .build();
-
-        UserRoleResponseDTO userRoleResponseDTO = UserRoleResponseDTO.builder()
-                .id(UUID.randomUUID())
-                .role(Role.USER)
-                .build();
-
 
         when(userRepository.findById(id)).thenReturn(Optional.of(user));
-        when(userFlagService.getUserFlagById(any(UUID.class)))
-                .thenReturn(userFlagResponseDTO);
-        when(userRoleService.getUserRoleById(any(UUID.class)))
-                .thenReturn(userRoleResponseDTO);
+        when(userMapper.userToUserResponseDTO(user))
+                .thenReturn(userResponseDTO);
 
-        UserResponseDTO userResponseDTO = userService.getUserById(id);
+        UserResponseDTO foundUserResponseDTO = userService.getUserById(id);
 
-        assertThat(userResponseDTO).isNotNull();
-        assertEquals(user.getId(), userResponseDTO.getId());
-        assertEquals(userResponseDTO.getUserRoleId(), userRoleResponseDTO.getId());
-        assertEquals(userResponseDTO.getUserFlagId(), userFlagResponseDTO.getId());
+        assertThat(foundUserResponseDTO).isNotNull();
+        assertEquals(user.getId(), foundUserResponseDTO.getId());
+        assertEquals(user.getUserFlag().getId(), foundUserResponseDTO.getUserFlagId());
+        assertEquals(user.getUserRole().getId(), foundUserResponseDTO.getUserRoleId());
+    }
 
+    @Test
+    void getUserById_ShouldThrowNotFoundException() {
+        assertThrows(NotFoundException.class, () ->
+                userService.getUserById(UUID.randomUUID()));
     }
 
     @Test
@@ -102,31 +99,29 @@ class UserServiceIntegrationTest {
                 .userRole(UserRole.builder().id(UUID.randomUUID()).build())
                 .build();
 
-        UserFlagResponseDTO userFlagResponseDTO = UserFlagResponseDTO.builder()
-                .id(UUID.randomUUID())
-                .isVerified(false)
-                .isMuted(false)
-                .isBanned(false)
+        UserResponseDTO userResponseDTO = UserResponseDTO.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .userFlagId(user.getUserFlag().getId())
+                .userRoleId(user.getUserRole().getId())
                 .build();
 
-        UserRoleResponseDTO userRoleResponseDTO = UserRoleResponseDTO.builder()
-                .id(UUID.randomUUID())
-                .role(Role.USER)
-                .build();
+        when(userRepository.findUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        when(userMapper.userToUserResponseDTO(user))
+                .thenReturn(userResponseDTO);
 
-        when(userRepository.findUserByEmail(any(String.class)))
-                .thenReturn(Optional.of(user));
-        when(userFlagService.getUserFlagById(any(UUID.class)))
-                .thenReturn(userFlagResponseDTO);
-        when(userRoleService.getUserRoleById(any(UUID.class)))
-                .thenReturn(userRoleResponseDTO);
+        UserResponseDTO foundUserResponseDTO = userService.getUserByEmail(user.getEmail());
 
-        UserResponseDTO userResponseDTO = userService.getUserByEmail(user.getEmail());
+        assertThat(foundUserResponseDTO).isNotNull();
+        assertEquals(user.getEmail(), foundUserResponseDTO.getEmail());
+        assertEquals(user.getUserFlag().getId(), foundUserResponseDTO.getUserFlagId());
+        assertEquals(user.getUserRole().getId(), foundUserResponseDTO.getUserRoleId());
+    }
 
-        assertThat(userResponseDTO).isNotNull();
-        assertEquals(user.getEmail(), userResponseDTO.getEmail());
-        assertEquals(userResponseDTO.getUserRoleId(), userRoleResponseDTO.getId());
-        assertEquals(userResponseDTO.getUserFlagId(), userFlagResponseDTO.getId());
+    @Test
+    void getUserByEmail_ShouldThrowNotFoundException() {
+        assertThrows(NotFoundException.class, () ->
+                userService.getUserByEmail("unknown@email.com"));
     }
 
     @Test
@@ -215,14 +210,10 @@ class UserServiceIntegrationTest {
     }
 
     @Test
-    void updateUserNotFound() {
-        UserDTO userDTO = UserDTO.builder().build();
-
-        when(userRepository.findById(any(UUID.class)))
-                .thenReturn(Optional.empty());
-
+    void updateUser_ShouldThrowNotFoundException() {
         assertThrows(NotFoundException.class, () ->
-                userService.updateUser(UUID.randomUUID(), userDTO));
+                userService.updateUser(UUID.randomUUID(),
+                        UserDTO.builder().build()));
 
     }
 
@@ -249,14 +240,10 @@ class UserServiceIntegrationTest {
     }
 
     @Test
-    void patchUserNotFound() {
-        UserPatchDTO userPatchDTO = UserPatchDTO.builder().build();
-
-        when(userRepository.findById(any(UUID.class)))
-                .thenReturn(Optional.empty());
-
+    void patchUser_ShouldThrowNotFoundException() {
        assertThrows(NotFoundException.class, () ->
-               userService.patchUser(UUID.randomUUID(), userPatchDTO));
+               userService.patchUser(UUID.randomUUID(),
+                       UserPatchDTO.builder().build()));
     }
 
     @Test
@@ -271,7 +258,7 @@ class UserServiceIntegrationTest {
     }
 
     @Test
-    void deleteUserNotFound() {
+    void deleteUser_ShouldThrowNotFoundException() {
         when(userRepository.findById(any(UUID.class)))
                 .thenReturn(Optional.empty());
 

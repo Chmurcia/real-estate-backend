@@ -1,4 +1,11 @@
 package cloud.uwu.realestatebackend.repositories.user;
 
-public interface UserFlagRepository {
+import cloud.uwu.realestatebackend.entities.user.UserFlag;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.UUID;
+
+@Repository
+public interface UserFlagRepository extends JpaRepository<UserFlag, UUID> {
 }

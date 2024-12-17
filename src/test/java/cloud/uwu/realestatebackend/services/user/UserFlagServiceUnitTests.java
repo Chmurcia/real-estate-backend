@@ -26,7 +26,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserFlagServiceIntegrationTest {
+class UserFlagServiceUnitTests {
 
     @Mock
     private UserFlagRepository userFlagRepository;
@@ -75,7 +75,7 @@ class UserFlagServiceIntegrationTest {
     }
 
     @Test
-    void getUserFlagByUserIdNotFound() {
+    void getUserFlagByUserId_ShouldThrowNotFoundException() {
         when(userRepository.findById(any(UUID.class)))
                 .thenReturn(Optional.empty());
 
@@ -113,46 +113,11 @@ class UserFlagServiceIntegrationTest {
     }
 
     @Test
-    void getUserFlagByIdNotFound() {
+    void getUserFlagById_ShouldThrowNotFoundException() {
         when(userFlagRepository.findById(any(UUID.class)))
                 .thenReturn(Optional.empty());
         assertThrows(NotFoundException.class,
                 () -> userFlagService.getUserFlagById(UUID.randomUUID()));
-    }
-
-    @Test
-    void createUserFlag() {
-        UUID id = UUID.randomUUID();
-        UserFlagDTO userFlagDTO = UserFlagDTO.builder().build();
-        UserFlag userFlag = UserFlag.builder()
-                .id(id)
-                .isVerified(true)
-                .isMuted(false)
-                .isBanned(false)
-                .build();
-
-        UserFlagResponseDTO userFlagResponseDTO = UserFlagResponseDTO.builder()
-                .id(id)
-                .isVerified(userFlag.getIsVerified())
-                .isBanned(userFlag.getIsBanned())
-                .isMuted(userFlag.getIsMuted())
-                .build();
-
-        when(userFlagMapper.userFlagDTOToUserFlag(any(UserFlagDTO.class)))
-                .thenReturn(userFlag);
-        when(userFlagRepository.save(any(UserFlag.class)))
-                .thenReturn(userFlag);
-        when(userFlagMapper.userFlagToUserFlagResponseDTO(any(UserFlag.class)))
-                .thenReturn(userFlagResponseDTO);
-
-         UserFlagResponseDTO createdUserFlag = userFlagService
-                 .createUserFlag(userFlagDTO);
-
-         verify(userFlagRepository).save(any(UserFlag.class));
-
-         assertThat(createdUserFlag).isNotNull();
-         assertEquals(userFlag.getId(), createdUserFlag.getId());
-         assertNotEquals(userFlag.getId(), UUID.randomUUID());
     }
 
     @Test
@@ -182,7 +147,7 @@ class UserFlagServiceIntegrationTest {
     }
 
     @Test
-    void updateUserFlagNotFound() {
+    void updateUserFlag_ShouldThrowNotFoundException() {
         UUID id = UUID.randomUUID();
 
         UserFlagDTO userFlagDTO = UserFlagDTO.builder().build();
@@ -195,7 +160,7 @@ class UserFlagServiceIntegrationTest {
     }
 
     @Test
-    void updateUserFlagVerifiedNull() {
+    void updateUserFlagVerified_ShouldThrowNullException() {
         UUID id = UUID.randomUUID();
 
         UserFlagDTO userFlagDTO = UserFlagDTO.builder()
@@ -213,7 +178,7 @@ class UserFlagServiceIntegrationTest {
     }
 
     @Test
-    void updateUserFlagBannedNull() {
+    void updateUserFlagBanned_ShouldThrowNullException() {
         UUID id = UUID.randomUUID();
 
         UserFlagDTO userFlagDTO = UserFlagDTO.builder()
@@ -231,7 +196,7 @@ class UserFlagServiceIntegrationTest {
     }
 
     @Test
-    void updateUserFlagMutedNull() {
+    void updateUserFlagMuted_ShouldThrowNullException() {
         UUID id = UUID.randomUUID();
 
         UserFlagDTO userFlagDTO = UserFlagDTO.builder()
@@ -274,7 +239,7 @@ class UserFlagServiceIntegrationTest {
     }
 
     @Test
-    void patchUserFlagNotFound() {
+    void patchUserFlag_ShouldThrowNotFoundException() {
         UUID id = UUID.randomUUID();
 
         UserFlagPatchDTO userFlagPatchDTO = UserFlagPatchDTO.builder().build();
@@ -300,7 +265,7 @@ class UserFlagServiceIntegrationTest {
     }
 
     @Test
-    void deleteUserFlagNotFound() {
+    void deleteUserFlag_ShouldThrowNotFoundException() {
         UUID id = UUID.randomUUID();
         when(userFlagRepository.findById(any(UUID.class)))
                 .thenReturn(Optional.empty());

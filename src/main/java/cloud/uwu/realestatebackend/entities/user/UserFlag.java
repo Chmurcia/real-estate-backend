@@ -1,14 +1,12 @@
 package cloud.uwu.realestatebackend.entities.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Version;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Entity
@@ -16,7 +14,8 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserFlags {
+@Builder
+public class UserFlag {
 
     @Id
     @UuidGenerator
@@ -25,9 +24,18 @@ public class UserFlags {
     @Version
     private int version;
 
+    @OneToOne(mappedBy = "userFlag")
+    private User user;
+
     private Boolean isVerified;
 
     private Boolean isBanned;
 
     private Boolean isMuted;
+
+    @CreationTimestamp
+    private ZonedDateTime createdAt;
+
+    @CreationTimestamp
+    private ZonedDateTime updatedAt;
 }

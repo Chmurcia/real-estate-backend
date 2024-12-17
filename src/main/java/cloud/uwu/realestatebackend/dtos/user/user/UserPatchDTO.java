@@ -1,9 +1,6 @@
-package cloud.uwu.realestatebackend.dtos.user;
+package cloud.uwu.realestatebackend.dtos.user.user;
 
-import jakarta.persistence.Entity;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.UUID;
@@ -19,10 +16,4 @@ public class UserPatchDTO {
     private String email;
 
     private String password;
-
-    private UUID userFlag;
-
-    private UUID userNotification;
-
-    private UUID userRole;
 }

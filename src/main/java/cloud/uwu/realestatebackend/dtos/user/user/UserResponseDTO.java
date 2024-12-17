@@ -1,12 +1,11 @@
-package cloud.uwu.realestatebackend.dtos.user;
+package cloud.uwu.realestatebackend.dtos.user.user;
 
-import cloud.uwu.realestatebackend.entities.user.UserFlag;
-import cloud.uwu.realestatebackend.entities.user.UserNotification;
-import cloud.uwu.realestatebackend.entities.user.UserRole;
-import jakarta.persistence.*;
+import cloud.uwu.realestatebackend.dtos.user.userFlag.UserFlagResponseDTO;
+import cloud.uwu.realestatebackend.dtos.user.userNotification.UserNotificationResponseDTO;
+import cloud.uwu.realestatebackend.dtos.user.userRole.UserRoleResponseDTO;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
 
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Getter
@@ -20,17 +19,11 @@ public class UserResponseDTO {
 
     private String email;
 
-    private String password;
+    private UUID userFlagId;
 
-    @OneToOne
-    @JoinColumn(name = "user_flag_id", referencedColumnName = "id")
-    private UserFlag userFlag;
+    private UUID userRoleId;
 
-    @OneToOne
-    @JoinColumn(name = "user_notification_id", referencedColumnName = "id")
-    private UserNotification userNotification;
+    private ZonedDateTime createdAt;
 
-    @OneToOne
-    @JoinColumn(name = "user_role_id", referencedColumnName = "id")
-    private UserRole userRole;
+    private ZonedDateTime updatedAt;
 }

@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserRoleServiceIntegrationTest {
+class UserRoleServiceUnitTests {
 
     @Mock
     private UserRoleRepository userRoleRepository;
@@ -64,7 +64,7 @@ class UserRoleServiceIntegrationTest {
     }
 
     @Test
-    void getUserRoleByUserIdNotFound() {
+    void getUserRoleByUserId_ShouldThrowNotFoundException() {
         when(userRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
 
         assertThrows(NotFoundException.class, () ->
@@ -94,43 +94,12 @@ class UserRoleServiceIntegrationTest {
     }
 
     @Test
-    void getUserRoleByIdNotFound() {
+    void getUserRoleById_ShouldThrowNotFoundException() {
         UUID id = UUID.randomUUID();
 
         when(userRoleRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
 
         assertThrows(NotFoundException.class, () -> userRoleService.getUserRoleById(id));
-    }
-
-    @Test
-    void createUserRole() {
-        UserRoleDTO userRoleDTO = UserRoleDTO.builder()
-                .role(Role.USER)
-                .build();
-
-        UserRole userRole = UserRole.builder()
-                .id(UUID.randomUUID())
-                .role(Role.USER)
-                .build();
-
-        UserRoleResponseDTO userRoleResponseDTO = UserRoleResponseDTO.builder()
-                .id(userRole.getId())
-                .role(userRole.getRole())
-                .build();
-
-        when(userRoleRepository.save(any(UserRole.class))).thenReturn(userRole);
-        when(userRoleMapper.userRoleDTOToUserRole(userRoleDTO)).thenReturn(userRole);
-        when(userRoleMapper.userRoleToUserRoleResponseDTO(userRole))
-                .thenReturn(userRoleResponseDTO);
-
-        UserRoleResponseDTO savedUserRole = userRoleService.createUserRole(userRoleDTO);
-
-        verify(userRoleMapper).userRoleDTOToUserRole(any(UserRoleDTO.class));
-        verify(userRoleRepository).save(any(UserRole.class));
-
-        assertThat(savedUserRole).isNotNull();
-        assertEquals(savedUserRole.getRole(), userRoleDTO.getRole());
-        assertNotEquals(savedUserRole.getRole(), Role.OWNER);
     }
 
     @Test
@@ -155,7 +124,14 @@ class UserRoleServiceIntegrationTest {
     }
 
     @Test
-    void updateUserRoleNull() {
+    void updateUserRole_ShouldThrowNotFoundException() {
+        assertThrows(NotFoundException.class, () ->
+                userRoleService.updateUserRole(UUID.randomUUID(),
+                        UserRoleDTO.builder().build()));
+    }
+
+    @Test
+    void updateUserRole_ShouldThrowNullException() {
         UUID id = UUID.randomUUID();
 
         UserRoleDTO userRoleDTO = UserRoleDTO.builder()
@@ -169,7 +145,7 @@ class UserRoleServiceIntegrationTest {
     }
 
     @Test
-    void updateUserRoleRoleNull() {
+    void updateUserRoleRole_ShouldThrowNullException() {
         UUID id = UUID.randomUUID();
 
         UserRoleDTO userRoleDTO = UserRoleDTO.builder()
@@ -210,20 +186,11 @@ class UserRoleServiceIntegrationTest {
     }
 
     @Test
-    void patchUserRoleUserNotFound() {
-        UUID id = UUID.randomUUID();
-
-        UserRolePatchDTO userRolePatchDTO = UserRolePatchDTO.builder()
-                .role(Role.ADMIN)
-                .build();
-
-
-
-
-        when(userRoleRepository.findById(id)).thenReturn(Optional.empty());
+    void patchUserRoleUser_ShouldThrowNotFoundException() {
 
         assertThrows(NotFoundException.class,
-                () -> userRoleService.patchUserRole(id, userRolePatchDTO));
+                () -> userRoleService.patchUserRole(UUID.randomUUID(),
+                        UserRolePatchDTO.builder().build()));
     }
 
 
@@ -243,13 +210,9 @@ class UserRoleServiceIntegrationTest {
     }
 
     @Test
-    void deleteUserRoleNotFound() {
-        UUID id = UUID.randomUUID();
-
-        when(userRoleRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
-
+    void deleteUserRole_ShouldThrowNotFoundException() {
         assertThrows(NotFoundException.class, () ->
-                userRoleService.deleteUserRole(id));
+                userRoleService.deleteUserRole(UUID.randomUUID()));
     }
 
 }

@@ -2,17 +2,22 @@ package cloud.uwu.realestatebackend.dtos.profile.profileStatistics;
 
 import lombok.*;
 
+import java.time.ZonedDateTime;
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProfileStatisticsPatchDTO {
+public class ProfileStatisticsResponseDTO {
+    private UUID id;
+
+    private UUID profileId;
+
     private Integer totalRatings;
 
     private Integer totalOffers;
-
-    private Integer totalFavorites;
 
     private Integer totalViews;
 
@@ -21,4 +26,8 @@ public class ProfileStatisticsPatchDTO {
     private Integer totalPosts;
 
     private Integer totalActionPoints;
+
+    private ZonedDateTime createdAt;
+
+    private ZonedDateTime updatedAt;
 }

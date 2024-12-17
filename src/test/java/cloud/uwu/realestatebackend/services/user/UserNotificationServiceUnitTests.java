@@ -29,7 +29,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserNotificationServiceIntegrationTest {
+class UserNotificationServiceUnitTests {
 
     @Mock
     private UserNotificationRepository userNotificationRepository;
@@ -86,7 +86,7 @@ class UserNotificationServiceIntegrationTest {
     }
 
     @Test
-    void getUserNotificationByIdNotFound() {
+    void getUserNotificationById_ShouldThrowNotFoundException() {
         when(userNotificationRepository.findById(any(UUID.class)))
                 .thenReturn(Optional.empty());
 
@@ -124,7 +124,7 @@ class UserNotificationServiceIntegrationTest {
     }
 
     @Test
-    void getNotificationsByUserIdNotFound() {
+    void getNotificationsByUserId_ShouldThrowNotFoundException() {
         when(userRepository.findById(any(UUID.class)))
                 .thenReturn(Optional.empty());
 
@@ -153,9 +153,6 @@ class UserNotificationServiceIntegrationTest {
 
         when(userRepository.findById(user.getId()))
                 .thenReturn(Optional.of(user));
-        when(userNotificationMapper
-                .userNotificationDTOToUserNotification(userNotificationDTO))
-                .thenReturn(userNotification);
         when(userNotificationRepository.save(any(UserNotification.class)))
                 .thenReturn(userNotification);
 
@@ -206,7 +203,14 @@ class UserNotificationServiceIntegrationTest {
     }
 
     @Test
-    void updateUserNotificationReferIdNull() {
+    void updateUserNotification_ShouldThrowNotFoundException() {
+        assertThrows(NotFoundException.class, () -> userNotificationService
+                .updateUserNotification(UUID.randomUUID(),
+                        UserNotificationDTO.builder().build()));
+    }
+
+    @Test
+    void updateUserNotificationReferId_ShouldThrowNullException() {
         UUID id = UUID.randomUUID();
         User user = User.builder().id(id).build();
         UserNotification userNotification = UserNotification.builder().build();
@@ -225,7 +229,7 @@ class UserNotificationServiceIntegrationTest {
     }
 
     @Test
-    void updateUserNotificationReferNameNull() {
+    void updateUserNotificationReferName_ShouldThrowNullException() {
         UUID id = UUID.randomUUID();
         User user = User.builder().id(id).build();
         UserNotification userNotification = UserNotification.builder().build();
@@ -244,7 +248,7 @@ class UserNotificationServiceIntegrationTest {
     }
 
     @Test
-    void updateUserNotificationIsSeenNull() {
+    void updateUserNotificationIsSeen_ShouldThrowNullException() {
         UUID id = UUID.randomUUID();
         User user = User.builder().id(id).build();
         UserNotification userNotification = UserNotification.builder().build();
@@ -292,6 +296,13 @@ class UserNotificationServiceIntegrationTest {
 }
 
     @Test
+    void patchUserNotification_ShouldThrowNotFoundException() {
+        assertThrows(NotFoundException.class, () -> userNotificationService
+                .patchUserNotification(UUID.randomUUID(),
+                        UserNotificationPatchDTO.builder().build()));
+    }
+
+    @Test
     void deleteUserNotification() {
         UUID id = UUID.randomUUID();
 
@@ -308,13 +319,8 @@ class UserNotificationServiceIntegrationTest {
     }
 
     @Test
-    void deleteUserNotificationNotFound() {
-        UUID id = UUID.randomUUID();
-
-        when(userNotificationRepository.findById(any(UUID.class)))
-                .thenReturn(Optional.empty());
-
+    void deleteUserNotification_ShouldThrowNotFoundException() {
         assertThrows(NotFoundException.class, () -> userNotificationService
-                .deleteUserNotification(id));
+                .deleteUserNotification(UUID.randomUUID()));
     }
 }

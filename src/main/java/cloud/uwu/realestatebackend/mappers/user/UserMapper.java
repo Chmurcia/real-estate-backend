@@ -13,7 +13,7 @@ public interface UserMapper {
     UserDTO userToUserDTO(User user);
     User userDTOToUser(UserDTO userDTO);
 
-    @Mapping(source = "userFlag", target = "userFlag")
-    @Mapping(source = "userRole", target = "userRole")
+    @Mapping(source = "userFlag.id", target = "userFlagId")
+    @Mapping(source = "userRole.id", target = "userRoleId")
     UserResponseDTO userToUserResponseDTO(User user);
 }

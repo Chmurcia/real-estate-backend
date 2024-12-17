@@ -1,12 +1,12 @@
 package cloud.uwu.realestatebackend.exceptions;
 
-public class NotFoundException extends RuntimeException{
+public class NullException extends RuntimeException{
 
-    public NotFoundException() {
+    public NullException() {
         super();
     }
 
-    public NotFoundException(String message) {
+    public NullException(String message) {
         super(message);
     }
 
