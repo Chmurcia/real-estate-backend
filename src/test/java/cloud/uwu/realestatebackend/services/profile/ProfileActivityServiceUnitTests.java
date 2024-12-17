@@ -266,8 +266,6 @@ class ProfileActivityServiceUnitTests {
                 14, 14, 12, 10,
                 9, ZoneId.of("Europe/Warsaw"));
 
-        UUID profileId = UUID.randomUUID();
-
         ProfileActivity profileActivity = ProfileActivity.builder()
                 .id(UUID.randomUUID())
                 .activityTitle("Title")

@@ -50,7 +50,7 @@ class ProfileServiceUnitTests {
     @InjectMocks
     private ProfileService profileService;
 
-    private LocalDateTime birthDate = LocalDateTime.of(2001, 8,
+    private final LocalDateTime birthDate = LocalDateTime.of(2001, 8,
             9, 15, 3);
 
     @Test

@@ -10,7 +10,6 @@ import org.mapstruct.Mapping;
 public interface UserNotificationMapper {
     @Mapping(source = "user.id", target = "userId")
     UserNotificationDTO userNotificationToUserNotificationDTO(UserNotification userNotification);
-    UserNotification userNotificationDTOToUserNotification(UserNotificationDTO userNotificationDTO);
 
     @Mapping(source = "user.id", target = "userId")
     UserNotificationResponseDTO userNotificationToUserNotificationResponseDTO(UserNotification userNotification);

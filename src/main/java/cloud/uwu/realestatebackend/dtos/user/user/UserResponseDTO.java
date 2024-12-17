@@ -1,8 +1,5 @@
 package cloud.uwu.realestatebackend.dtos.user.user;
 
-import cloud.uwu.realestatebackend.dtos.user.userFlag.UserFlagResponseDTO;
-import cloud.uwu.realestatebackend.dtos.user.userNotification.UserNotificationResponseDTO;
-import cloud.uwu.realestatebackend.dtos.user.userRole.UserRoleResponseDTO;
 import lombok.*;
 
 import java.time.ZonedDateTime;

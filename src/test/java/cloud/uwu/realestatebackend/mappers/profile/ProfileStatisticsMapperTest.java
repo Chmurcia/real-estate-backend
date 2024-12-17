@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.UUID;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProfileStatisticsMapperTest {

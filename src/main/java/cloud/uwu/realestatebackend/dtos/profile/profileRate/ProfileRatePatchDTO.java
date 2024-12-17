@@ -2,8 +2,6 @@ package cloud.uwu.realestatebackend.dtos.profile.profileRate;
 
 import lombok.*;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @NoArgsConstructor

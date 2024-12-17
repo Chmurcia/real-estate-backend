@@ -5,7 +5,6 @@ import cloud.uwu.realestatebackend.dtos.user.userFlag.UserFlagPatchDTO;
 import cloud.uwu.realestatebackend.dtos.user.userFlag.UserFlagResponseDTO;
 import cloud.uwu.realestatebackend.entities.user.User;
 import cloud.uwu.realestatebackend.entities.user.UserFlag;
-import cloud.uwu.realestatebackend.entities.user.UserRole;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
 import cloud.uwu.realestatebackend.exceptions.NullException;
 import cloud.uwu.realestatebackend.mappers.user.UserFlagMapper;

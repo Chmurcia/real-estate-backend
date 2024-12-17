@@ -30,8 +30,6 @@ public class UserService {
     private final UserFlagRepository userFlagRepository;
     private final UserRoleRepository userRoleRepository;
     private final UserMapper userMapper;
-    private final UserRoleMapper userRoleMapper;
-    private final UserFlagMapper userFlagMapper;
 
 
     public UserResponseDTO getUserById(UUID id) {

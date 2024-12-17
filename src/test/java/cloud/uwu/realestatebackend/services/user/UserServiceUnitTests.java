@@ -3,8 +3,6 @@ package cloud.uwu.realestatebackend.services.user;
 import cloud.uwu.realestatebackend.dtos.user.user.UserDTO;
 import cloud.uwu.realestatebackend.dtos.user.user.UserPatchDTO;
 import cloud.uwu.realestatebackend.dtos.user.user.UserResponseDTO;
-import cloud.uwu.realestatebackend.dtos.user.userFlag.UserFlagResponseDTO;
-import cloud.uwu.realestatebackend.dtos.user.userRole.UserRoleResponseDTO;
 import cloud.uwu.realestatebackend.entities.user.User;
 import cloud.uwu.realestatebackend.entities.user.UserFlag;
 import cloud.uwu.realestatebackend.entities.user.UserRole;
@@ -38,13 +36,7 @@ class UserServiceUnitTests {
     private UserMapper userMapper;
 
     @Mock
-    private UserFlagService userFlagService;
-
-    @Mock
     private UserRoleRepository userRoleRepository;
-
-    @Mock
-    private UserRoleService userRoleService;
 
     @Mock
     private UserFlagRepository userFlagRepository;

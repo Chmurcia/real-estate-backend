@@ -10,7 +10,6 @@ import org.mapstruct.Mapping;
 uses = {UserRoleMapper.class, UserFlagMapper.class, UserNotificationMapper.class})
 public interface UserMapper {
 
-    UserDTO userToUserDTO(User user);
     User userDTOToUser(UserDTO userDTO);
 
     @Mapping(source = "userFlag.id", target = "userFlagId")

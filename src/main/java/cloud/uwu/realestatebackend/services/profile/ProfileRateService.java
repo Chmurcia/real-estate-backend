@@ -1,11 +1,9 @@
 package cloud.uwu.realestatebackend.services.profile;
 
-import cloud.uwu.realestatebackend.dtos.profile.profileAsk.ProfileAskDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profileRate.ProfileRateDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profileRate.ProfileRatePatchDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profileRate.ProfileRateResponseDTO;
 import cloud.uwu.realestatebackend.entities.profile.Profile;
-import cloud.uwu.realestatebackend.entities.profile.ProfileAsk;
 import cloud.uwu.realestatebackend.entities.profile.ProfileRate;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
 import cloud.uwu.realestatebackend.exceptions.NullException;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service

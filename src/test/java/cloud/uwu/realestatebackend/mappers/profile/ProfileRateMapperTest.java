@@ -1,6 +1,5 @@
 package cloud.uwu.realestatebackend.mappers.profile;
 
-import cloud.uwu.realestatebackend.dtos.profile.profileAsk.ProfileAskResponseDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profileRate.ProfileRateDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profileRate.ProfileRateResponseDTO;
 import cloud.uwu.realestatebackend.entities.profile.Profile;
