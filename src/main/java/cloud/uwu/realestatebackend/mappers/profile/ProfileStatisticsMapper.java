@@ -10,6 +10,5 @@ import org.mapstruct.Mapping;
 public interface ProfileStatisticsMapper {
     ProfileStatisticsDTO profileStatisticsToProfileStatisticsDTO(ProfileStatistics profileStatistics);
 
-    @Mapping(source = "profile.id", target = "profileId")
     ProfileStatisticsResponseDTO profileStatisticsToProfileStatisticsResponseDTO(ProfileStatistics profileStatistics);
 }

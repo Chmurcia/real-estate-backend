@@ -23,7 +23,7 @@ public class ProfileAsk {
     @Version
     private int version;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "profile_id", nullable = false, referencedColumnName = "id")
     private Profile profile;
 

@@ -21,6 +21,9 @@ public class ProfileSettings {
     @UuidGenerator
     private UUID id;
 
+    @Version
+    private int version;
+
     @OneToOne(mappedBy = "profileSettings")
     private Profile profile;
 

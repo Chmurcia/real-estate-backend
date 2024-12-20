@@ -20,7 +20,7 @@ public class ProfileRate {
     @Version
     private int version;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "profile_id", nullable = false, referencedColumnName = "id")
     private Profile profile;
 

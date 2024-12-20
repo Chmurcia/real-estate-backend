@@ -13,8 +13,6 @@ import java.util.UUID;
 public class ProfileStatisticsResponseDTO {
     private UUID id;
 
-    private UUID profileId;
-
     private Integer totalRatings;
 
     private Integer totalOffers;

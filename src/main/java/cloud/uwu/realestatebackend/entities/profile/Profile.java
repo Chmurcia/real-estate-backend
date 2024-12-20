@@ -47,6 +47,9 @@ public class Profile {
     @JoinColumn(name = "profile_settings_id", referencedColumnName = "id")
     private ProfileSettings profileSettings;
 
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProfileNotification> profileNotifications;
+
     private String firstName;
 
     private String lastName;

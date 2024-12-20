@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring",
-uses = {UserRoleMapper.class, UserFlagMapper.class, UserNotificationMapper.class})
+uses = {UserRoleMapper.class, UserFlagMapper.class})
 public interface UserMapper {
 
     User userDTOToUser(UserDTO userDTO);

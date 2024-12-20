@@ -83,7 +83,6 @@ class ProfileStatisticsMapperTest {
         ProfileStatisticsResponseDTO profileStatisticsResponseDTO = ProfileStatisticsResponseDTO
                 .builder()
                 .id(id)
-                .profileId(profileId)
                 .totalRatings(192)
                 .totalOffers(3)
                 .totalViews(71623)
@@ -99,9 +98,6 @@ class ProfileStatisticsMapperTest {
 
         assertEquals(profileStatisticsResponseDTO.getId(),
                 mappedProfileStatisticsResponse.getId());
-
-        assertEquals(profileStatisticsResponseDTO.getProfileId(),
-                mappedProfileStatisticsResponse.getProfileId());
 
         assertEquals(profileStatisticsResponseDTO.getTotalRatings(),
                 mappedProfileStatisticsResponse.getTotalRatings());

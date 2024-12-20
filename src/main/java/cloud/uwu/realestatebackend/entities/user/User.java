@@ -34,9 +34,6 @@ public class User {
     @JoinColumn(name = "user_flag_id", referencedColumnName = "id")
     private UserFlag userFlag;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserNotification> userNotification;
-
     @OneToOne
     @JoinColumn(name = "user_role_id", referencedColumnName = "id")
     private UserRole userRole;

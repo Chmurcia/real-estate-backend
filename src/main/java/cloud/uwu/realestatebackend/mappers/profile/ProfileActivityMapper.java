@@ -11,5 +11,6 @@ public interface ProfileActivityMapper {
     @Mapping(source = "profile.id", target = "profileId")
     ProfileActivityDTO profileActivityToProfileActivityDTO(ProfileActivity profileActivity);
 
+    @Mapping(source = "profile.id", target = "profileId")
     ProfileActivityResponseDTO profileActivityToProfileActivityResponseDTO(ProfileActivity profileActivity);
 }

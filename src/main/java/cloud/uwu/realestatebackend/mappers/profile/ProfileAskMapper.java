@@ -11,5 +11,6 @@ public interface ProfileAskMapper {
     @Mapping(source = "profile.id", target = "profileId")
     ProfileAskDTO profileAskToProfileAskDTO(ProfileAsk profileAsk);
 
+    @Mapping(source = "profile.id", target = "profileId")
     ProfileAskResponseDTO profileAskToProfileAskResponseDTO(ProfileAsk profileAsk);
 }

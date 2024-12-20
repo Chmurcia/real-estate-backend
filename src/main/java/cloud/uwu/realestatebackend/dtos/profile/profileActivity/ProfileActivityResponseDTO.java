@@ -13,6 +13,8 @@ import java.util.UUID;
 public class ProfileActivityResponseDTO {
     private UUID id;
 
+    private UUID profileId;
+
     private String activityTitle;
 
     private String activityDescription;

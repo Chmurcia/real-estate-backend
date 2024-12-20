@@ -1,6 +1,5 @@
-package cloud.uwu.realestatebackend.entities.user;
+package cloud.uwu.realestatebackend.entities.property.multimedia;
 
-import cloud.uwu.realestatebackend.entities.user.userEnums.NotificationReferName;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -16,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserNotification {
+public class PropertyMultimediaVideo {
     @Id
     @UuidGenerator
     private UUID id;
@@ -24,16 +23,11 @@ public class UserNotification {
     @Version
     private int version;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
-    private User user;
+    private String videoURL;
 
-    @Enumerated(EnumType.STRING)
-    private NotificationReferName referName;
-
-    private UUID referId;
-
-    private Boolean isSeen;
+    @ManyToOne
+    @JoinColumn(name = "property_multimedia_id", nullable = false, referencedColumnName = "id")
+    private PropertyMultimedia propertyMultimedia;
 
     @CreationTimestamp
     private ZonedDateTime createdAt;

@@ -14,6 +14,10 @@ import java.util.UUID;
 public class ProfileResponseDTO {
     private UUID id;
 
+    private UUID profileSettingsId;
+
+    private UUID profileStatisticsId;
+
     private String firstName;
 
     private String lastName;
