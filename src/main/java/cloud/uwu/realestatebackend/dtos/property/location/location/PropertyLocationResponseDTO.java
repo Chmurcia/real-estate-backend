@@ -1,6 +1,7 @@
 package cloud.uwu.realestatebackend.dtos.property.location.location;
 
 import cloud.uwu.realestatebackend.dtos.property.location.geolocation.PropertyGeolocationDTO;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Getter
@@ -15,9 +16,11 @@ public class PropertyLocationResponseDTO {
 
     private String city;
 
+    @JsonProperty("zip_code")
     private String zipCode;
 
     private String address;
 
+    @JsonProperty("geolocation")
     private PropertyGeolocationDTO geolocationDTO;
 }
