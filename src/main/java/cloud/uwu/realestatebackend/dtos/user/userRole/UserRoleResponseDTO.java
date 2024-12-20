@@ -2,6 +2,7 @@ package cloud.uwu.realestatebackend.dtos.user.userRole;
 
 
 import cloud.uwu.realestatebackend.entities.user.userEnums.Role;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,7 +21,9 @@ public class UserRoleResponseDTO {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @JsonProperty("created_at")
     private ZonedDateTime createdAt;
 
+    @JsonProperty("updated_at")
     private ZonedDateTime updatedAt;
 }

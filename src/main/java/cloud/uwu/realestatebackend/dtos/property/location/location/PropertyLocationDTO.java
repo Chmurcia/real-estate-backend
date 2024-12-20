@@ -1,5 +1,6 @@
 package cloud.uwu.realestatebackend.dtos.property.location.location;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -24,6 +25,7 @@ public class PropertyLocationDTO {
 
     @NotNull(message = "ZipCode must be defined")
     @Size(min = 5, max = 10, message = "ZipCode must contain between 5 and 10 characters")
+    @JsonProperty("zip_code")
     private String zipCode;
 
     @NotNull(message = "Address must be defined")

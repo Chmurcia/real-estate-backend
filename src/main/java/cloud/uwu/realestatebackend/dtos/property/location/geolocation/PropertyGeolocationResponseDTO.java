@@ -1,5 +1,6 @@
 package cloud.uwu.realestatebackend.dtos.property.location.geolocation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.time.ZonedDateTime;
@@ -17,7 +18,9 @@ public class PropertyGeolocationResponseDTO {
 
     private Double longitude;
 
+    @JsonProperty("created_at")
     private ZonedDateTime createdAt;
 
+    @JsonProperty("updated_at")
     private ZonedDateTime updatedAt;
 }
