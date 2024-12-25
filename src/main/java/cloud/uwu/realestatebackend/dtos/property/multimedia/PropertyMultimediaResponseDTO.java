@@ -1,8 +1,8 @@
 package cloud.uwu.realestatebackend.dtos.property.multimedia;
 
 import cloud.uwu.realestatebackend.dtos.property.multimedia.multimediaImage.PropertyMultimediaImageResponseDTO;
-import cloud.uwu.realestatebackend.dtos.property.multimedia.multimediaVideo.PropertyMultimediaVideoDTO;
 
+import cloud.uwu.realestatebackend.dtos.property.multimedia.multimediaVideo.PropertyMultimediaVideoResponseDTO;
 import lombok.*;
 
 import java.util.List;
@@ -18,5 +18,5 @@ public class PropertyMultimediaResponseDTO {
 
     private List<PropertyMultimediaImageResponseDTO> images;
 
-    private List<PropertyMultimediaVideoDTO> videos;
+    private List<PropertyMultimediaVideoResponseDTO> videos;
 }
