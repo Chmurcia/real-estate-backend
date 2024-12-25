@@ -11,15 +11,15 @@ import lombok.*;
 @Builder
 public class UserFlagDTO {
 
-    @NotNull(message = "isVerified must be defined")
+    @NotNull(message = "is_verified must be defined")
     @JsonProperty("is_verified")
     private Boolean isVerified;
 
-    @NotNull(message = "isMuted must be defined")
+    @NotNull(message = "is_muted must be defined")
     @JsonProperty("is_muted")
     private Boolean isMuted;
 
-    @NotNull(message = "isBanned must be defined")
+    @NotNull(message = "is_banned must be defined")
     @JsonProperty("is_banned")
     private Boolean isBanned;
 }

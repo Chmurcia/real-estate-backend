@@ -1,5 +1,6 @@
 package cloud.uwu.realestatebackend.entities.property;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,6 +23,9 @@ public class PropertyReview {
 
     @Version
     private int version;
+
+    @JsonProperty("evaluator_id")
+    private UUID evaluatorId;
 
     private Double rate;
 

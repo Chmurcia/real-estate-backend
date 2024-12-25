@@ -25,14 +25,6 @@ public class PropertyStatistics {
     @Version
     private int version;
 
-    private Integer viewsCount;
-
-    private Integer clicksCount;
-
-    private Integer likesCount;
-
-    private Integer dislikesCount;
-
     private ZonedDateTime lastVisitedAt;
 
     @OneToMany(mappedBy = "propertyStatistics")

@@ -24,6 +24,7 @@ public class PropertyAmenity {
     @Version
     private int version;
 
+    @Enumerated(EnumType.STRING)
     private AmenityType amenityType;
 
     @ManyToOne

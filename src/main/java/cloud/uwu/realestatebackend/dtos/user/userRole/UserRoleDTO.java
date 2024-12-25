@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 public class UserRoleDTO {
 
-    @NotBlank(message = "Role must be defined")
+    @NotBlank(message = "role must be defined")
     @Enumerated(EnumType.STRING)
     private Role role;
 }

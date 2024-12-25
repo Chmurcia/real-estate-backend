@@ -15,22 +15,22 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class ProfileDTO {
-    @NotBlank(message = "First name must be defined")
-    @Size(min = 2, max = 100, message = "First name must contain between 2 and 100 characters")
+    @NotBlank(message = "first_name must be defined")
+    @Size(min = 2, max = 100, message = "first_name must contain between 2 and 100 characters")
     @JsonProperty("first_name")
     private String firstName;
 
-    @NotBlank(message = "Last name must be defined")
+    @NotBlank(message = "last_name must be defined")
     @Size(min = 2, max = 100, message = "Last name must contain between 2 and 100 characters")
     @JsonProperty("last_name")
     private String lastName;
 
-    @NotBlank(message = "Phone number must be defined")
-    @Size(min = 9, max = 9, message = "Phone number must be 9 characters long")
+    @NotBlank(message = "phone_number must be defined")
+    @Size(min = 9, max = 9, message = "phone_number must be 9 characters long")
     @JsonProperty("phone_number")
     private String phoneNumber;
 
-    @NotBlank(message = "URL of avatar must be defined")
+    @NotBlank(message = "avatar_url must be defined")
     @JsonProperty("avatar_url")
     private String avatarURL;
 
@@ -50,8 +50,8 @@ public class ProfileDTO {
     @Size(min = 2, max = 150, message = "Name of a city must contain between 2 and 150 characters")
     private String city;
 
-    @NotNull(message = "Date of birth must be defined")
-    @Past(message = "Date must be in the past")
+    @NotNull(message = "birth_date must be defined")
+    @Past(message = "birth_date must be in the past")
     @JsonProperty("birth_date")
     private LocalDateTime birthDate;
 }

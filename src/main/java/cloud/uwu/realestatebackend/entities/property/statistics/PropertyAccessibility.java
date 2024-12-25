@@ -24,6 +24,7 @@ public class PropertyAccessibility {
     @Version
     private int version;
 
+    @Enumerated(EnumType.STRING)
     private AccessibilityType accessibilityType;
 
     @ManyToOne

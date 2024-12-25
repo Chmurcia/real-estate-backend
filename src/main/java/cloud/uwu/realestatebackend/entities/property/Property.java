@@ -30,8 +30,10 @@ public class Property {
     @Version
     private int version;
 
+    @Enumerated(EnumType.STRING)
     private PropertyType propertyType;
 
+    @Enumerated(EnumType.STRING)
     private OfferStatus offerStatus;
 
     private String title;

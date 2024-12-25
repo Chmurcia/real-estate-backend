@@ -23,6 +23,8 @@ public class PropertyMultimediaImage {
     @Version
     private int version;
 
+    private String imageTitle;
+
     private String imageURL;
 
     @ManyToOne

@@ -16,22 +16,22 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class ProfileActivityDTO {
-    @NotNull(message = "Id of profile must be defined")
+    @NotNull(message = "profile_id must be defined")
     @JsonProperty("profile_id")
     private UUID profileId;
 
-    @NotBlank(message = "Title of an activity must be defined")
-    @Size(min = 2, max = 50, message = "Title of an activity must contain between 2 and 50 character")
+    @NotBlank(message = "activity_title must be defined")
+    @Size(min = 2, max = 50, message = "activity_title must contain between 2 and 50 character")
     @JsonProperty("activity_title")
     private String activityTitle;
 
-    @NotBlank(message = "Description of an activity must be defined")
-    @Size(min = 1, max = 255, message = "Description of an activity must contain between 1 and 255 character")
+    @NotBlank(message = "activity_description must be defined")
+    @Size(min = 1, max = 255, message = "activity_description must contain between 1 and 255 character")
     @JsonProperty("activity_description")
     private String activityDescription;
 
-    @NotNull(message = "Date of an activity must be defined")
-    @Past(message = "Date of an activity must be in the past")
+    @NotNull(message = "activity_date must be defined")
+    @Past(message = "activity_date must be in the past")
     @JsonProperty("activity_date")
     private ZonedDateTime activityDate;
 }

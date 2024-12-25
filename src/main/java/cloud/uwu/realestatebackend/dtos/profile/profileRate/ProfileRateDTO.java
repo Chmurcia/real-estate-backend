@@ -1,10 +1,7 @@
 package cloud.uwu.realestatebackend.dtos.profile.profileRate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.util.UUID;
@@ -15,21 +12,24 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class ProfileRateDTO {
-    @NotNull(message = "Id of profile must be defined")
+    @NotNull(message = "profile_id must be defined")
     @JsonProperty("profile_id")
     private UUID profileId;
 
-    @NotNull(message = "Id of evaluator must be defined")
+    @NotNull(message = "evaluator_id must be defined")
     @JsonProperty("evaluator_id")
     private UUID evaluatorId;
 
+    @NotBlank(message = "title must be defined")
     @Size(min = 2, max = 50, message = "Title of a rate must contain between 2 and 50 characters")
     private String title;
 
+    @NotBlank(message = "description must be defined")
     @Size(min = 2, max = 100, message = "Title of a rate must contain between 2 and 100 characters")
     private String description;
 
-    @Max(value = 10, message = "Rate must value be at most 10")
-    @Min(value = 0, message = "Rate value must be at least 0")
+    @NotNull(message = "rate must be defined")
+    @Max(value = 10, message = "rate must value be at most 10")
+    @Min(value = 0, message = "rate value must be at least 0")
     private Integer rate;
 }

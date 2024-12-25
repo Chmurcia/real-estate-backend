@@ -12,11 +12,11 @@ import lombok.*;
 @AllArgsConstructor
 public class UserDTO {
 
-    @NotBlank(message = "Email must be defined")
-    @Email(message = "Email must be valid")
+    @NotBlank(message = "email must be defined")
+    @Email(message = "email must be valid")
     private String email;
 
-    @NotBlank(message = "Email must be defined")
+    @NotBlank(message = "password must be defined")
     private String password;
 
 }

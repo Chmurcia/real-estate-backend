@@ -40,8 +40,8 @@ public class ProfilePatchDTO {
     @Size(min = 2, max = 150, message = "Name of a city must contain between 2 and 150 characters")
     private String city;
 
-    @JsonProperty("birthDate")
-    @Past
+    @Past(message = "birth_date must be in the past")
+    @JsonProperty("birth_date")
     private LocalDateTime birthDate;
 
 }
