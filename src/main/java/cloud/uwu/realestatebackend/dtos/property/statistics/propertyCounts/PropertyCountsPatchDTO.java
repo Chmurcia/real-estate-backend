@@ -18,6 +18,4 @@ public class PropertyCountsPatchDTO {
     @Min(value = 0, message = "dislikes must be at least 0")
     private Integer dislikes;
 
-    @Min(value = 0, message = "comments must be at least 0")
-    private Integer comments;
 }

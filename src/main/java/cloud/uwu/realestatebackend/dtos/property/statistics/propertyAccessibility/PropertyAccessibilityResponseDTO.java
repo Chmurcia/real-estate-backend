@@ -15,6 +15,7 @@ import java.util.UUID;
 public class PropertyAccessibilityResponseDTO {
     private UUID id;
 
+    @JsonProperty("accessibility_type")
     private AccessibilityType accessibilityType;
 
     @JsonProperty("created_at")

@@ -20,6 +20,8 @@ import java.util.UUID;
 public class PropertyStatisticsResponseDTO {
     private UUID id;
 
+    private Double rating;
+
     @JsonProperty("last_visited_at")
     private ZonedDateTime lastVisitedAt;
 

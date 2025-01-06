@@ -20,6 +20,7 @@ import java.util.UUID;
 public class PropertyAmenityResponseDTO {
     private UUID id;
 
+    @JsonProperty("amenity_type")
     private AmenityType amenityType;
 
     @JsonProperty("created_at")

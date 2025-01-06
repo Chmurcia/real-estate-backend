@@ -25,21 +25,23 @@ public class PropertyStatistics {
     @Version
     private int version;
 
+    private Double rating;
+
     private ZonedDateTime lastVisitedAt;
 
-    @OneToMany(mappedBy = "propertyStatistics")
+    @OneToMany(mappedBy = "propertyStatistics", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PropertyAccessibility> propertyAccessibilities;
 
-    @OneToMany(mappedBy = "propertyStatistics")
+    @OneToMany(mappedBy = "propertyStatistics", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PropertyAmenity> propertyAmenities;
 
     @OneToOne(mappedBy = "statistics")
     private Property property;
 
-    @OneToMany(mappedBy = "propertyStatistics")
+    @OneToMany(mappedBy = "propertyStatistics", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PropertyTrustLevel> propertyTrustLevels;
 
-    @OneToOne
+    @OneToOne(mappedBy = "propertyStatistics", cascade = CascadeType.ALL, orphanRemoval = true)
     private PropertyCounts counts;
 
     @CreationTimestamp

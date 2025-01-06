@@ -1,6 +1,8 @@
 package cloud.uwu.realestatebackend.entities.property;
 
 import cloud.uwu.realestatebackend.entities.profile.Profile;
+import cloud.uwu.realestatebackend.entities.property.location.PropertyLocation;
+import cloud.uwu.realestatebackend.entities.property.multimedia.PropertyMultimedia;
 import cloud.uwu.realestatebackend.entities.property.neighbourhood.PropertyNeighbourhood;
 import cloud.uwu.realestatebackend.entities.property.propertyEnum.OfferStatus;
 import cloud.uwu.realestatebackend.entities.property.propertyEnum.PropertyType;
@@ -40,16 +42,16 @@ public class Property {
 
     private String description;
 
-    private BigDecimal price;
+    private Double price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id", nullable = false, referencedColumnName = "id")
     private Profile profile;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private PropertyDetails details;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private PropertyNeighbourhood neighbourhood;
 
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -61,8 +63,14 @@ public class Property {
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PropertyPriceRecord> pricesHistory;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private PropertyLocation propertyLocation;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private PropertyStatistics statistics;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private PropertyMultimedia propertyMultimedia;
 
     @CreationTimestamp
     private ZonedDateTime createdAt;

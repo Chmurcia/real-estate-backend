@@ -39,11 +39,11 @@ public class Profile {
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProfileRate> profileRates;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "profile_statistics_id", referencedColumnName = "id")
     private ProfileStatistics profileStatistics;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "profile_settings_id", referencedColumnName = "id")
     private ProfileSettings profileSettings;
 

@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 
 @Getter
@@ -18,6 +19,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class PropertyDTO {
+    @JsonProperty("profile_id")
+    private UUID profileId;
+
     @NotNull(message = "property_type must be defined")
     @JsonProperty("property_type")
     private PropertyType propertyType;
@@ -36,5 +40,5 @@ public class PropertyDTO {
 
     @NotNull(message = "price must be defined")
     @Min(value = 0, message = "price must be at least 0")
-    private BigDecimal price;
+    private Double price;
 }

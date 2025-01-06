@@ -1,5 +1,6 @@
 package cloud.uwu.realestatebackend.dtos.property.property;
 
+import cloud.uwu.realestatebackend.dtos.property.multimedia.PropertyMultimediaResponseDTO;
 import cloud.uwu.realestatebackend.dtos.property.neighbourhood.neighbourhood.PropertyNeighbourhoodResponseDTO;
 import cloud.uwu.realestatebackend.dtos.property.propertyDetails.PropertyDetailsResponseDTO;
 import cloud.uwu.realestatebackend.dtos.property.propertyDistanceTo.PropertyDistanceToResponseDTO;
@@ -34,7 +35,7 @@ public class PropertyResponseDTO {
 
     private String description;
 
-    private BigDecimal price;
+    private Double price;
 
     @JsonProperty("details")
     private PropertyDetailsResponseDTO detailsResponseDTO;
@@ -48,11 +49,11 @@ public class PropertyResponseDTO {
     @JsonProperty("reviews")
     private List<PropertyReviewResponseDTO> reviewResponseDTOS;
 
-    @JsonProperty("prices")
-    private List<PropertyPriceRecordResponseDTO> propertyPriceRecordResponseDTOS;
-
     @JsonProperty("statistics")
     private PropertyStatisticsResponseDTO propertyStatisticsResponseDTO;
+
+    @JsonProperty("multimedia")
+    private PropertyMultimediaResponseDTO propertyMultimediaResponseDTO;
 
     @JsonProperty("created_at")
     private ZonedDateTime createdAt;

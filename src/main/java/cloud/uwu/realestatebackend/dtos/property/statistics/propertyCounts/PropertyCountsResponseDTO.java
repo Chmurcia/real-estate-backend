@@ -21,8 +21,6 @@ public class PropertyCountsResponseDTO {
 
     private Integer dislikes;
 
-    private Integer comments;
-
     @JsonProperty("created_at")
     private ZonedDateTime createdAt;
 

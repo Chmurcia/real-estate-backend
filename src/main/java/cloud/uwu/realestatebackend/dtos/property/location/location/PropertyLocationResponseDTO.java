@@ -1,6 +1,6 @@
 package cloud.uwu.realestatebackend.dtos.property.location.location;
 
-import cloud.uwu.realestatebackend.dtos.property.location.geolocation.PropertyGeolocationDTO;
+import cloud.uwu.realestatebackend.dtos.property.location.geolocation.PropertyGeolocationResponseDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -27,7 +27,7 @@ public class PropertyLocationResponseDTO {
     private String address;
 
     @JsonProperty("geolocation")
-    private PropertyGeolocationDTO geolocationDTO;
+    private PropertyGeolocationResponseDTO geolocationResponseDTO;
 
     @JsonProperty("created_at")
     private ZonedDateTime createdAt;

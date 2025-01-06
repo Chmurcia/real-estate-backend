@@ -9,6 +9,8 @@ import org.mapstruct.Mapper;
 public interface PropertyGeolocationMapper {
     PropertyGeolocationDTO propertyGeolocationToPropertyGeolocationDTO(PropertyGeolocation propertyGeolocation);
 
+    PropertyGeolocation propertyGeolocationDTOToPropertyGeolocation(PropertyGeolocationDTO propertyGeolocationDTO);
+
     PropertyGeolocationResponseDTO propertyGeolocationToPropertyGeolocationResponseDTO(PropertyGeolocation propertyGeolocation);
 
 }

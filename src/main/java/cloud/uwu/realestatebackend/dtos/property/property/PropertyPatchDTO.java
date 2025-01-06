@@ -29,5 +29,5 @@ public class PropertyPatchDTO {
     private String description;
 
     @Min(value = 0, message = "price must be at least 0")
-    private BigDecimal price;
+    private Double price;
 }

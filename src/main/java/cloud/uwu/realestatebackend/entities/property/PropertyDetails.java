@@ -1,10 +1,7 @@
 package cloud.uwu.realestatebackend.entities.property;
 
 import cloud.uwu.realestatebackend.entities.property.propertyEnum.ConditionStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Version;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -30,17 +27,18 @@ public class PropertyDetails {
     @OneToOne(mappedBy = "details")
     private Property property;
 
-    @OneToOne
-    private PropertyAreas areas;
-
-    @OneToOne
-    private PropertyRooms rooms;
-
     private Integer totalFloors;
 
     private Integer yearBuilt;
 
+    @Enumerated(EnumType.STRING)
     private ConditionStatus conditionStatus;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    private PropertyAreas areas;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    private PropertyRooms rooms;
 
     @CreationTimestamp
     private ZonedDateTime createdAt;

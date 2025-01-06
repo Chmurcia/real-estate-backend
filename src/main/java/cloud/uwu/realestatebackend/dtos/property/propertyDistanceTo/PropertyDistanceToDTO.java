@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,6 +16,9 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @Builder
 public class PropertyDistanceToDTO {
+    @JsonProperty("property_id")
+    private UUID propertyId;
+
     @NotNull(message = "distance must be defined")
     @Min(value = 0, message = "distance must be at least 0")
     private Double distance;
@@ -22,10 +26,4 @@ public class PropertyDistanceToDTO {
     @NotBlank(message = "destination must be defined")
     @Size(max = 100, message = "destination must contain at most 100 characters")
     private String destination;
-
-    @JsonProperty("created_at")
-    private ZonedDateTime createdAt;
-
-    @JsonProperty("updated_at")
-    private ZonedDateTime updatedAt;
 }

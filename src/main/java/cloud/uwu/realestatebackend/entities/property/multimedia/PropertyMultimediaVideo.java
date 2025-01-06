@@ -23,7 +23,7 @@ public class PropertyMultimediaVideo {
     @Version
     private int version;
 
-    private String imageTitle;
+    private String videoTitle;
 
     private String videoURL;
 

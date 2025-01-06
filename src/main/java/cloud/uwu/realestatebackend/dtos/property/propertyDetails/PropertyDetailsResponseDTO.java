@@ -17,10 +17,13 @@ import java.util.UUID;
 public class PropertyDetailsResponseDTO {
     private UUID id;
 
+    @JsonProperty("total_floors")
     private Integer totalFloors;
 
+    @JsonProperty("year_built")
     private Integer yearBuilt;
 
+    @JsonProperty("condition_status")
     private ConditionStatus conditionStatus;
 
     @JsonProperty("areas")

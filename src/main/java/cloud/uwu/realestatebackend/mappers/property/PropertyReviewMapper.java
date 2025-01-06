@@ -4,9 +4,11 @@ import cloud.uwu.realestatebackend.dtos.property.propertyReview.PropertyReviewDT
 import cloud.uwu.realestatebackend.dtos.property.propertyReview.PropertyReviewResponseDTO;
 import cloud.uwu.realestatebackend.entities.property.PropertyReview;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PropertyReviewMapper {
+    @Mapping(source = "property.id", target = "propertyId")
     PropertyReviewDTO propertyReviewToPropertyReviewDTO(PropertyReview propertyReview);
 
     PropertyReviewResponseDTO propertyReviewToPropertyReviewResponseDTO(PropertyReview propertyReview);

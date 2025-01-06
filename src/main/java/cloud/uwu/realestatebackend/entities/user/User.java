@@ -30,11 +30,11 @@ public class User {
 
     private String password;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_flag_id", referencedColumnName = "id")
     private UserFlag userFlag;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_role_id", referencedColumnName = "id")
     private UserRole userRole;
 

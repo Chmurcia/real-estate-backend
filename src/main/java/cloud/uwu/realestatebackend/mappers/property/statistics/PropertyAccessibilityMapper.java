@@ -4,9 +4,11 @@ import cloud.uwu.realestatebackend.dtos.property.statistics.propertyAccessibilit
 import cloud.uwu.realestatebackend.dtos.property.statistics.propertyAccessibility.PropertyAccessibilityResponseDTO;
 import cloud.uwu.realestatebackend.entities.property.statistics.PropertyAccessibility;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PropertyAccessibilityMapper {
+    @Mapping(source = "propertyStatistics.id", target = "propertyStatisticsId")
     PropertyAccessibilityDTO propertyAccessibilityToPropertyAccessibilityDTO(PropertyAccessibility propertyAccessibility);
 
     PropertyAccessibilityResponseDTO propertyAccessibilityToPropertyAccessibilityResponseDTO(PropertyAccessibility propertyAccessibility);

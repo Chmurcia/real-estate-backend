@@ -12,6 +12,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class PropertyReviewDTO {
+    @JsonProperty("property_id")
+    private UUID propertyId;
 
     @NotNull(message = "evaluator_id must be defined")
     @JsonProperty("evaluator_id")

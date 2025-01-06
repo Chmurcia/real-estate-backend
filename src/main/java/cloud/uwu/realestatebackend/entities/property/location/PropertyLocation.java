@@ -1,15 +1,15 @@
 package cloud.uwu.realestatebackend.entities.property.location;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Version;
+import cloud.uwu.realestatebackend.entities.property.Property;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,18 +26,22 @@ public class PropertyLocation {
     @Version
     private int version;
 
-    @OneToOne
-    private PropertyGeolocation geolocation;
-
     private String country;
 
     private String state;
 
     private String city;
 
+    @JsonProperty("zip_code")
     private String zipCode;
 
     private String address;
+
+    @OneToOne
+    private PropertyGeolocation geolocation;
+
+    @OneToOne(mappedBy = "propertyLocation")
+    private Property property;
 
     @CreationTimestamp
     private ZonedDateTime createdAt;

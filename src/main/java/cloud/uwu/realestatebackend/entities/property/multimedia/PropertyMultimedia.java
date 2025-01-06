@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,14 +26,16 @@ public class PropertyMultimedia {
     @Version
     private int version;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "propertyMultimedia")
     private Property property;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<PropertyMultimediaImage> images;
+    @Builder.Default
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PropertyMultimediaImage> images = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<PropertyMultimediaVideo> videos;
+    @Builder.Default
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PropertyMultimediaVideo> videos = new ArrayList<>();
 
     @CreationTimestamp
     private ZonedDateTime createdAt;

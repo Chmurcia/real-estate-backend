@@ -3,6 +3,7 @@ package cloud.uwu.realestatebackend.services.profile;
 import cloud.uwu.realestatebackend.dtos.profile.profileStatistics.ProfileStatisticsDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profileStatistics.ProfileStatisticsPatchDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profileStatistics.ProfileStatisticsResponseDTO;
+import cloud.uwu.realestatebackend.dtos.property.statistics.propertyStatistics.PropertyStatisticsDTO;
 import cloud.uwu.realestatebackend.entities.profile.ProfileStatistics;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
 import cloud.uwu.realestatebackend.exceptions.NullException;
