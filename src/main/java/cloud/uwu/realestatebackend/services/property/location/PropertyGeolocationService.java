@@ -20,8 +20,9 @@ public class PropertyGeolocationService {
     private final PropertyGeolocationRepository propertyGeolocationRepository;
     private final PropertyGeolocationMapper propertyGeolocationMapper;
 
-    public PropertyGeolocation createPropertyGeolocation(PropertyGeolocationDTO propertyGeolocationDTO) {
-        return propertyGeolocationRepository.save(propertyGeolocationMapper
+    public PropertyGeolocation createPropertyGeolocation(
+            PropertyGeolocationDTO propertyGeolocationDTO) {
+        return propertyGeolocationRepository.saveAndFlush(propertyGeolocationMapper
                 .propertyGeolocationDTOToPropertyGeolocation(propertyGeolocationDTO));
     }
 
@@ -55,12 +56,6 @@ public class PropertyGeolocationService {
         }
 
         propertyGeolocationRepository.save(propertyGeolocation);
-    }
-
-    public void deletePropertyGeolocation(UUID id) {
-        getPropertyGeolocation(id);
-
-        propertyGeolocationRepository.deleteById(id);
     }
 
     //

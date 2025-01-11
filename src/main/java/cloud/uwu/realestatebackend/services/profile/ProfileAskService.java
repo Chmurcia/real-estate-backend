@@ -27,9 +27,10 @@ public class ProfileAskService {
     private final ProfileRepository profileRepository;
     private final ProfileAskMapper profileAskMapper;
 
-    public Page<ProfileAskResponseDTO> getProfileAsksByProfileId(UUID id, int page, int size) {
-        page = Math.max(page, 0);
-        size = size > 0 ? size : 50;
+    public Page<ProfileAskResponseDTO> getProfileAsksByProfileId(
+            UUID id, Integer page, Integer size) {
+        page = (page != null) ? Math.max(page, 0) : 0;
+        size = (size != null && size > 0) ? size : 50;
 
         getProfile(id);
 
@@ -44,13 +45,10 @@ public class ProfileAskService {
         return profileAskMapper.profileAskToProfileAskResponseDTO(profileAsk);
     }
 
-    public ProfileAskResponseDTO createProfileAsk(ProfileAskDTO profileAskDTO) {
-        Profile profile;
-        if (profileAskDTO.getProfileId() != null) {
-            profile = getProfile(profileAskDTO.getProfileId());
-        } else {
-            throw new NullException("profileId is null");
-        }
+    public ProfileAskResponseDTO createProfileAsk(
+            UUID profileId, ProfileAskDTO profileAskDTO) {
+        Profile profile = getProfile(profileId);
+
 
         ProfileAsk profileAsk = ProfileAsk.builder()
                 .profile(profile)
@@ -59,7 +57,7 @@ public class ProfileAskService {
                 .askAnswer(profileAskDTO.getAskAnswer())
                 .build();
 
-        ProfileAsk savedProfileAsk = profileAskRepository.save(profileAsk);
+        ProfileAsk savedProfileAsk = profileAskRepository.saveAndFlush(profileAsk);
 
         return profileAskMapper.profileAskToProfileAskResponseDTO(savedProfileAsk);
     }

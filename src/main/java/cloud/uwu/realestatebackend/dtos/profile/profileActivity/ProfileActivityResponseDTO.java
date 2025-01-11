@@ -14,9 +14,6 @@ import java.util.UUID;
 public class ProfileActivityResponseDTO {
     private UUID id;
 
-    @JsonProperty("profile_id")
-    private UUID profileId;
-
     @JsonProperty("activity_title")
     private String activityTitle;
 

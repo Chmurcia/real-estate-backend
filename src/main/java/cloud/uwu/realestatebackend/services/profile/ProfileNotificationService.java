@@ -1,6 +1,5 @@
 package cloud.uwu.realestatebackend.services.profile;
 
-import cloud.uwu.realestatebackend.dtos.profile.profile.ProfileDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profileNotification.ProfileNotificationDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profileNotification.ProfileNotificationResponseDTO;
 import cloud.uwu.realestatebackend.entities.profile.Profile;
@@ -25,13 +24,6 @@ public class ProfileNotificationService {
     private final ProfileNotificationMapper profileNotificationMapper;
     private final ProfileRepository profileRepository;
 
-    public ProfileNotificationResponseDTO getProfileNotificationById(UUID id) {
-        return profileNotificationMapper
-                .profileNotificationToProfileNotificationResponseDTO(
-                        getProfileNotification(id)
-                );
-    }
-
     public List<ProfileNotificationResponseDTO> getProfileNotificationsByProfileId(UUID id) {
         getProfile(id);
 
@@ -41,16 +33,18 @@ public class ProfileNotificationService {
                 .toList();
     }
 
+    public ProfileNotificationResponseDTO getProfileNotificationById(UUID id) {
+        return profileNotificationMapper
+                .profileNotificationToProfileNotificationResponseDTO(
+                        getProfileNotification(id)
+                );
+    }
+
     public ProfileNotificationResponseDTO createProfileNotification(
+            UUID profileId,
             ProfileNotificationDTO profileNotificationDTO
     ) {
-        Profile profile;
-
-        if (profileNotificationDTO.getProfileId() != null) {
-            profile = getProfile(profileNotificationDTO.getProfileId());
-        } else {
-            throw new NullException("profileId is null");
-        }
+        Profile profile = getProfile(profileId);
 
         ProfileNotification profileNotification = ProfileNotification.builder()
                 .profile(profile)
@@ -60,7 +54,7 @@ public class ProfileNotificationService {
                 .build();
 
         ProfileNotification savedProfileNotification =
-                profileNotificationRepository.save(profileNotification);
+                profileNotificationRepository.saveAndFlush(profileNotification);
 
         return profileNotificationMapper
                 .profileNotificationToProfileNotificationResponseDTO(savedProfileNotification);

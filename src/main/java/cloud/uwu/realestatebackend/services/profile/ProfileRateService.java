@@ -27,9 +27,9 @@ public class ProfileRateService {
     private final ProfileRepository profileRepository;
     private final ProfileRateMapper profileRateMapper;
 
-    public Page<ProfileRateResponseDTO> getProfileRatesByProfileId(UUID id, int page, int size) {
-        page = Math.max(page, 0);
-        size = size > 0 ? size : 50;
+    public Page<ProfileRateResponseDTO> getProfileRatesByProfileId(UUID id, Integer page, Integer size) {
+        page = (page != null) ? Math.max(page, 0) : 0;
+        size = (size != null && size > 0) ? size : 50;
 
         getProfile(id);
 
@@ -45,13 +45,9 @@ public class ProfileRateService {
         return profileRateMapper.profileRateToProfileRateResponseDTO(profileRate);
     }
 
-    public ProfileRateResponseDTO createProfileRate(ProfileRateDTO profileRateDTO) {
-        Profile profile;
-        if (profileRateDTO.getProfileId() != null) {
-            profile = getProfile(profileRateDTO.getProfileId());
-        } else {
-            throw new NullException("profileId is null");
-        }
+    public ProfileRateResponseDTO createProfileRate(UUID profileId, ProfileRateDTO profileRateDTO) {
+        Profile profile = getProfile(profileId);
+        getEvaluator(profileRateDTO.getEvaluatorId());
 
         ProfileRate profileRate = ProfileRate.builder()
                 .profile(profile)
@@ -61,7 +57,7 @@ public class ProfileRateService {
                 .rate(profileRateDTO.getRate())
                 .build();
 
-        ProfileRate savedProfileRate = profileRateRepository.save(profileRate);
+        ProfileRate savedProfileRate = profileRateRepository.saveAndFlush(profileRate);
 
         return profileRateMapper.profileRateToProfileRateResponseDTO(savedProfileRate);
     }
@@ -121,6 +117,11 @@ public class ProfileRateService {
     private Profile getProfile(UUID id) {
         return profileRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Profile not found"));
+    }
+
+    private Profile getEvaluator(UUID id) {
+        return profileRepository.findById(id).orElseThrow(() ->
+                new NotFoundException("Evaluator not found"));
     }
 
     private ProfileRate getProfileRate(UUID id) {

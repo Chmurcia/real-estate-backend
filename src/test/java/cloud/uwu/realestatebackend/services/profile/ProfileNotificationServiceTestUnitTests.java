@@ -142,7 +142,6 @@ class ProfileNotificationServiceTestUnitTests {
 
         ProfileNotificationDTO profileNotificationDTO = ProfileNotificationDTO
                 .builder()
-                .profileId(profile.getId())
                 .notificationName("Name")
                 .notificationDescription("Description")
                 .notificationId(UUID.randomUUID())
@@ -170,7 +169,7 @@ class ProfileNotificationServiceTestUnitTests {
                                 .getNotificationId())
                         .build();
 
-        when(profileRepository.findById(profileNotificationDTO.getProfileId()))
+        when(profileRepository.findById(profile.getId()))
                 .thenReturn(Optional.of(profile));
 
         when(profileNotificationRepository.save(any(ProfileNotification.class)))
@@ -183,13 +182,11 @@ class ProfileNotificationServiceTestUnitTests {
                 .thenReturn(profileNotificationResponseDTO);
 
         ProfileNotificationResponseDTO createdProfileNotification = profileNotificationService
-                .createProfileNotification(profileNotificationDTO);
+                .createProfileNotification(profile.getId(), profileNotificationDTO);
 
         verify(profileNotificationRepository).save(any(ProfileNotification.class));
 
         assertThat(createdProfileNotification).isNotNull();
-        assertEquals(createdProfileNotification.getProfileId(),
-                profileNotificationDTO.getProfileId());
         assertEquals(createdProfileNotification.getNotificationName(),
                 profileNotificationDTO.getNotificationName());
         assertEquals(createdProfileNotification.getNotificationDescription(),
@@ -202,16 +199,16 @@ class ProfileNotificationServiceTestUnitTests {
     void createProfileNotification_ShouldThrowNotFoundException() {
         assertThrows(NotFoundException.class, () ->
                 profileNotificationService
-                        .createProfileNotification(ProfileNotificationDTO
-                                .builder().profileId(UUID.randomUUID()).build()));
+                        .createProfileNotification(UUID.randomUUID(),
+                                ProfileNotificationDTO.builder().build()));
     }
 
     @Test
     void createProfileNotification_ShouldThrowNullException() {
         assertThrows(NullException.class, () ->
                 profileNotificationService
-                        .createProfileNotification(ProfileNotificationDTO
-                                .builder().build()));
+                        .createProfileNotification(UUID.randomUUID(),
+                                ProfileNotificationDTO.builder().build()));
     }
 
     @Test

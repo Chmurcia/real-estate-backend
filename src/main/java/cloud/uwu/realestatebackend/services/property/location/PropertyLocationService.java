@@ -108,8 +108,6 @@ public class PropertyLocationService {
     public void deletePropertyLocation(UUID id) {
         PropertyLocation propertyLocation = getPropertyLocation(id);
 
-        propertyGeolocationService.deletePropertyGeolocation(propertyLocation.getGeolocation().getId());
-
         propertyLocationRepository.deleteById(id);
     }
 

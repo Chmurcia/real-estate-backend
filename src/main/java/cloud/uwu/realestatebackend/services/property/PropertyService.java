@@ -25,7 +25,7 @@ import cloud.uwu.realestatebackend.services.property.location.PropertyLocationSe
 import cloud.uwu.realestatebackend.services.property.neighbourhood.PropertyNeighbourhoodService;
 import cloud.uwu.realestatebackend.services.property.statistics.PropertyStatisticsService;
 import cloud.uwu.realestatebackend.sorts.PropertySort;
-import cloud.uwu.realestatebackend.specifications.property.PropertySpecification;
+import cloud.uwu.realestatebackend.specifications.PropertySpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,7 +49,9 @@ public class PropertyService {
     private final PropertyLocationService propertyLocationService;
     private final PropertyStatisticsService propertyStatisticsService;
 
-    public Page<PropertyResponseDTO> getAllProperties(PropertyFilterDTO filters, int page, int size, String sortBy, String sortDirection) {
+    public Page<PropertyResponseDTO> getAllProperties(
+            PropertyFilterDTO filters, int page, int size,
+            String sortBy, String sortDirection) {
         page = Math.max(page, 0);
         size = size > 0 ? size : 50;
 

@@ -27,9 +27,9 @@ public class ProfileActivityService {
     private final ProfileRepository profileRepository;
     private final ProfileActivityMapper profileActivityMapper;
 
-    public Page<ProfileActivityResponseDTO> getProfileActivitiesByProfileId(UUID id, int page, int size) {
-        page = Math.max(page, 0);
-        size = size > 0 ? size : 50;
+    public Page<ProfileActivityResponseDTO> getProfileActivitiesByProfileId(UUID id, Integer page, Integer size) {
+        page = (page != null) ? Math.max(page, 0) : 0;
+        size = (size != null && size > 0) ? size : 50;
 
         getProfile(id);
 
@@ -46,13 +46,9 @@ public class ProfileActivityService {
                 .profileActivityToProfileActivityResponseDTO(profileActivity);
     }
 
-    public ProfileActivityResponseDTO createProfileActivity(ProfileActivityDTO profileActivityDTO) {
-        Profile profile;
-        if (profileActivityDTO.getProfileId() != null) {
-            profile = getProfile(profileActivityDTO.getProfileId());
-        } else {
-            throw new NullException("profileId is null");
-        }
+    public ProfileActivityResponseDTO createProfileActivity(UUID profileId, ProfileActivityDTO profileActivityDTO) {
+        Profile profile = getProfile(profileId);
+
 
         ProfileActivity profileActivity = ProfileActivity.builder()
                 .profile(profile)
@@ -65,7 +61,7 @@ public class ProfileActivityService {
                 .build();
 
         ProfileActivity savedProfileActivity = profileActivityRepository
-                .save(profileActivity);
+                .saveAndFlush(profileActivity);
 
         return profileActivityMapper
                 .profileActivityToProfileActivityResponseDTO(savedProfileActivity);
@@ -77,7 +73,7 @@ public class ProfileActivityService {
         if(profileActivityDTO.getActivityTitle() != null &&
                 StringUtils.hasText(profileActivityDTO
                         .getActivityTitle())) {
-            profileActivity.setActivityTitle(profileActivity
+            profileActivity.setActivityTitle(profileActivityDTO
                     .getActivityTitle());
         } else {
             throw new NullException("activityTitle is null");
@@ -86,14 +82,14 @@ public class ProfileActivityService {
         if(profileActivityDTO.getActivityDescription() != null &&
                 StringUtils.hasText(profileActivityDTO
                         .getActivityDescription())) {
-            profileActivity.setActivityDescription(profileActivity
+            profileActivity.setActivityDescription(profileActivityDTO
                     .getActivityDescription());
         } else {
             throw new NullException("activityTitle is null");
         }
 
         if(profileActivityDTO.getActivityDate() != null) {
-            profileActivity.setActivityDate(profileActivity
+            profileActivity.setActivityDate(profileActivityDTO
                     .getActivityDate());
         } else {
             throw new NullException("activityDate is null");
@@ -108,19 +104,19 @@ public class ProfileActivityService {
         if(profileActivityPatchDTO.getActivityTitle() != null &&
                 StringUtils.hasText(profileActivityPatchDTO
                         .getActivityTitle())) {
-            profileActivity.setActivityTitle(profileActivity
+            profileActivity.setActivityTitle(profileActivityPatchDTO
                     .getActivityTitle());
         }
 
         if(profileActivityPatchDTO.getActivityDescription() != null &&
                 StringUtils.hasText(profileActivityPatchDTO
                         .getActivityDescription())) {
-            profileActivity.setActivityDescription(profileActivity
+            profileActivity.setActivityDescription(profileActivityPatchDTO
                     .getActivityDescription());
         }
 
         if(profileActivityPatchDTO.getActivityDate() != null) {
-            profileActivity.setActivityDate(profileActivity
+            profileActivity.setActivityDate(profileActivityPatchDTO
                     .getActivityDate());
         }
 

@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ProfileAskMapper {
-    @Mapping(source = "profile.id", target = "profileId")
     ProfileAskDTO profileAskToProfileAskDTO(ProfileAsk profileAsk);
 
     @Mapping(source = "profile.id", target = "profileId")

@@ -12,9 +12,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class ProfileRateDTO {
-    @NotNull(message = "profile_id must be defined")
-    @JsonProperty("profile_id")
-    private UUID profileId;
 
     @NotNull(message = "evaluator_id must be defined")
     @JsonProperty("evaluator_id")

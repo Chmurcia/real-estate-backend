@@ -1,6 +1,7 @@
 package cloud.uwu.realestatebackend.entities.user;
 
 import cloud.uwu.realestatebackend.entities.user.userEnums.Role;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

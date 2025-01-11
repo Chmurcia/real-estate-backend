@@ -35,7 +35,7 @@ public class ProfileDTO {
     private String avatarURL;
 
     @NotBlank(message = "Bio must be defined")
-    @Size(min = 1, max = 255, message = "Bio must contain between 1 and 255 characters")
+    @Size(min = 1, max = 500, message = "Bio must contain between 1 and 255 characters")
     private String bio;
 
     @NotBlank(message = "Country must be defined")

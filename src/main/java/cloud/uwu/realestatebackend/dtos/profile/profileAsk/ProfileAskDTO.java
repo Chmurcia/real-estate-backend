@@ -13,10 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class ProfileAskDTO {
-    @NotNull(message = "profile_id must be defined")
-    @JsonProperty("profile_id")
-    private UUID profileId;
-
     @NotNull(message = "ask_title must be defined")
     @Size(min = 2, max = 50, message = "ask_title must contain between 2 and 50 characters")
     @JsonProperty("ask_title")

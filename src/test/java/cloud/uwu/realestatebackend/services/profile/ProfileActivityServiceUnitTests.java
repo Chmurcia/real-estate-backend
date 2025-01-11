@@ -204,7 +204,7 @@ class ProfileActivityServiceUnitTests {
                 .thenReturn(profileActivityResponseDTO);
 
         ProfileActivityResponseDTO savedProfileActivity = profileActivityService
-                .createProfileActivity(profileActivityDTO);
+                .createProfileActivity(profileId, profileActivityDTO);
 
         assertThat(savedProfileActivity).isNotNull();
         assertEquals(profileActivityDTO.getActivityTitle(),
@@ -217,8 +217,10 @@ class ProfileActivityServiceUnitTests {
 
     @Test
     void createProfileActivityProfileId_ShouldThrowNullException() {
+        UUID id = UUID.randomUUID();
+
         assertThrows(NullException.class, () -> profileActivityService
-                .createProfileActivity(ProfileActivityDTO.builder().build()));
+                .createProfileActivity(id, ProfileActivityDTO.builder().build()));
     }
 
     @Test

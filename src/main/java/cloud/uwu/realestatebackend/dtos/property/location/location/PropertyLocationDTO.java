@@ -13,10 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class PropertyLocationDTO {
-    @NotNull(message = "property_id must be defined")
-    @JsonProperty("property_id")
-    private UUID propertyId;
-
     @NotNull(message = "country must be defined")
     @Size(min = 3, max = 50, message = "Country must contain between 3 and 50 characters")
     private String country;

@@ -16,10 +16,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class ProfileActivityDTO {
-    @NotNull(message = "profile_id must be defined")
-    @JsonProperty("profile_id")
-    private UUID profileId;
-
     @NotBlank(message = "activity_title must be defined")
     @Size(min = 2, max = 50, message = "activity_title must contain between 2 and 50 character")
     @JsonProperty("activity_title")

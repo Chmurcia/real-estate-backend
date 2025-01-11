@@ -79,62 +79,6 @@ class ProfileServiceUnitTests {
     }
 
     @Test
-    void getProfilesByCountry() {
-        int page = 0;
-        int size = 50;
-
-        PageRequest pageable = PageRequest.of(page, size);
-
-        Profile profile1 = Profile.builder()
-                .id(UUID.randomUUID())
-                .build();
-        Profile profile2 = Profile.builder()
-                .id(UUID.randomUUID())
-                .build();
-
-        Page<Profile> profiles = new PageImpl<>(
-                List.of(profile1, profile2),
-                pageable, 2
-        );
-
-        when(profileRepository.getProfilesByCountry("Country", pageable))
-                .thenReturn(profiles);
-
-        when(profileMapper.profileToProfileResponseDTO(any(Profile.class)))
-                .thenReturn(ProfileResponseDTO.builder()
-                        .id(UUID.randomUUID())
-                        .build());
-
-        Page<ProfileResponseDTO> foundProfiles = profileService
-                .getProfilesByCountry("Country", page, size);
-
-        assertThat(foundProfiles).isNotNull();
-        assertEquals(foundProfiles.getContent().size(), 2);
-    }
-
-    @Test
-    void getProfilesByCountry_ShouldReturn0Elements() {
-        int page = 0;
-        int size = 50;
-
-        PageRequest pageable = PageRequest.of(page, size);
-
-        Page<Profile> profiles = new PageImpl<>(
-                List.of(),
-                pageable, 2
-        );
-
-        when(profileRepository.getProfilesByCountry("Country", pageable))
-                .thenReturn(profiles);
-
-        Page<ProfileResponseDTO> foundProfiles = profileService
-                .getProfilesByCountry("Country", page, size);
-
-        assertThat(foundProfiles).isNotNull();
-        assertEquals(foundProfiles.getContent().size(), 0);
-    }
-
-    @Test
     void getProfilesByState() {
         int page = 0;
         int size = 50;

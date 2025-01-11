@@ -156,8 +156,6 @@ class PropertyPriceRecordServiceUnitTests {
 
     @Test
     void createPropertyPriceRecord_ShouldThrowNotFoundException() {
-        UUID id = UUID.randomUUID();
-
         assertThrows(NotFoundException.class, () ->
                 propertyPriceRecordService
                         .createPropertyPriceRecord(PropertyPriceRecordDTO

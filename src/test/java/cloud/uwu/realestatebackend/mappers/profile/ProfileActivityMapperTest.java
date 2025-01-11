@@ -36,7 +36,6 @@ class ProfileActivityMapperTest {
                 .build();
 
         ProfileActivityDTO profileActivityDTO = ProfileActivityDTO.builder()
-                .profileId(profileId)
                 .activityTitle("Title")
                 .activityDescription("Description")
                 .activityDate(zonedDateTime)
@@ -46,9 +45,6 @@ class ProfileActivityMapperTest {
                 .profileActivityToProfileActivityDTO(profileActivity);
 
         assertThat(mappedProfileActivity).isNotNull();
-
-        assertEquals(profileActivityDTO.getProfileId(),
-                mappedProfileActivity.getProfileId());
 
         assertEquals(profileActivityDTO.getActivityTitle(),
                 mappedProfileActivity.getActivityTitle());

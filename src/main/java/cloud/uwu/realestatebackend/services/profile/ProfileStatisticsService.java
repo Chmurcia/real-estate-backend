@@ -120,6 +120,8 @@ public class ProfileStatisticsService {
         profileStatisticsRepository.deleteById(id);
     }
 
+    //
+
     private ProfileStatistics getProfileStatistics(UUID id) {
         return profileStatisticsRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("ProfileStatistics not found"));

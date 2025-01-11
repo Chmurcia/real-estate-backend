@@ -37,25 +37,33 @@ public class UserFlagService {
         return userFlagMapper.userFlagToUserFlagResponseDTO(userFlag);
     }
 
+    public UserFlag createUserFlag() {
+        return userFlagRepository.save(UserFlag.builder()
+                .isVerified(false)
+                .isBanned(false)
+                .isMuted(false)
+                .build());
+    }
+
     public void updateUserFlag(UUID id, UserFlagDTO userFlagDTO) {
         UserFlag userFlag = getUserFlag(id);
 
         if (userFlagDTO.getIsVerified() != null) {
             userFlag.setIsVerified(userFlagDTO.getIsVerified());
         } else {
-            throw new NullException("isVerified is null");
+            throw new NullException("is_verified is null");
         }
 
         if (userFlagDTO.getIsBanned() != null) {
             userFlag.setIsBanned(userFlagDTO.getIsBanned());
         } else {
-            throw new NullException("isBanned is null");
+            throw new NullException("is_banned is null");
         }
 
         if (userFlagDTO.getIsMuted() != null) {
             userFlag.setIsMuted(userFlagDTO.getIsMuted());
         } else {
-            throw new NullException("isMuted is null");
+            throw new NullException("is_muted is null");
         }
 
         userFlagRepository.save(userFlag);

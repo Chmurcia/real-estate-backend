@@ -37,7 +37,7 @@ public class PropertyLocation {
 
     private String address;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true)
     private PropertyGeolocation geolocation;
 
     @OneToOne(mappedBy = "propertyLocation")

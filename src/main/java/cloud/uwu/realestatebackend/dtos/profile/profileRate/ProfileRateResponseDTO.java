@@ -14,9 +14,6 @@ import java.util.UUID;
 public class ProfileRateResponseDTO {
     private UUID id;
 
-    @JsonProperty("profile_id")
-    private UUID profileId;
-
     @JsonProperty("evaluator_id")
     private UUID evaluatorId;
 

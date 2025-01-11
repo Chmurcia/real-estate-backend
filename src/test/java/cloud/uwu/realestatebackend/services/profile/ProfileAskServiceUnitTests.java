@@ -152,7 +152,6 @@ class ProfileAskServiceUnitTests {
         Profile profile = Profile.builder().id(profileId).build();
 
         ProfileAskDTO profileAskDTO = ProfileAskDTO.builder()
-                .profileId(profileId)
                 .askTitle("Tile of an ask")
                 .askDescription("Description of an ask")
                 .askAnswer("Answer for an ask")
@@ -185,7 +184,7 @@ class ProfileAskServiceUnitTests {
                 .thenReturn(profileAskResponseDTO);
 
         ProfileAskResponseDTO savedProfileAsk = profileAskService
-                .createProfileAsk(profileAskDTO);
+                .createProfileAsk(profileId, profileAskDTO);
 
         assertThat(savedProfileAsk).isNotNull();
         assertEquals(profileAskDTO.getAskTitle(),
@@ -199,7 +198,8 @@ class ProfileAskServiceUnitTests {
     @Test
     void createProfileAsk_ShouldThrowNullException() {
         assertThrows(NullException.class, () ->
-                profileAskService.createProfileAsk(ProfileAskDTO.builder().build()));
+                profileAskService.createProfileAsk(UUID.randomUUID(),
+                        ProfileAskDTO.builder().build()));
     }
 
     @Test

@@ -8,9 +8,9 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ProfileRateMapper {
-    @Mapping(source = "profile.id", target = "profileId")
     ProfileRateDTO profileRateToProfileRateDTO(ProfileRate profileRate);
 
-    @Mapping(source = "profile.id", target = "profileId")
+    @Mapping(source = "createdAt", target = "createdAt")
+    @Mapping(source = "updatedAt", target = "updatedAt")
     ProfileRateResponseDTO profileRateToProfileRateResponseDTO(ProfileRate profileRate);
 }

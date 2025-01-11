@@ -4,10 +4,13 @@ import cloud.uwu.realestatebackend.dtos.user.userRole.UserRoleDTO;
 import cloud.uwu.realestatebackend.dtos.user.userRole.UserRolePatchDTO;
 import cloud.uwu.realestatebackend.dtos.user.userRole.UserRoleResponseDTO;
 import cloud.uwu.realestatebackend.entities.user.User;
+import cloud.uwu.realestatebackend.entities.user.UserFlag;
 import cloud.uwu.realestatebackend.entities.user.UserRole;
+import cloud.uwu.realestatebackend.entities.user.userEnums.Role;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
 import cloud.uwu.realestatebackend.exceptions.NullException;
 import cloud.uwu.realestatebackend.mappers.user.UserRoleMapper;
+import cloud.uwu.realestatebackend.repositories.user.UserFlagRepository;
 import cloud.uwu.realestatebackend.repositories.user.UserRepository;
 import cloud.uwu.realestatebackend.repositories.user.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,20 +47,26 @@ public class UserRoleService {
                 .build();
     }
 
+    public UserRole createUserRole() {
+        return userRoleRepository.save(UserRole.builder()
+                .role(Role.USER)
+                .build());
+    }
+
     public void updateUserRole(UUID id, UserRoleDTO userRoleDTO) {
         UserRole userRole = getUserRole(id);
         if (userRoleDTO.getRole() != null) {
             userRole.setRole(userRoleDTO.getRole());
         } else {
-            throw new NullException("Role is null");
+            throw new NullException("role is null");
         }
         userRoleRepository.save(userRole);
     }
 
     public void patchUserRole(UUID id, UserRolePatchDTO userRolePatchDTO) {
         UserRole userRole = getUserRole(id);
-        if (userRole.getRole() != null &&  StringUtils
-                .hasText(userRole.getRole().toString())) {
+        if (userRolePatchDTO.getRole() != null && StringUtils
+                .hasText(userRolePatchDTO.getRole().toString())) {
             userRole.setRole(userRolePatchDTO.getRole());
         }
         userRoleRepository.save(userRole);
@@ -67,6 +76,8 @@ public class UserRoleService {
         getUserRole(id);
         userRoleRepository.deleteById(id);
     }
+
+    //
 
     private UserRole getUserRole(UUID id) {
         return userRoleRepository.findById(id).orElseThrow(() ->

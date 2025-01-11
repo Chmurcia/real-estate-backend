@@ -1,5 +1,6 @@
 package cloud.uwu.realestatebackend.services.profile;
 
+import cloud.uwu.realestatebackend.dtos.other.filters.ProfileFilterDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profile.ProfileDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profile.ProfilePatchDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profile.ProfileResponseDTO;
@@ -13,9 +14,12 @@ import cloud.uwu.realestatebackend.mappers.profile.ProfileMapper;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileRepository;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileSettingsRepository;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileStatisticsRepository;
+import cloud.uwu.realestatebackend.sorts.ProfileSort;
+import cloud.uwu.realestatebackend.specifications.ProfileSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -31,40 +35,39 @@ public class ProfileService {
     private final ProfileStatisticsRepository profileStatisticsRepository;
     private final ProfileMapper profileMapper;
 
+    public Page<ProfileResponseDTO> getProfiles(
+            String country, String state, String city, Integer page,
+            Integer size, String sortBy, String sortDirection) {
+        page = (page != null) ? Math.max(page, 0) : 0;
+        size = (size != null && size > 0)  ? size : 50;
+
+        ProfileSort sortField = (sortBy != null && ProfileSort.isValid(sortBy))
+                ? ProfileSort.valueOf(sortBy.toUpperCase())
+                : ProfileSort.COUNTRY;
+
+        String sortOrder = ("desc".equalsIgnoreCase(sortDirection) ? "desc" : "asc");
+
+        Sort sort = ("desc".equalsIgnoreCase(sortOrder))
+                ? Sort.by(Sort.Order.desc(sortField.getField()))
+                : Sort.by(Sort.Order.asc(sortField.getField()));
+
+        PageRequest pageable = PageRequest.of(page, size, sort);
+
+        var specification = ProfileSpecification
+                .createSpecification(ProfileFilterDTO.builder()
+                        .country(country)
+                        .state(state)
+                        .city(city)
+                        .build());
+
+        return profileRepository.findAll(specification, pageable)
+                .map(profileMapper::profileToProfileResponseDTO);
+    }
+
     public ProfileResponseDTO getProfileById(UUID id) {
         Profile profile = getProfile(id);
 
         return profileMapper.profileToProfileResponseDTO(profile);
-    }
-
-    public Page<ProfileResponseDTO> getProfilesByCountry(String country, int page, int size) {
-        size = size > 0 ? size : 50;
-        page = Math.max(page, 0);
-
-        PageRequest pageable = PageRequest.of(page, size);
-
-        return profileRepository.getProfilesByCountry(country, pageable)
-                .map(profileMapper::profileToProfileResponseDTO);
-    }
-
-    public Page<ProfileResponseDTO> getProfilesByState(String state, int page, int size) {
-        size = size > 0 ? size : 50;
-        page = Math.max(page, 0);
-
-        PageRequest pageable = PageRequest.of(page, size);
-
-        return profileRepository.getProfilesByState(state, pageable)
-                .map(profileMapper::profileToProfileResponseDTO);
-    }
-
-    public Page<ProfileResponseDTO> getProfilesByCity(String city, int page, int size) {
-        size = size > 0 ? size : 50;
-        page = Math.max(page, 0);
-
-        PageRequest pageable = PageRequest.of(page, size);
-
-        return profileRepository.getProfilesByCity(city, pageable)
-                .map(profileMapper::profileToProfileResponseDTO);
     }
 
     public ProfileResponseDTO createProfile(ProfileDTO profileDTO) {
@@ -102,7 +105,7 @@ public class ProfileService {
                 .profileStatistics(savedProfileStatistics)
                 .build();
 
-        Profile savedProfile = profileRepository.save(profile);
+        Profile savedProfile = profileRepository.saveAndFlush(profile);
 
         return profileMapper.profileToProfileResponseDTO(savedProfile);
     }
@@ -213,6 +216,7 @@ public class ProfileService {
         getProfile(id);
 
         profileRepository.deleteById(id);
+
     }
 
     private Profile getProfile(UUID id) {

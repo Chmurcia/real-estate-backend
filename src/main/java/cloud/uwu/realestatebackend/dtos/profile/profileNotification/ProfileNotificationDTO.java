@@ -15,10 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class ProfileNotificationDTO {
-    @NotNull(message = "profile_id must be defined")
-    @JsonProperty("profile_id")
-    private UUID profileId;
-
     @NotNull(message = "notification_id must be defined")
     @JsonProperty("notification_id")
     private UUID notificationId;

@@ -144,7 +144,6 @@ class ProfileRateServiceUnitTests {
     void createProfileRate() {
         Profile profile = Profile.builder().id(UUID.randomUUID()).build();
         ProfileRateDTO profileRateDTO = ProfileRateDTO.builder()
-                .profileId(profile.getId())
                 .evaluatorId(UUID.randomUUID())
                 .title("Rand Title")
                 .description("Rand Description")
@@ -161,7 +160,6 @@ class ProfileRateServiceUnitTests {
         ProfileRateResponseDTO profileRateResponseDTO = ProfileRateResponseDTO
                 .builder()
                 .id(profileRate.getId())
-                .profileId(profileRate.getProfile().getId())
                 .evaluatorId(profileRate.getEvaluatorId())
                 .title(profileRate.getTitle())
                 .description(profileRate.getDescription())
@@ -178,10 +176,9 @@ class ProfileRateServiceUnitTests {
                 .thenReturn(profileRateResponseDTO);
 
         ProfileRateResponseDTO foundProfileRate = profileRateService
-                .createProfileRate(profileRateDTO);
+                .createProfileRate(profile.getId(), profileRateDTO);
 
         assertThat(foundProfileRate).isNotNull();
-        assertEquals(profileRateDTO.getProfileId(), foundProfileRate.getProfileId());
         assertEquals(profileRateDTO.getEvaluatorId(), foundProfileRate.getEvaluatorId());
         assertEquals(profileRateDTO.getTitle(), foundProfileRate.getTitle());
         assertEquals(profileRateDTO.getDescription(), foundProfileRate.getDescription());
@@ -191,14 +188,15 @@ class ProfileRateServiceUnitTests {
     @Test
     void createProfileRateProfile_ShouldThrowNotFoundException() {
         assertThrows(NotFoundException.class, () -> profileRateService
-                        .createProfileRate(ProfileRateDTO.builder()
-                                .profileId(UUID.randomUUID()).build()));
+                        .createProfileRate(UUID.randomUUID(),
+                                ProfileRateDTO.builder().build()));
     }
 
     @Test
     void createProfileRateProfileId_ShouldThrowNullException() {
         assertThrows(NullException.class, () -> profileRateService
-                .createProfileRate(ProfileRateDTO.builder().build()));
+                .createProfileRate(UUID.randomUUID(),
+                        ProfileRateDTO.builder().build()));
     }
 
     @Test

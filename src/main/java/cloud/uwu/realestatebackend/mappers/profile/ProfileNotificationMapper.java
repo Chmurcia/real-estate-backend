@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ProfileNotificationMapper {
-    @Mapping(source = "profile.id", target = "profileId")
     ProfileNotificationDTO profileNotificationToProfileNotificationDTO(ProfileNotification profileNotification);
 
     @Mapping(source = "profile.id", target = "profileId")

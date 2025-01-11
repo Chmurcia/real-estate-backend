@@ -7,6 +7,7 @@ import cloud.uwu.realestatebackend.entities.user.User;
 import cloud.uwu.realestatebackend.entities.user.UserFlag;
 import cloud.uwu.realestatebackend.entities.user.UserRole;
 import cloud.uwu.realestatebackend.entities.user.userEnums.Role;
+import cloud.uwu.realestatebackend.exceptions.AlreadyExistException;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
 import cloud.uwu.realestatebackend.exceptions.NullException;
 import cloud.uwu.realestatebackend.mappers.user.UserMapper;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -44,22 +46,30 @@ public class UserService {
     }
 
     public UserResponseDTO createUser(UserDTO userDTO) {
+        Optional<User> userEmail = userRepository.findUserByEmail(userDTO.getEmail());
+
+        if (userEmail.isPresent()) {
+            throw new AlreadyExistException("user with the given email address already exists");
+        }
+
         User user = userMapper.userDTOToUser(userDTO);
 
-        UserFlag savedUserFlag = userFlagRepository.saveAndFlush(UserFlag.builder()
+        UserFlag savedUserFlag = userFlagRepository.save(UserFlag.builder()
                 .isVerified(false)
-                .isMuted(false)
                 .isBanned(false)
+                .isMuted(false)
                 .build());
 
-        UserRole savedUserRole = userRoleRepository.saveAndFlush(UserRole.builder()
+        UserRole savedUserRole = userRoleRepository.save(UserRole.builder()
                 .role(Role.USER)
                 .build());
 
         user.setUserFlag(savedUserFlag);
         user.setUserRole(savedUserRole);
 
-        return userMapper.userToUserResponseDTO(userRepository.save(user));
+        User savedUser = userRepository.save(user);
+
+        return userMapper.userToUserResponseDTO(savedUser);
     }
 
     public void updateUser(UUID id, UserDTO userDTO) {
