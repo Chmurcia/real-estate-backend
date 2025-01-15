@@ -22,7 +22,7 @@ public class PropertyCountsController {
 
     private final PropertyCountsService propertyCountsService;
 
-    @GetMapping("/property/{statisticsId}")
+    @GetMapping("/statistics/{statisticsId}")
     public ResponseEntity<PropertyCountsResponseDTO> getPropertyCountsByPropertyStatisticsId(
             @PathVariable("statisticsId") @NotNull UUID id) {
         PropertyCountsResponseDTO foundCounts = propertyCountsService
