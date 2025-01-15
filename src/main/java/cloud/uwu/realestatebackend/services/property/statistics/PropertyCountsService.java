@@ -4,12 +4,12 @@ import cloud.uwu.realestatebackend.dtos.property.statistics.propertyCounts.Prope
 import cloud.uwu.realestatebackend.dtos.property.statistics.propertyCounts.PropertyCountsPatchDTO;
 import cloud.uwu.realestatebackend.dtos.property.statistics.propertyCounts.PropertyCountsResponseDTO;
 import cloud.uwu.realestatebackend.entities.property.statistics.PropertyCounts;
-import cloud.uwu.realestatebackend.entities.property.statistics.PropertyStatistics;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
 import cloud.uwu.realestatebackend.exceptions.NullException;
 import cloud.uwu.realestatebackend.mappers.property.statistics.PropertyCountsMapper;
 import cloud.uwu.realestatebackend.repositories.property.statistics.PropertyCountsRepository;
 import cloud.uwu.realestatebackend.repositories.property.statistics.PropertyStatisticsRepository;
+import cloud.uwu.realestatebackend.services.other.PropertyCountsBufferService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +23,7 @@ public class PropertyCountsService {
     private final PropertyCountsRepository propertyCountsRepository;
     private final PropertyStatisticsRepository propertyStatisticsRepository;
     private final PropertyCountsMapper propertyCountsMapper;
+    private final PropertyCountsBufferService propertyCountsBufferService;
 
     public PropertyCountsResponseDTO getPropertyCountsByPropertyStatisticsId(UUID id) {
         getPropertyStatistics(id);
@@ -45,27 +46,26 @@ public class PropertyCountsService {
     }
 
     public void updatePropertyCounts(UUID id, PropertyCountsDTO propertyCountsDTO) {
-        PropertyCounts propertyCounts = getPropertyCounts(id);
+        getPropertyCounts(id);
 
-        if (propertyCountsDTO.getVisits() != null) {
-            propertyCounts.setVisits(propertyCountsDTO.getVisits());
-        } else {
+        if (propertyCountsDTO.getVisits() == null) {
             throw new NullException("visits are null");
         }
 
-        if (propertyCountsDTO.getLikes() != null) {
-            propertyCounts.setLikes(propertyCountsDTO.getLikes());
-        } else {
+        if (propertyCountsDTO.getLikes() == null) {
             throw new NullException("likes are null");
         }
 
-        if (propertyCountsDTO.getDislikes() != null) {
-            propertyCounts.setDislikes(propertyCountsDTO.getDislikes());
-        } else {
+        if (propertyCountsDTO.getDislikes() == null) {
             throw new NullException("dislikes are null");
         }
 
-        propertyCountsRepository.save(propertyCounts);
+        propertyCountsBufferService.updatePropertyCountsInMemory(
+                id,
+                propertyCountsDTO.getVisits(),
+                propertyCountsDTO.getLikes(),
+                propertyCountsDTO.getDislikes()
+        );
     }
 
     public void patchPropertyCounts(UUID id, PropertyCountsPatchDTO propertyCountsPatchDTO) {
@@ -83,7 +83,12 @@ public class PropertyCountsService {
             propertyCounts.setDislikes(propertyCountsPatchDTO.getDislikes());
         }
 
-        propertyCountsRepository.save(propertyCounts);
+        propertyCountsBufferService.updatePropertyCountsInMemory(
+                id,
+                propertyCounts.getVisits(),
+                propertyCounts.getLikes(),
+                propertyCounts.getDislikes()
+        );
     }
 
     public void deletePropertyCount(UUID id) {
@@ -99,8 +104,8 @@ public class PropertyCountsService {
                 .orElseThrow(() -> new NotFoundException("PropertyCounts not found"));
     }
 
-    private PropertyStatistics getPropertyStatistics(UUID id) {
-        return propertyStatisticsRepository.findById(id)
+    private void getPropertyStatistics(UUID id) {
+        propertyStatisticsRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("PropertyStatistics not found"));
     }
 }
