@@ -56,24 +56,4 @@ class PropertyMultimediaServiceUnitTests {
         assertThrows(NotFoundException.class, () ->
                 propertyMultimediaService.getPropertyMultimediaById(id));
     }
-
-    @Test
-    void deletePropertyMultimedia() {
-        UUID id = UUID.randomUUID();
-
-        when(propertyMultimediaRepository.findById(id))
-                .thenReturn(Optional.of(PropertyMultimedia.builder().build()));
-
-        propertyMultimediaService.deletePropertyMultimedia(id);
-
-        verify(propertyMultimediaRepository).deleteById(id);
-    }
-
-    @Test
-    void deletePropertyMultimedia_ShouldThrowNotFoundException() {
-        UUID id = UUID.randomUUID();
-
-        assertThrows(NotFoundException.class, () ->
-                propertyMultimediaService.deletePropertyMultimedia(id));
-    }
 }

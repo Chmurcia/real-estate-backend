@@ -91,10 +91,6 @@ class PropertyServiceUnitTests {
         when(propertyRepository.findAll(any(Specification.class), eq(pageable)))
                 .thenReturn(propertyPage);
 
-        when(propertyMapper
-                .propertyToPropertyResponseDTO(any(Property.class)))
-                .thenReturn(PropertyResponseDTO.builder().build());
-
         Page<PropertySmallResponseDTO> foundProperties = propertyService
                 .getAllProperties(filters, page, size, "price", "desc");
 
@@ -249,7 +245,7 @@ class PropertyServiceUnitTests {
                 .createPropertyStatistics(any(PropertyStatisticsDTO.class)))
                 .thenReturn(PropertyStatistics.builder().build());
 
-        when(propertyRepository.save(any(Property.class)))
+        when(propertyRepository.saveAndFlush(any(Property.class)))
                 .thenReturn(property);
 
         when(propertyMapper

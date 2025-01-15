@@ -60,10 +60,9 @@ class PropertyMultimediaVideoServiceUnitTests {
                 .videoURL("url")
                 .build();
 
-        when(propertyMultimediaRepository.findById(propertyMultimediaVideoDTO
-                .getPropertyMultimediaId())).thenReturn(Optional.of(propertyMultimedia));
+        when(propertyMultimediaRepository.findById(propertyMultimedia.getId())).thenReturn(Optional.of(propertyMultimedia));
 
-        when(propertyMultimediaVideoRepository.save(any(PropertyMultimediaVideo.class)))
+        when(propertyMultimediaVideoRepository.saveAndFlush(any(PropertyMultimediaVideo.class)))
                 .thenReturn(propertyMultimediaVideo);
 
         when(propertyMultimediaVideoMapper
@@ -75,9 +74,6 @@ class PropertyMultimediaVideoServiceUnitTests {
                         .createPropertyMultimediaVideo(propertyMultimedia.getId(),
                                 propertyMultimediaVideoDTO);
 
-        verify(propertyMultimediaRepository).save(any(PropertyMultimedia.class));
-        verify(propertyMultimediaVideoRepository).save(any(PropertyMultimediaVideo.class));
-
         assertEquals(createdPropertyMultimediaVideo.getVideoTitle(),
                 propertyMultimediaVideoDTO.getVideoTitle());
         assertEquals(createdPropertyMultimediaVideo.getVideoURL(),
@@ -88,7 +84,6 @@ class PropertyMultimediaVideoServiceUnitTests {
     void createPropertyMultimediaVideo_ShouldThrowNotFoundException() {
         PropertyMultimediaVideoDTO propertyMultimediaVideoDTO = PropertyMultimediaVideoDTO
                 .builder()
-                .propertyMultimediaId(UUID.randomUUID())
                 .build();
 
         assertThrows(NotFoundException.class, () ->

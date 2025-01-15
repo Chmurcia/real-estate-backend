@@ -5,7 +5,6 @@ import cloud.uwu.realestatebackend.dtos.profile.profileNotification.ProfileNotif
 import cloud.uwu.realestatebackend.entities.profile.Profile;
 import cloud.uwu.realestatebackend.entities.profile.ProfileNotification;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
-import cloud.uwu.realestatebackend.exceptions.NullException;
 import cloud.uwu.realestatebackend.mappers.profile.ProfileNotificationMapper;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileNotificationRepository;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileRepository;
@@ -21,7 +20,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.LIST;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -172,7 +170,7 @@ class ProfileNotificationServiceTestUnitTests {
         when(profileRepository.findById(profile.getId()))
                 .thenReturn(Optional.of(profile));
 
-        when(profileNotificationRepository.save(any(ProfileNotification.class)))
+        when(profileNotificationRepository.saveAndFlush(any(ProfileNotification.class)))
                 .thenReturn(savedProfileNotification);
 
         when(profileNotificationMapper
@@ -184,7 +182,7 @@ class ProfileNotificationServiceTestUnitTests {
         ProfileNotificationResponseDTO createdProfileNotification = profileNotificationService
                 .createProfileNotification(profile.getId(), profileNotificationDTO);
 
-        verify(profileNotificationRepository).save(any(ProfileNotification.class));
+        verify(profileNotificationRepository).saveAndFlush(any(ProfileNotification.class));
 
         assertThat(createdProfileNotification).isNotNull();
         assertEquals(createdProfileNotification.getNotificationName(),
@@ -205,7 +203,7 @@ class ProfileNotificationServiceTestUnitTests {
 
     @Test
     void createProfileNotification_ShouldThrowNullException() {
-        assertThrows(NullException.class, () ->
+        assertThrows(NotFoundException.class, () ->
                 profileNotificationService
                         .createProfileNotification(UUID.randomUUID(),
                                 ProfileNotificationDTO.builder().build()));

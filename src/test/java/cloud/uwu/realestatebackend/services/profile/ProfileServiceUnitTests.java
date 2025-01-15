@@ -17,12 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -76,118 +72,6 @@ class ProfileServiceUnitTests {
     void getProfileByIdNotFound() {
         assertThrows(NotFoundException.class, () ->
                 profileService.getProfileById(UUID.randomUUID()));
-    }
-
-    @Test
-    void getProfilesByState() {
-        int page = 0;
-        int size = 50;
-
-        PageRequest pageable = PageRequest.of(page, size);
-
-        Profile profile1 = Profile.builder()
-                .id(UUID.randomUUID())
-                .build();
-        Profile profile2 = Profile.builder()
-                .id(UUID.randomUUID())
-                .build();
-
-        Page<Profile> profiles = new PageImpl<>(
-                List.of(profile1, profile2),
-                pageable, 2
-        );
-
-        when(profileRepository.getProfilesByState("State", pageable))
-                .thenReturn(profiles);
-
-        when(profileMapper.profileToProfileResponseDTO(any(Profile.class)))
-                .thenReturn(ProfileResponseDTO.builder()
-                        .id(UUID.randomUUID())
-                        .build());
-
-        Page<ProfileResponseDTO> foundProfiles = profileService
-                .getProfilesByState("State", page, size);
-
-        assertThat(foundProfiles).isNotNull();
-        assertEquals(foundProfiles.getContent().size(), 2);
-    }
-
-    @Test
-    void getProfilesByState_ShouldReturn0Elements() {
-        int page = 0;
-        int size = 50;
-
-        PageRequest pageable = PageRequest.of(page, size);
-
-        Page<Profile> profiles = new PageImpl<>(
-                List.of(),
-                pageable, 2
-        );
-
-        when(profileRepository.getProfilesByState("State", pageable))
-                .thenReturn(profiles);
-
-        Page<ProfileResponseDTO> foundProfiles = profileService
-                .getProfilesByState("State", page, size);
-
-        assertThat(foundProfiles).isNotNull();
-        assertEquals(foundProfiles.getContent().size(), 0);
-    }
-
-    @Test
-    void getProfilesByCity() {
-        int page = 0;
-        int size = 50;
-
-        PageRequest pageable = PageRequest.of(page, size);
-
-        Profile profile1 = Profile.builder()
-                .id(UUID.randomUUID())
-                .build();
-        Profile profile2 = Profile.builder()
-                .id(UUID.randomUUID())
-                .build();
-
-        Page<Profile> profiles = new PageImpl<>(
-                List.of(profile1, profile2),
-                pageable, 2
-        );
-
-        when(profileRepository.getProfilesByCity("City", pageable))
-                .thenReturn(profiles);
-
-        when(profileMapper.profileToProfileResponseDTO(any(Profile.class)))
-                .thenReturn(ProfileResponseDTO.builder()
-                        .id(UUID.randomUUID())
-                        .build());
-
-        Page<ProfileResponseDTO> foundProfiles = profileService
-                .getProfilesByCity("City", page, size);
-
-        assertThat(foundProfiles).isNotNull();
-        assertEquals(foundProfiles.getContent().size(), 2);
-    }
-
-    @Test
-    void getProfilesByCity_ShouldReturn0Elements() {
-        int page = 0;
-        int size = 50;
-
-        PageRequest pageable = PageRequest.of(page, size);
-
-        Page<Profile> profiles = new PageImpl<>(
-                List.of(),
-                pageable, 2
-        );
-
-        when(profileRepository.getProfilesByCity("City", pageable))
-                .thenReturn(profiles);
-
-        Page<ProfileResponseDTO> foundProfiles = profileService
-                .getProfilesByCity("City", page, size);
-
-        assertThat(foundProfiles).isNotNull();
-        assertEquals(foundProfiles.getContent().size(), 0);
     }
 
     @Test
@@ -251,7 +135,7 @@ class ProfileServiceUnitTests {
         when(profileSettingsRepository.saveAndFlush(any(ProfileSettings.class)))
                 .thenReturn(profileSettings);
 
-        when(profileRepository.save(any(Profile.class)))
+        when(profileRepository.saveAndFlush(any(Profile.class)))
                 .thenReturn(profile);
 
         when(profileMapper.profileToProfileResponseDTO(any(Profile.class)))
@@ -259,7 +143,7 @@ class ProfileServiceUnitTests {
 
         ProfileResponseDTO savedProfile = profileService.createProfile(profileDTO);
 
-        verify(profileRepository).save(any(Profile.class));
+        verify(profileRepository).saveAndFlush(any(Profile.class));
 
         assertThat(savedProfile).isNotNull();
         assertEquals(profileDTO.getFirstName(), savedProfile.getFirstName());

@@ -16,7 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -50,14 +49,14 @@ class PropertyGeolocationServiceUnitTests {
                 .thenReturn(propertyGeolocation);
 
         when(propertyGeolocationRepository
-                .save(any(PropertyGeolocation.class)))
+                .saveAndFlush(any(PropertyGeolocation.class)))
                 .thenReturn(propertyGeolocation);
 
         PropertyGeolocation createdPropertyGeolocation = propertyGeolocationService
                 .createPropertyGeolocation(propertyGeolocationDTO);
 
         verify(propertyGeolocationRepository)
-                .save(any(PropertyGeolocation.class));
+                .saveAndFlush(any(PropertyGeolocation.class));
 
         assertEquals(createdPropertyGeolocation.getLatitude(),
                 propertyGeolocationDTO.getLatitude());

@@ -144,7 +144,7 @@ class PropertyReviewServiceUnitTests {
         when(propertyRepository.findById(id))
                 .thenReturn(Optional.of(Property.builder().build()));
 
-        when(propertyReviewRepository.save(any(PropertyReview.class)))
+        when(propertyReviewRepository.saveAndFlush(any(PropertyReview.class)))
                 .thenReturn(propertyReview);
 
         when(propertyReviewMapper

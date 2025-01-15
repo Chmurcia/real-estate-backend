@@ -106,7 +106,7 @@ class PropertyAmenityServiceUnitTests {
                 .findById(id))
                 .thenReturn(Optional.of(propertyStatistics));
 
-        when(propertyAmenityRepository.save(any(PropertyAmenity.class)))
+        when(propertyAmenityRepository.saveAndFlush(any(PropertyAmenity.class)))
                 .thenReturn(propertyAmenity);
 
         when(propertyAmenityMapper

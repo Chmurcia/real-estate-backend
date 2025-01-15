@@ -138,7 +138,7 @@ class PropertyPriceRecordServiceUnitTests {
                 .findById(id))
                 .thenReturn(Optional.of(Property.builder().build()));
 
-        when(propertyPriceRecordRepository.save(any(PropertyPriceRecord.class)))
+        when(propertyPriceRecordRepository.saveAndFlush(any(PropertyPriceRecord.class)))
                 .thenReturn(propertyPriceRecord);
 
         when(propertyPriceRecordMapper

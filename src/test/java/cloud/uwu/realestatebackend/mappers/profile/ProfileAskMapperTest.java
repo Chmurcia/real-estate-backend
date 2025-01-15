@@ -31,7 +31,6 @@ class ProfileAskMapperTest {
                 .build();
 
         ProfileAskDTO profileAskDTO = ProfileAskDTO.builder()
-                .profileId(profileId)
                 .askTitle("AskTitle")
                 .askDescription("AskDescription")
                 .askAnswer("AskAnswer")
@@ -41,9 +40,6 @@ class ProfileAskMapperTest {
                 .profileAskToProfileAskDTO(profileAsk);
 
         assertThat(mappedProfileAsk).isNotNull();
-
-        assertEquals(profileAskDTO.getProfileId(),
-                mappedProfileAsk.getProfileId());
 
         assertEquals(profileAskDTO.getAskTitle(),
                 mappedProfileAsk.getAskTitle());

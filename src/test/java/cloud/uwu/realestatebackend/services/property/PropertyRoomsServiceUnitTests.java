@@ -77,13 +77,13 @@ class PropertyRoomsServiceUnitTests {
 
     @Test
     void createPropertyRooms() {
-        when(propertyRoomsRepository.save(any(PropertyRooms.class)))
+        when(propertyRoomsRepository.saveAndFlush(any(PropertyRooms.class)))
                 .thenReturn(propertyRooms);
 
         PropertyRooms createdPropertyRooms = propertyRoomsService
                 .createPropertyRooms(propertyRoomsDTOCreate);
 
-        verify(propertyRoomsRepository).save(any(PropertyRooms.class));
+        verify(propertyRoomsRepository).saveAndFlush(any(PropertyRooms.class));
 
         comparePropertyRoomsDTOs(createdPropertyRooms, propertyRoomsDTOCreate);
     }

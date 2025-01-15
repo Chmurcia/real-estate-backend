@@ -14,8 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -66,7 +64,7 @@ class PropertyMultimediaImageServiceUnitTests {
         when(propertyMultimediaRepository.findById(propertyMultimedia.getId()))
                 .thenReturn(Optional.of(propertyMultimedia));
 
-        when(propertyMultimediaImageRepository.save(any(PropertyMultimediaImage.class)))
+        when(propertyMultimediaImageRepository.saveAndFlush(any(PropertyMultimediaImage.class)))
                 .thenReturn(propertyMultimediaImage);
 
         when(propertyMultimediaImageMapper
@@ -77,9 +75,6 @@ class PropertyMultimediaImageServiceUnitTests {
                 propertyMultimediaImageService
                         .createPropertyMultimediaImage(propertyMultimedia.getId(),
                                 propertyMultimediaImageDTO);
-
-        verify(propertyMultimediaImageRepository).save(any(PropertyMultimediaImage.class));
-        verify(propertyMultimediaRepository).save(any(PropertyMultimedia.class));
 
         assertEquals(createdPropertyMultimediaImage.getImageTitle(),
                 propertyMultimediaImageDTO.getImageTitle());

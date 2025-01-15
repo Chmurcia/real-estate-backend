@@ -153,12 +153,6 @@ class UserServiceUnitTests {
         when(userMapper.userDTOToUser(any(UserDTO.class)))
                 .thenReturn(user);
 
-        when(userFlagRepository.saveAndFlush(any(UserFlag.class)))
-                .thenReturn(userFlag);
-
-        when(userRoleRepository.saveAndFlush(any(UserRole.class)))
-                .thenReturn(userRole);
-
         when(userMapper.userToUserResponseDTO(any(User.class)))
                 .thenReturn(userResponseDTO);
 
@@ -168,8 +162,6 @@ class UserServiceUnitTests {
         UserResponseDTO createdUser = userService
                 .createUser(userDTO);
 
-        verify(userFlagRepository).saveAndFlush(any(UserFlag.class));
-        verify(userRoleRepository).saveAndFlush(any(UserRole.class));
         verify(userMapper).userToUserResponseDTO(any(User.class));
         verify(userRepository).save(any(User.class));
 

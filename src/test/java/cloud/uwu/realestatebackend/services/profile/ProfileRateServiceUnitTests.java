@@ -6,7 +6,6 @@ import cloud.uwu.realestatebackend.dtos.profile.profileRate.ProfileRateResponseD
 import cloud.uwu.realestatebackend.entities.profile.Profile;
 import cloud.uwu.realestatebackend.entities.profile.ProfileRate;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
-import cloud.uwu.realestatebackend.exceptions.NullException;
 import cloud.uwu.realestatebackend.mappers.profile.ProfileRateMapper;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileRateRepository;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileRepository;
@@ -169,7 +168,10 @@ class ProfileRateServiceUnitTests {
         when(profileRepository.findById(profile.getId()))
                 .thenReturn(Optional.of(profile));
 
-        when(profileRateRepository.save(any(ProfileRate.class)))
+        when(profileRepository.findById(profileRateDTO.getEvaluatorId()))
+                .thenReturn(Optional.of(Profile.builder().build()));
+
+        when(profileRateRepository.saveAndFlush(any(ProfileRate.class)))
                 .thenReturn(profileRate);
 
         when(profileRateMapper.profileRateToProfileRateResponseDTO(any(ProfileRate.class)))
@@ -194,7 +196,7 @@ class ProfileRateServiceUnitTests {
 
     @Test
     void createProfileRateProfileId_ShouldThrowNullException() {
-        assertThrows(NullException.class, () -> profileRateService
+        assertThrows(NotFoundException.class, () -> profileRateService
                 .createProfileRate(UUID.randomUUID(),
                         ProfileRateDTO.builder().build()));
     }

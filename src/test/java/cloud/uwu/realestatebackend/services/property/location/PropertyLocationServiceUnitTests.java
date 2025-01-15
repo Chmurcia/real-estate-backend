@@ -128,13 +128,13 @@ class PropertyLocationServiceUnitTests {
                 .createPropertyGeolocation(propertyGeolocationDTO))
                 .thenReturn(propertyGeolocation);
 
-        when(propertyLocationRepository.save(any(PropertyLocation.class)))
+        when(propertyLocationRepository.saveAndFlush(any(PropertyLocation.class)))
                 .thenReturn(propertyLocation);
 
         PropertyLocation createdPropertyLocation = propertyLocationService
                 .createPropertyLocation(locationDTO);
 
-        verify(propertyLocationRepository).save(any(PropertyLocation.class));
+        verify(propertyLocationRepository).saveAndFlush(any(PropertyLocation.class));
 
         assertEquals(createdPropertyLocation.getCountry(), propertyLocation.getCountry());
         assertEquals(createdPropertyLocation.getAddress(), propertyLocation.getAddress());
@@ -228,31 +228,6 @@ class PropertyLocationServiceUnitTests {
                 propertyLocationService.patchPropertyLocation(id,
                         PropertyLocationPatchDTO.builder().build()));
     }
-
-//    @Test
-//    void deletePropertyLocation() {
-//        UUID id = UUID.randomUUID();
-//
-//        PropertyLocation propertyLocation = PropertyLocation.builder()
-//                .country("Estados Unidos")
-//                .state("Texas")
-//                .city("Drunki Town")
-//                .zipCode("18-192")
-//                .address("Address 12/34")
-//                .geolocation(PropertyGeolocation.builder()
-//                        .id(UUID.randomUUID())
-//                        .build())
-//                .build();
-//
-//        when(propertyLocationRepository.findById(id))
-//                .thenReturn(Optional.of(propertyLocation));
-//
-//        propertyLocationService.deletePropertyLocation(id);
-//
-//        verify(propertyGeolocationService).deletePropertyGeolocation(propertyLocation
-//                .getGeolocation().getId());
-//        verify(propertyLocationRepository).deleteById(id);
-//    }
 
     @Test
     void deletePropertyLocation_ShouldThrowNotFoundException() {

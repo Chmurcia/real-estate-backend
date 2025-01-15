@@ -146,7 +146,7 @@ class PropertyDistanceToServiceUnitTests {
         when(propertyRepository.findById(id))
                 .thenReturn(Optional.of(Property.builder().build()));
 
-        when(propertyDistanceToRepository.save(any(PropertyDistanceTo.class)))
+        when(propertyDistanceToRepository.saveAndFlush(any(PropertyDistanceTo.class)))
                 .thenReturn(propertyDistanceTo);
 
         when(propertyDistanceToMapper

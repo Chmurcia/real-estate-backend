@@ -3,9 +3,11 @@ package cloud.uwu.realestatebackend.services.property.statistics;
 import cloud.uwu.realestatebackend.dtos.property.statistics.propertyStatistics.PropertyStatisticsDTO;
 import cloud.uwu.realestatebackend.dtos.property.statistics.propertyStatistics.PropertyStatisticsPatchDTO;
 import cloud.uwu.realestatebackend.dtos.property.statistics.propertyStatistics.PropertyStatisticsResponseDTO;
+import cloud.uwu.realestatebackend.entities.property.statistics.PropertyCounts;
 import cloud.uwu.realestatebackend.entities.property.statistics.PropertyStatistics;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
 import cloud.uwu.realestatebackend.mappers.property.statistics.PropertyStatisticsMapper;
+import cloud.uwu.realestatebackend.repositories.property.statistics.PropertyCountsRepository;
 import cloud.uwu.realestatebackend.repositories.property.statistics.PropertyStatisticsRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +33,9 @@ class PropertyStatisticsServiceUnitTests {
 
     @Mock
     private PropertyStatisticsMapper propertyStatisticsMapper;
+
+    @Mock
+    private PropertyCountsRepository propertyCountsRepository;
 
     @Mock
     private PropertyCountsService propertyCountsService;

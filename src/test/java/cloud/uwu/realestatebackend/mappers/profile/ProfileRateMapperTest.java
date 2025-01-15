@@ -32,7 +32,6 @@ class ProfileRateMapperTest {
                 .build();
 
         ProfileRateDTO profileRateDTO = ProfileRateDTO.builder()
-                .profileId(profileId)
                 .evaluatorId(evaluatorId)
                 .title("Title")
                 .description("Description")
@@ -43,9 +42,6 @@ class ProfileRateMapperTest {
                 .profileRateToProfileRateDTO(profileAsk);
 
         assertThat(mappedProfileRate).isNotNull();
-
-        assertEquals(profileRateDTO.getProfileId(),
-                mappedProfileRate.getProfileId());
 
         assertEquals(profileRateDTO.getTitle(),
                 mappedProfileRate.getTitle());
@@ -74,7 +70,6 @@ class ProfileRateMapperTest {
 
         ProfileRateResponseDTO profileRateResponseDTO = ProfileRateResponseDTO.builder()
                 .id(id)
-                .profileId(profileId)
                 .evaluatorId(evaluatorId)
                 .title("Title")
                 .description("Description")
@@ -88,9 +83,6 @@ class ProfileRateMapperTest {
 
         assertEquals(profileRateResponseDTO.getId(),
                 mappedProfileRate.getId());
-
-        assertEquals(profileRateResponseDTO.getProfileId(),
-                mappedProfileRate.getProfileId());
 
         assertEquals(profileRateResponseDTO.getTitle(),
                 mappedProfileRate.getTitle());

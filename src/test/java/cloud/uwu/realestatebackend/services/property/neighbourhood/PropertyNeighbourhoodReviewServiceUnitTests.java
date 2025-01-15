@@ -204,8 +204,6 @@ class PropertyNeighbourhoodReviewServiceUnitTests {
 
     @Test
     void createPropertyNeighbourhoodReview_ShouldThrowNotFoundException() {
-        UUID id = UUID.randomUUID();
-
         assertThrows(NotFoundException.class, () ->
                 propertyNeighbourhoodReviewService.createPropertyNeighbourhoodReview(
                         UUID.randomUUID(),

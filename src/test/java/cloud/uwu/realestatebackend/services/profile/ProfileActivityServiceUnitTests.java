@@ -6,7 +6,6 @@ import cloud.uwu.realestatebackend.dtos.profile.profileActivity.ProfileActivityR
 import cloud.uwu.realestatebackend.entities.profile.Profile;
 import cloud.uwu.realestatebackend.entities.profile.ProfileActivity;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
-import cloud.uwu.realestatebackend.exceptions.NullException;
 import cloud.uwu.realestatebackend.mappers.profile.ProfileActivityMapper;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileActivityRepository;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileRepository;
@@ -170,7 +169,6 @@ class ProfileActivityServiceUnitTests {
         Profile profile = Profile.builder().id(profileId).build();
 
         ProfileActivityDTO profileActivityDTO = ProfileActivityDTO.builder()
-                .profileId(profileId)
                 .activityTitle("Title uwu")
                 .activityDescription("Description uwu")
                 .activityDate(ZonedDateTime.of(2024, 7, 14, 14,
@@ -196,7 +194,7 @@ class ProfileActivityServiceUnitTests {
         when(profileRepository.findById(profileId))
                 .thenReturn(Optional.of(profile));
 
-        when(profileActivityRepository.save(any(ProfileActivity.class)))
+        when(profileActivityRepository.saveAndFlush(any(ProfileActivity.class)))
                 .thenReturn(profileActivity);
 
         when(profileActivityMapper
@@ -219,7 +217,7 @@ class ProfileActivityServiceUnitTests {
     void createProfileActivityProfileId_ShouldThrowNullException() {
         UUID id = UUID.randomUUID();
 
-        assertThrows(NullException.class, () -> profileActivityService
+        assertThrows(NotFoundException.class, () -> profileActivityService
                 .createProfileActivity(id, ProfileActivityDTO.builder().build()));
     }
 
@@ -229,8 +227,6 @@ class ProfileActivityServiceUnitTests {
                 14, 14, 12, 10,
                 9, ZoneId.of("Europe/Warsaw"));
 
-        UUID profileId = UUID.randomUUID();
-
         ProfileActivity profileActivity = ProfileActivity.builder()
                 .id(UUID.randomUUID())
                 .activityTitle("Title")
@@ -239,7 +235,6 @@ class ProfileActivityServiceUnitTests {
                 .build();
 
         ProfileActivityDTO profileActivityDTO = ProfileActivityDTO.builder()
-                .profileId(profileId)
                 .activityTitle("Title uwu")
                 .activityDescription("Description uwu")
                 .activityDate(zonedDateTime)

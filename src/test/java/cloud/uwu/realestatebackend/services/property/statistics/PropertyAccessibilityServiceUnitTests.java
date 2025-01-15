@@ -9,7 +9,6 @@ import cloud.uwu.realestatebackend.exceptions.NotFoundException;
 import cloud.uwu.realestatebackend.mappers.property.statistics.PropertyAccessibilityMapper;
 import cloud.uwu.realestatebackend.repositories.property.statistics.PropertyAccessibilityRepository;
 import cloud.uwu.realestatebackend.repositories.property.statistics.PropertyStatisticsRepository;
-import org.apache.catalina.LifecycleState;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -110,7 +109,7 @@ class PropertyAccessibilityServiceUnitTests {
         when(propertyStatisticsRepository.findById(id))
                 .thenReturn(Optional.of(propertyStatistics));
 
-        when(propertyAccessibilityRepository.save(any(PropertyAccessibility.class)))
+        when(propertyAccessibilityRepository.saveAndFlush(any(PropertyAccessibility.class)))
                 .thenReturn(propertyAccessibility);
 
         when(propertyAccessibilityMapper

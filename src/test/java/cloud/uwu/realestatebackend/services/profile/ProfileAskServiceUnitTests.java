@@ -6,7 +6,6 @@ import cloud.uwu.realestatebackend.dtos.profile.profileAsk.ProfileAskResponseDTO
 import cloud.uwu.realestatebackend.entities.profile.Profile;
 import cloud.uwu.realestatebackend.entities.profile.ProfileAsk;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
-import cloud.uwu.realestatebackend.exceptions.NullException;
 import cloud.uwu.realestatebackend.mappers.profile.ProfileAskMapper;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileAskRepository;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileRepository;
@@ -176,7 +175,7 @@ class ProfileAskServiceUnitTests {
         when(profileRepository.findById(profileId))
                 .thenReturn(Optional.of(profile));
 
-        when(profileAskRepository.save(any(ProfileAsk.class)))
+        when(profileAskRepository.saveAndFlush(any(ProfileAsk.class)))
                 .thenReturn(profileAsk);
 
         when(profileAskMapper
@@ -197,7 +196,7 @@ class ProfileAskServiceUnitTests {
 
     @Test
     void createProfileAsk_ShouldThrowNullException() {
-        assertThrows(NullException.class, () ->
+        assertThrows(NotFoundException.class, () ->
                 profileAskService.createProfileAsk(UUID.randomUUID(),
                         ProfileAskDTO.builder().build()));
     }

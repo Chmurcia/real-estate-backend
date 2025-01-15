@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockedConstruction;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -154,7 +153,7 @@ class PropertyTrustLevelServiceUnitTests {
                 .findById(id))
                 .thenReturn(Optional.of(PropertyStatistics.builder().build()));
 
-        when(propertyTrustLevelRepository.save(any(PropertyTrustLevel.class)))
+        when(propertyTrustLevelRepository.saveAndFlush(any(PropertyTrustLevel.class)))
                 .thenReturn(propertyTrustLevel);
 
         when(propertyTrustLevelMapper

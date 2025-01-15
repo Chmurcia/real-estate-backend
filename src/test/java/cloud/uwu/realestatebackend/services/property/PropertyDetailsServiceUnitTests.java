@@ -118,13 +118,13 @@ class PropertyDetailsServiceUnitTests {
         when(propertyRoomsService.createPropertyRooms(detailsDTO.getPropertyRoomsDTO()))
                 .thenReturn(PropertyRooms.builder().build());
 
-        when(propertyDetailsRepository.save(any(PropertyDetails.class)))
+        when(propertyDetailsRepository.saveAndFlush(any(PropertyDetails.class)))
                 .thenReturn(propertyDetails);
 
         PropertyDetails createdPropertyDetails = propertyDetailsService
                 .createPropertyDetails(detailsDTO);
 
-        verify(propertyDetailsRepository).save(any(PropertyDetails.class));
+        verify(propertyDetailsRepository).saveAndFlush(any(PropertyDetails.class));
 
         assertNotNull(createdPropertyDetails);
         assertEquals(createdPropertyDetails.getTotalFloors(),

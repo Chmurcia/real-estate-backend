@@ -108,13 +108,13 @@ class PropertyAreasServiceUnitTests {
                 .poolArea(0.0)
                 .build();
 
-        when(propertyAreasRepository.save(any(PropertyAreas.class)))
+        when(propertyAreasRepository.saveAndFlush(any(PropertyAreas.class)))
                 .thenReturn(propertyAreas);
 
         PropertyAreas createdPropertyAreas = propertyAreasService
                 .createPropertyAreas(propertyAreasDTO);
 
-        verify(propertyAreasRepository).save(any(PropertyAreas.class));
+        verify(propertyAreasRepository).saveAndFlush(any(PropertyAreas.class));
 
         assertNotNull(createdPropertyAreas);
     }
