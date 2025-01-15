@@ -123,9 +123,10 @@ class PropertyNeighbourhoodReviewServiceUnitTests {
 
     @Test
     void createPropertyNeighbourhoodReview() {
+        UUID id = UUID.randomUUID();
+
         PropertyNeighbourhoodReviewDTO propertyNeighbourhoodReviewDTO =
                 PropertyNeighbourhoodReviewDTO.builder()
-                        .neighbourhoodId(UUID.randomUUID())
                         .reviewerId(UUID.randomUUID())
                         .rate(7)
                         .description("Description")
@@ -167,7 +168,7 @@ class PropertyNeighbourhoodReviewServiceUnitTests {
                         .build();
 
         when(propertyNeighbourhoodRepository
-                .findById(propertyNeighbourhoodReviewDTO.getNeighbourhoodId()))
+                .findById(id))
                 .thenReturn(Optional.of(PropertyNeighbourhood.builder().build()));
 
         when(propertyNeighbourhoodReviewRepository.save(any(PropertyNeighbourhoodReview
@@ -180,10 +181,10 @@ class PropertyNeighbourhoodReviewServiceUnitTests {
 
         PropertyNeighbourhoodReviewResponseDTO createdPropertyNeighbourhoodReview =
                 propertyNeighbourhoodReviewService
-                        .createPropertyNeighbourhoodReview(propertyNeighbourhoodReviewDTO);
+                        .createPropertyNeighbourhoodReview(id, propertyNeighbourhoodReviewDTO);
 
         verify(propertyNeighbourhoodRepository)
-                .findById(propertyNeighbourhoodReviewDTO.getNeighbourhoodId());
+                .findById(id);
 
         assertNotNull(createdPropertyNeighbourhoodReview);
 
@@ -207,8 +208,8 @@ class PropertyNeighbourhoodReviewServiceUnitTests {
 
         assertThrows(NotFoundException.class, () ->
                 propertyNeighbourhoodReviewService.createPropertyNeighbourhoodReview(
+                        UUID.randomUUID(),
                         PropertyNeighbourhoodReviewDTO.builder()
-                                .neighbourhoodId(id)
                                 .build())
         );
     }

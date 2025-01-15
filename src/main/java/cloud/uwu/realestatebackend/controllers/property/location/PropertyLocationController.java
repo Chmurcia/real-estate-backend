@@ -1,10 +1,13 @@
 package cloud.uwu.realestatebackend.controllers.property.location;
 
+import cloud.uwu.realestatebackend.dtos.property.location.location.PropertyLocationDTO;
+import cloud.uwu.realestatebackend.dtos.property.location.location.PropertyLocationPatchDTO;
 import cloud.uwu.realestatebackend.dtos.property.location.location.PropertyLocationResponseDTO;
 import cloud.uwu.realestatebackend.services.property.location.PropertyLocationService;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -26,6 +29,24 @@ public class PropertyLocationController {
                 .getPropertyLocationById(id);
 
         return ResponseEntity.ok(foundPropertyLocation);
+    }
+
+    @PutMapping("/{propertyLocationId}")
+    public ResponseEntity<Object> updatePropertyLocation(
+            @PathVariable("propertyLocationId") @NotNull UUID id,
+            @RequestBody @Validated PropertyLocationDTO propertyLocationDTO) {
+        propertyLocationService.updatePropertyLocation(id, propertyLocationDTO);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{propertyLocationId}")
+    public ResponseEntity<Object> patchPropertyLocation(
+            @PathVariable("propertyLocationId") @NotNull UUID id,
+            @RequestBody @Validated PropertyLocationPatchDTO propertyLocationPatchDTO) {
+        propertyLocationService.patchPropertyLocation(id, propertyLocationPatchDTO);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PropertyAccessibilityMapper {
-    @Mapping(source = "propertyStatistics.id", target = "propertyStatisticsId")
     PropertyAccessibilityDTO propertyAccessibilityToPropertyAccessibilityDTO(PropertyAccessibility propertyAccessibility);
 
     PropertyAccessibilityResponseDTO propertyAccessibilityToPropertyAccessibilityResponseDTO(PropertyAccessibility propertyAccessibility);

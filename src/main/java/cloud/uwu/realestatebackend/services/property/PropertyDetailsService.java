@@ -45,7 +45,7 @@ public class PropertyDetailsService {
                 .rooms(propertyRooms)
                 .build();
 
-        return propertyDetailsRepository.save(propertyDetails);
+        return propertyDetailsRepository.saveAndFlush(propertyDetails);
 
     }
 

@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,8 +35,9 @@ public class PropertyNeighbourhood {
 
     private Integer safetyLevel;
 
-    @OneToMany(mappedBy = "neighbourhood", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PropertyNeighbourhoodReview> reviews;
+    @Builder.Default
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "neighbourhood", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PropertyNeighbourhoodReview> reviews = new ArrayList<>();
 
     @CreationTimestamp
     private ZonedDateTime createdAt;

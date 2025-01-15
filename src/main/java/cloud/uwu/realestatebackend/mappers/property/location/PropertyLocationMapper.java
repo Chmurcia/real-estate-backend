@@ -8,10 +8,10 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {PropertyGeolocationMapper.class})
 public interface PropertyLocationMapper {
-    @Mapping(source = "property.id", target = "propertyId")
     PropertyLocationDTO propertyLocationToPropertyLocationDTO(PropertyLocation propertyLocation);
 
     PropertyLocation propertyLocationDTOToPropertyLocation(PropertyLocationDTO propertyLocationDTO);
 
+    @Mapping(source = "geolocation", target = "geolocationResponseDTO")
     PropertyLocationResponseDTO propertyLocationToPropertyLocationResponseDTO(PropertyLocation propertyLocation);
 }

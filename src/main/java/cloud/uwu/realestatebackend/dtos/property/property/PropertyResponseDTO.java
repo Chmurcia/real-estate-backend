@@ -1,5 +1,6 @@
 package cloud.uwu.realestatebackend.dtos.property.property;
 
+import cloud.uwu.realestatebackend.dtos.property.location.location.PropertyLocationResponseDTO;
 import cloud.uwu.realestatebackend.dtos.property.multimedia.PropertyMultimediaResponseDTO;
 import cloud.uwu.realestatebackend.dtos.property.neighbourhood.neighbourhood.PropertyNeighbourhoodResponseDTO;
 import cloud.uwu.realestatebackend.dtos.property.propertyDetails.PropertyDetailsResponseDTO;
@@ -48,6 +49,9 @@ public class PropertyResponseDTO {
 
     @JsonProperty("reviews")
     private List<PropertyReviewResponseDTO> reviewResponseDTOS;
+
+    @JsonProperty("location")
+    private PropertyLocationResponseDTO propertyLocationResponseDTO;
 
     @JsonProperty("statistics")
     private PropertyStatisticsResponseDTO propertyStatisticsResponseDTO;

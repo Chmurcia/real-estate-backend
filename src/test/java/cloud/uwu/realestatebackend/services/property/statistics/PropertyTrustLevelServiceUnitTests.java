@@ -131,9 +131,10 @@ class PropertyTrustLevelServiceUnitTests {
 
     @Test
     void createPropertyTrustLevel() {
+        UUID id = UUID.randomUUID();
+
         PropertyTrustLevelDTO propertyTrustLevelDTO = PropertyTrustLevelDTO
                 .builder()
-                .propertyStatisticsId(UUID.randomUUID())
                 .evaluatorId(UUID.randomUUID())
                 .trustLevel(9)
                 .build();
@@ -150,7 +151,7 @@ class PropertyTrustLevelServiceUnitTests {
                 .build();
 
         when(propertyStatisticsRepository
-                .findById(propertyTrustLevelDTO.getPropertyStatisticsId()))
+                .findById(id))
                 .thenReturn(Optional.of(PropertyStatistics.builder().build()));
 
         when(propertyTrustLevelRepository.save(any(PropertyTrustLevel.class)))
@@ -161,10 +162,10 @@ class PropertyTrustLevelServiceUnitTests {
                 .thenReturn(propertyTrustLevelResponseDTO);
 
         PropertyTrustLevelResponseDTO createdPropertyTrustLevel =
-                propertyTrustLevelService.createPropertyTrustLevel(propertyTrustLevelDTO);
+                propertyTrustLevelService.createPropertyTrustLevel(id, propertyTrustLevelDTO);
 
         verify(propertyStatisticsRepository)
-                .findById(propertyTrustLevelDTO.getPropertyStatisticsId());
+                .findById(id);
 
         assertNotNull(createdPropertyTrustLevel);
         assertEquals(propertyTrustLevelDTO.getEvaluatorId(),
@@ -177,12 +178,12 @@ class PropertyTrustLevelServiceUnitTests {
     void createPropertyTrustLevel_ShouldThrowNotFoundException() {
         PropertyTrustLevelDTO propertyTrustLevelDTO = PropertyTrustLevelDTO
                 .builder()
-                .propertyStatisticsId(UUID.randomUUID())
                 .build();
 
         assertThrows(NotFoundException.class, () ->
                 propertyTrustLevelService
-                        .createPropertyTrustLevel(propertyTrustLevelDTO));
+                        .createPropertyTrustLevel(UUID.randomUUID(),
+                                propertyTrustLevelDTO));
     }
 
     @Test

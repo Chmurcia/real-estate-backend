@@ -114,8 +114,8 @@ class PropertyCountsServiceUnitTests {
                 .propertyCountsToPropertyCountsResponseDTO(propertyCounts))
                 .thenReturn(propertyCountsResponseDTO);
 
-        PropertyCountsResponseDTO createPropertyCounts = propertyCountsService
-                .createPropertyCounts(id);
+        PropertyCounts createPropertyCounts = propertyCountsService
+                .createPropertyCounts();
 
         verify(propertyStatisticsRepository).findById(id);
 
@@ -133,7 +133,7 @@ class PropertyCountsServiceUnitTests {
         UUID id = UUID.randomUUID();
 
         assertThrows(NotFoundException.class, () ->
-                propertyCountsService.createPropertyCounts(id));
+                propertyCountsService.createPropertyCounts());
     }
 
     @Test

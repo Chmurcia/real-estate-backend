@@ -13,9 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class PropertyAmenityDTO {
-    @JsonProperty("property_statistics_id")
-    private UUID propertyStatisticsId;
-
     @NotNull(message = "amenity_type must be defined")
     @JsonProperty("amenity_type")
     private AmenityType amenityType;

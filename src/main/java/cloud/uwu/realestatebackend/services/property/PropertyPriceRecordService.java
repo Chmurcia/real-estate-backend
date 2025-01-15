@@ -37,8 +37,9 @@ public class PropertyPriceRecordService {
                 .propertyPriceRecordToPropertyPriceRecordResponseDTO(getPropertyPriceRecord(id));
     }
 
-    public PropertyPriceRecordResponseDTO createPropertyPriceRecord(PropertyPriceRecordDTO propertyPriceRecordDTO) {
-        Property property = getProperty(propertyPriceRecordDTO.getPropertyId());
+    public PropertyPriceRecordResponseDTO createPropertyPriceRecord(
+            UUID propertyId, PropertyPriceRecordDTO propertyPriceRecordDTO) {
+        Property property = getProperty(propertyId);
 
         PropertyPriceRecord propertyPriceRecord = PropertyPriceRecord.builder()
                 .property(property)
@@ -46,7 +47,7 @@ public class PropertyPriceRecordService {
                 .build();
 
         PropertyPriceRecord savedPropertyPriceRecord = propertyPriceRecordRepository
-                .save(propertyPriceRecord);
+                .saveAndFlush(propertyPriceRecord);
 
         return propertyPriceRecordMapper
                 .propertyPriceRecordToPropertyPriceRecordResponseDTO(savedPropertyPriceRecord);

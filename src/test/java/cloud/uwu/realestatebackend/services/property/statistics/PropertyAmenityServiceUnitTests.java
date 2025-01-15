@@ -82,13 +82,14 @@ class PropertyAmenityServiceUnitTests {
 
     @Test
     void createPropertyAmenity() {
+        UUID id = UUID.randomUUID();
+
         PropertyAmenityDTO propertyAmenityDTO = PropertyAmenityDTO.builder()
-                .propertyStatisticsId(UUID.randomUUID())
                 .amenityType(AmenityType.ELEVATOR)
                 .build();
 
         PropertyStatistics propertyStatistics = PropertyStatistics.builder()
-                .id(propertyAmenityDTO.getPropertyStatisticsId())
+                .id(id)
                 .build();
 
         PropertyAmenity propertyAmenity = PropertyAmenity.builder()
@@ -102,7 +103,7 @@ class PropertyAmenityServiceUnitTests {
                         .build();
 
         when(propertyStatisticsRepository
-                .findById(propertyAmenityDTO.getPropertyStatisticsId()))
+                .findById(id))
                 .thenReturn(Optional.of(propertyStatistics));
 
         when(propertyAmenityRepository.save(any(PropertyAmenity.class)))
@@ -113,10 +114,10 @@ class PropertyAmenityServiceUnitTests {
                 .thenReturn(propertyAmenityResponseDTO);
 
         PropertyAmenityResponseDTO createdPropertyAmenity = propertyAmenityService
-                .createPropertyAmenity(propertyAmenityDTO);
+                .createPropertyAmenity(id, propertyAmenityDTO);
 
         verify(propertyStatisticsRepository)
-                .findById(propertyAmenityDTO.getPropertyStatisticsId());
+                .findById(id);
 
         assertNotNull(createdPropertyAmenity);
         assertEquals(createdPropertyAmenity.getAmenityType(),
@@ -126,12 +127,11 @@ class PropertyAmenityServiceUnitTests {
     @Test
     void createPropertyAmenity_ShouldThrowNotFoundException() {
         PropertyAmenityDTO propertyAmenityDTO = PropertyAmenityDTO.builder()
-                .propertyStatisticsId(UUID.randomUUID())
                 .build();
 
         assertThrows(NotFoundException.class, () ->
                 propertyAmenityService
-                        .createPropertyAmenity(propertyAmenityDTO));
+                        .createPropertyAmenity(UUID.randomUUID(), propertyAmenityDTO));
     }
 
     @Test

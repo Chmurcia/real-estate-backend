@@ -20,9 +20,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class PropertyTrustLevelDTO {
-    @NotNull(message = "property_statistics_id must be defined")
-    @JsonProperty("property_statistics_id")
-    private UUID propertyStatisticsId;
 
     @NotNull(message = "evaluator_id must be defined")
     @JsonProperty("evaluator_id")

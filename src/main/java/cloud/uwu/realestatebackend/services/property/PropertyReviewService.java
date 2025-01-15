@@ -38,12 +38,9 @@ public class PropertyReviewService {
                 .propertyReviewToPropertyReviewResponseDTO(getPropertyReview(id));
     }
 
-    public PropertyReviewResponseDTO createPropertyReview(PropertyReviewDTO propertyReviewDTO) {
-        if (propertyReviewDTO.getPropertyId() == null) {
-            throw new NullException("property_id is null");
-        }
-
-        Property property = getProperty(propertyReviewDTO.getPropertyId());
+    public PropertyReviewResponseDTO createPropertyReview(
+            UUID propertyId, PropertyReviewDTO propertyReviewDTO) {
+        Property property = getProperty(propertyId);
 
         PropertyReview propertyReview = PropertyReview.builder()
                 .property(property)
@@ -53,7 +50,7 @@ public class PropertyReviewService {
                 .build();
 
         PropertyReview savedPropertyReview = propertyReviewRepository
-                .save(propertyReview);
+                .saveAndFlush(propertyReview);
 
         return propertyReviewMapper
                 .propertyReviewToPropertyReviewResponseDTO(savedPropertyReview);

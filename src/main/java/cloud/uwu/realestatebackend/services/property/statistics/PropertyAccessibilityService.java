@@ -31,9 +31,10 @@ public class PropertyAccessibilityService {
                 .toList();
     }
 
-    public PropertyAccessibilityResponseDTO createPropertyAccessibility(PropertyAccessibilityDTO propertyAccessibilityDTO) {
-        PropertyStatistics propertyStatistics = getPropertyStatistics(propertyAccessibilityDTO
-                .getPropertyStatisticsId());
+    public PropertyAccessibilityResponseDTO createPropertyAccessibility(
+            UUID statisticsId,
+            PropertyAccessibilityDTO propertyAccessibilityDTO) {
+        PropertyStatistics propertyStatistics = getPropertyStatistics(statisticsId);
 
         PropertyAccessibility propertyAccessibility = PropertyAccessibility.builder()
                 .propertyStatistics(propertyStatistics)
@@ -41,7 +42,7 @@ public class PropertyAccessibilityService {
                 .build();
 
         PropertyAccessibility savedPropertyAccessibility = propertyAccessibilityRepository
-                .save(propertyAccessibility);
+                .saveAndFlush(propertyAccessibility);
 
         return propertyAccessibilityMapper
                 .propertyAccessibilityToPropertyAccessibilityResponseDTO(savedPropertyAccessibility);

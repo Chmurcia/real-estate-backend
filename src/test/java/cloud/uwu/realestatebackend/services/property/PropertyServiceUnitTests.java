@@ -8,6 +8,7 @@ import cloud.uwu.realestatebackend.dtos.property.neighbourhood.neighbourhood.Pro
 import cloud.uwu.realestatebackend.dtos.property.property.PropertyDTO;
 import cloud.uwu.realestatebackend.dtos.property.property.PropertyPatchDTO;
 import cloud.uwu.realestatebackend.dtos.property.property.PropertyResponseDTO;
+import cloud.uwu.realestatebackend.dtos.property.property.PropertySmallResponseDTO;
 import cloud.uwu.realestatebackend.dtos.property.statistics.propertyStatistics.PropertyStatisticsDTO;
 import cloud.uwu.realestatebackend.entities.profile.Profile;
 import cloud.uwu.realestatebackend.entities.property.Property;
@@ -94,7 +95,7 @@ class PropertyServiceUnitTests {
                 .propertyToPropertyResponseDTO(any(Property.class)))
                 .thenReturn(PropertyResponseDTO.builder().build());
 
-        Page<PropertyResponseDTO> foundProperties = propertyService
+        Page<PropertySmallResponseDTO> foundProperties = propertyService
                 .getAllProperties(filters, page, size, "price", "desc");
 
         assertNotNull(foundProperties);
@@ -196,7 +197,6 @@ class PropertyServiceUnitTests {
         UUID id = UUID.randomUUID();
 
         PropertyDTO propertyDTO = PropertyDTO.builder()
-                .profileId(id)
                 .propertyType(PropertyType.CABIN)
                 .offerStatus(OfferStatus.UNDER_OFFER)
                 .title("Title")
@@ -257,7 +257,7 @@ class PropertyServiceUnitTests {
                 .thenReturn(propertyResponseDTO);
 
         PropertyResponseDTO createdProperty = propertyService.
-                createProperty(fullPropertyDTO);
+                createProperty(id, fullPropertyDTO);
 
         assertNotNull(createdProperty);
         assertEquals(createdProperty.getPropertyType(),
@@ -279,12 +279,11 @@ class PropertyServiceUnitTests {
         FullPropertyDTO fullPropertyDTO = FullPropertyDTO
                 .builder()
                 .propertyDTO(PropertyDTO.builder()
-                        .profileId(id)
                         .build())
                 .build();
 
         assertThrows(NotFoundException.class, () ->
-                propertyService.createProperty(fullPropertyDTO));
+                propertyService.createProperty(id, fullPropertyDTO));
     }
 
     @Test

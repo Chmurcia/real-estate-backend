@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PropertyMultimediaImageMapper {
-    @Mapping(source = "propertyMultimedia.id", target = "propertyMultimediaId")
     PropertyMultimediaImageDTO propertyMultimediaImageToPropertyMultimediaImageDTO(PropertyMultimediaImage propertyMultimediaImage);
 
     PropertyMultimediaImageResponseDTO propertyMultimediaImageToPropertyMultimediaImageResponseDTO(PropertyMultimediaImage propertyMultimediaImage);

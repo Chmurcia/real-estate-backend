@@ -90,6 +90,7 @@ public class PropertyNeighbourhoodService {
 
         propertyNeighbourhoodRepository.deleteById(id);
     }
+
     //
 
     private PropertyNeighbourhood getPropertyNeighbourhood(UUID id) {

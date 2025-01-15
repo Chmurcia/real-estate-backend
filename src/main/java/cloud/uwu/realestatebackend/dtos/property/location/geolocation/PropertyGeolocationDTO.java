@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class PropertyGeolocationDTO {
-    @NotNull(message = "Geolocation must be defined")
+    @NotNull(message = "Latitude must be defined")
     @DecimalMax(value = "90.0", message = "Latitude must be less than or equal to 90")
     @DecimalMin(value = "-90.0", message = "Latitude must be greater than or equal to -90")
     private Double latitude;

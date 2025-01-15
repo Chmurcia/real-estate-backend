@@ -33,7 +33,7 @@ public class PropertyCounts {
 
     private Integer dislikes;
 
-    @OneToOne
+    @OneToOne(mappedBy = "counts")
     private PropertyStatistics propertyStatistics;
 
     @CreationTimestamp

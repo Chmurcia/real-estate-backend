@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PropertyNeighbourhoodReviewMapper {
-    @Mapping(source = "neighbourhood.id", target = "neighbourhoodId")
     PropertyNeighbourhoodReviewDTO propertyNeighbourhoodReviewToPropertyNeighbourhoodReviewDTO(PropertyNeighbourhoodReview propertyNeighbourhoodReview);
 
     PropertyNeighbourhoodReviewResponseDTO propertyNeighbourhoodReviewToPropertyNeighbourhoodReviewResponseDTO(PropertyNeighbourhoodReview propertyNeighbourhoodReview);

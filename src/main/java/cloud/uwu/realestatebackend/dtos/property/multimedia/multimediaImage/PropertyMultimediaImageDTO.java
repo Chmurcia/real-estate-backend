@@ -13,9 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class PropertyMultimediaImageDTO {
-    @NotNull(message = "property_multimedia_id must be defined")
-    @JsonProperty("property_multimedia_id")
-    private UUID propertyMultimediaId;
 
     @Size(min = 1, max = 100, message = "image_title must contain between 1 and 100 characters")
     @NotNull(message = "image_title must be defined")

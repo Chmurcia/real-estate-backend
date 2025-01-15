@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,19 +30,22 @@ public class PropertyStatistics {
 
     private ZonedDateTime lastVisitedAt;
 
-    @OneToMany(mappedBy = "propertyStatistics", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PropertyAccessibility> propertyAccessibilities;
+    @Builder.Default
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "propertyStatistics", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PropertyAccessibility> propertyAccessibilities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "propertyStatistics", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PropertyAmenity> propertyAmenities;
+    @Builder.Default
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "propertyStatistics", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PropertyAmenity> propertyAmenities = new ArrayList<>();
 
     @OneToOne(mappedBy = "statistics")
     private Property property;
 
-    @OneToMany(mappedBy = "propertyStatistics", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PropertyTrustLevel> propertyTrustLevels;
+    @Builder.Default
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "propertyStatistics", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PropertyTrustLevel> propertyTrustLevels = new ArrayList<>();
 
-    @OneToOne(mappedBy = "propertyStatistics", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private PropertyCounts counts;
 
     @CreationTimestamp

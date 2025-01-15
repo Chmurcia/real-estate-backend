@@ -42,11 +42,11 @@ class PropertyMultimediaImageServiceUnitTests {
     @Test
     void createPropertyMultimediaImage() {
         PropertyMultimedia propertyMultimedia = PropertyMultimedia.builder()
+                .id(UUID.randomUUID())
                 .build();
 
         PropertyMultimediaImageDTO propertyMultimediaImageDTO = PropertyMultimediaImageDTO
                 .builder()
-                .propertyMultimediaId(UUID.randomUUID())
                 .imageTitle("Title")
                 .imageURL("url")
                 .build();
@@ -63,8 +63,8 @@ class PropertyMultimediaImageServiceUnitTests {
                         .imageURL(propertyMultimediaImage.getImageURL())
                         .build();
 
-        when(propertyMultimediaRepository.findById(propertyMultimediaImageDTO
-                .getPropertyMultimediaId())).thenReturn(Optional.of(propertyMultimedia));
+        when(propertyMultimediaRepository.findById(propertyMultimedia.getId()))
+                .thenReturn(Optional.of(propertyMultimedia));
 
         when(propertyMultimediaImageRepository.save(any(PropertyMultimediaImage.class)))
                 .thenReturn(propertyMultimediaImage);
@@ -75,7 +75,8 @@ class PropertyMultimediaImageServiceUnitTests {
 
         PropertyMultimediaImageResponseDTO createdPropertyMultimediaImage =
                 propertyMultimediaImageService
-                        .createPropertyMultimediaImage(propertyMultimediaImageDTO);
+                        .createPropertyMultimediaImage(propertyMultimedia.getId(),
+                                propertyMultimediaImageDTO);
 
         verify(propertyMultimediaImageRepository).save(any(PropertyMultimediaImage.class));
         verify(propertyMultimediaRepository).save(any(PropertyMultimedia.class));
@@ -89,11 +90,11 @@ class PropertyMultimediaImageServiceUnitTests {
     @Test
     void createPropertyMultimediaImage_ShouldThrowNotFoundException() {
         PropertyMultimediaImageDTO propertyMultimediaImageDTO = PropertyMultimediaImageDTO.builder()
-                .propertyMultimediaId(UUID.randomUUID())
                 .build();
 
         assertThrows(NotFoundException.class, () ->
-                propertyMultimediaImageService.createPropertyMultimediaImage(propertyMultimediaImageDTO));
+                propertyMultimediaImageService.createPropertyMultimediaImage(
+                        UUID.randomUUID(), propertyMultimediaImageDTO));
     }
 
     @Test

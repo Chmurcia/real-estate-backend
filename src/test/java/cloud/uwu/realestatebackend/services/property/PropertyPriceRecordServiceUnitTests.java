@@ -117,9 +117,10 @@ class PropertyPriceRecordServiceUnitTests {
 
     @Test
     void createPropertyPriceRecord() {
+        UUID id = UUID.randomUUID();
+
         PropertyPriceRecordDTO propertyPriceRecordDTO = PropertyPriceRecordDTO
                 .builder()
-                .propertyId(UUID.randomUUID())
                 .price(190000.0)
                 .build();
 
@@ -134,7 +135,7 @@ class PropertyPriceRecordServiceUnitTests {
                 .build();
 
         when(propertyRepository
-                .findById(propertyPriceRecordDTO.getPropertyId()))
+                .findById(id))
                 .thenReturn(Optional.of(Property.builder().build()));
 
         when(propertyPriceRecordRepository.save(any(PropertyPriceRecord.class)))
@@ -146,9 +147,9 @@ class PropertyPriceRecordServiceUnitTests {
 
         PropertyPriceRecordResponseDTO createdPropertyPriceRecord =
                 propertyPriceRecordService
-                        .createPropertyPriceRecord(propertyPriceRecordDTO);
+                        .createPropertyPriceRecord(id,propertyPriceRecordDTO);
 
-        verify(propertyRepository).findById(propertyPriceRecordDTO.getPropertyId());
+        verify(propertyRepository).findById(id);
 
         assertEquals(createdPropertyPriceRecord.getPrice(),
                 propertyPriceRecordResponseDTO.getPrice());
@@ -158,10 +159,8 @@ class PropertyPriceRecordServiceUnitTests {
     void createPropertyPriceRecord_ShouldThrowNotFoundException() {
         assertThrows(NotFoundException.class, () ->
                 propertyPriceRecordService
-                        .createPropertyPriceRecord(PropertyPriceRecordDTO
-                                .builder()
-                                .propertyId(UUID.randomUUID())
-                                .build()));
+                        .createPropertyPriceRecord(UUID.randomUUID(),
+                                PropertyPriceRecordDTO.builder().build()));
     }
 
     @Test

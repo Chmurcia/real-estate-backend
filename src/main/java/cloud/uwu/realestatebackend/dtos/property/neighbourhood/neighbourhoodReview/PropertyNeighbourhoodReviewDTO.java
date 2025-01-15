@@ -12,9 +12,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class PropertyNeighbourhoodReviewDTO {
-    @NotNull(message = "neighbourhood_id must be defined")
-    @JsonProperty("neighbourhood_id")
-    private UUID neighbourhoodId;
 
     @NotNull(message = "reviewer_id must de defined")
     @JsonProperty("reviewer_id")

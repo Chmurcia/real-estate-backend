@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PropertyTrustLevelMapper {
-    @Mapping(source = "propertyStatistics.id", target = "propertyStatisticsId")
     PropertyTrustLevelDTO propertyTrustLevelToPropertyTrustLevelDTO(PropertyTrustLevel propertyTrustLevel);
 
     PropertyTrustLevelResponseDTO propertyTrustLevelToPropertyTrustLevelResponseDTO(PropertyTrustLevel propertyTrustLevel);

@@ -123,9 +123,10 @@ class PropertyDistanceToServiceUnitTests {
 
     @Test
     void createPropertyDistances() {
+        UUID id = UUID.randomUUID();
+
         PropertyDistanceToDTO propertyDistanceToDTO = PropertyDistanceToDTO
                 .builder()
-                .propertyId(UUID.randomUUID())
                 .distance(55.0)
                 .destination("Supermarket")
                 .build();
@@ -142,7 +143,7 @@ class PropertyDistanceToServiceUnitTests {
                 .destination("Supermarket")
                 .build();
 
-        when(propertyRepository.findById(propertyDistanceToDTO.getPropertyId()))
+        when(propertyRepository.findById(id))
                 .thenReturn(Optional.of(Property.builder().build()));
 
         when(propertyDistanceToRepository.save(any(PropertyDistanceTo.class)))
@@ -153,10 +154,10 @@ class PropertyDistanceToServiceUnitTests {
                 .thenReturn(propertyDistanceToResponseDTO);
 
         PropertyDistanceToResponseDTO createdPropertyDistanceTo = propertyDistanceToService
-                .createPropertyDistances(propertyDistanceToDTO);
+                .createPropertyDistances(id, propertyDistanceToDTO);
 
         verify(propertyRepository)
-                .findById(propertyDistanceToDTO.getPropertyId());
+                .findById(id);
         assertEquals(createdPropertyDistanceTo.getDistance(),
                 propertyDistanceToResponseDTO.getDistance());
         assertEquals(createdPropertyDistanceTo.getDestination(),
@@ -167,10 +168,8 @@ class PropertyDistanceToServiceUnitTests {
     void createPropertyDistances_ShouldThrowNotFoundException() {
         assertThrows(NotFoundException.class, () ->
                 propertyDistanceToService
-                        .createPropertyDistances(PropertyDistanceToDTO
-                                .builder()
-                                .propertyId(UUID.randomUUID())
-                                .build()));
+                        .createPropertyDistances(UUID.randomUUID(),
+                                PropertyDistanceToDTO.builder().build()));
     }
 
     @Test

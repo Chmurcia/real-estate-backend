@@ -31,16 +31,15 @@ public class PropertyAmenityService {
                 .toList();
     }
 
-    public PropertyAmenityResponseDTO createPropertyAmenity(PropertyAmenityDTO propertyAmenityDTO) {
-        PropertyStatistics propertyStatistics = getPropertyStatistics(propertyAmenityDTO
-                .getPropertyStatisticsId());
+    public PropertyAmenityResponseDTO createPropertyAmenity(UUID statisticsId, PropertyAmenityDTO propertyAmenityDTO) {
+        PropertyStatistics propertyStatistics = getPropertyStatistics(statisticsId);
 
         PropertyAmenity propertyAmenity = PropertyAmenity.builder()
                 .propertyStatistics(propertyStatistics)
                 .amenityType(propertyAmenityDTO.getAmenityType())
                 .build();
 
-        PropertyAmenity savedPropertyAmenity = propertyAmenityRepository.save(propertyAmenity);
+        PropertyAmenity savedPropertyAmenity = propertyAmenityRepository.saveAndFlush(propertyAmenity);
 
         return propertyAmenityMapper.propertyAmenityToPropertyAmenityResponseDTO(savedPropertyAmenity);
     }

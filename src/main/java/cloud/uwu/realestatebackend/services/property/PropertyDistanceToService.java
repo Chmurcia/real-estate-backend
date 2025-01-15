@@ -41,14 +41,10 @@ public class PropertyDistanceToService {
     }
 
     public PropertyDistanceToResponseDTO createPropertyDistances(
+            UUID propertyId,
             PropertyDistanceToDTO propertyDistanceToDTO
     ) {
-        if (propertyDistanceToDTO.getPropertyId() == null) {
-            throw new NullException("property_id is null");
-        }
-
-        Property property = getProperty(propertyDistanceToDTO
-                .getPropertyId());
+        Property property = getProperty(propertyId);
 
         PropertyDistanceTo propertyDistanceTo = PropertyDistanceTo
                 .builder()
@@ -58,7 +54,7 @@ public class PropertyDistanceToService {
                 .build();
 
         PropertyDistanceTo savedPropertyDistanceTo = propertyDistanceToRepository
-                .save(propertyDistanceTo);
+                .saveAndFlush(propertyDistanceTo);
 
         return propertyDistanceToMapper
                 .propertyDistanceToToPropertyDistanceToResponseDTO(savedPropertyDistanceTo);

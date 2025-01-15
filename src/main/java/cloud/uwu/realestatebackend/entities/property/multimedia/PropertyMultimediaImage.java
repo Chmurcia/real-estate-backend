@@ -28,7 +28,6 @@ public class PropertyMultimediaImage {
     private String imageURL;
 
     @ManyToOne
-    @JoinColumn(name = "property_multimedia_id", nullable = false, referencedColumnName = "id")
     private PropertyMultimedia propertyMultimedia;
 
     @CreationTimestamp

@@ -22,9 +22,12 @@ public class PropertyMultimediaVideoService {
     private final PropertyMultimediaRepository propertyMultimediaRepository;
     private final PropertyMultimediaVideoMapper propertyMultimediaVideoMapper;
 
-    public PropertyMultimediaVideoResponseDTO createPropertyMultimediaVideo(PropertyMultimediaVideoDTO propertyMultimediaVideoDTO) {
+    public PropertyMultimediaVideoResponseDTO createPropertyMultimediaVideo(
+            UUID propertyMultimediaId,
+            PropertyMultimediaVideoDTO propertyMultimediaVideoDTO) {
+
         PropertyMultimedia propertyMultimedia =
-                getPropertyMultimedia(propertyMultimediaVideoDTO.getPropertyMultimediaId());
+                getPropertyMultimedia(propertyMultimediaId);
 
         PropertyMultimediaVideo propertyMultimediaVideo = PropertyMultimediaVideo.builder()
                 .videoTitle(propertyMultimediaVideoDTO.getVideoTitle())
@@ -33,7 +36,7 @@ public class PropertyMultimediaVideoService {
                 .build();
 
         PropertyMultimediaVideo savedPropertyMultimediaVideo =
-                propertyMultimediaVideoRepository.save(propertyMultimediaVideo);
+                propertyMultimediaVideoRepository.saveAndFlush(propertyMultimediaVideo);
 
         propertyMultimedia.getVideos().add(savedPropertyMultimediaVideo);
 

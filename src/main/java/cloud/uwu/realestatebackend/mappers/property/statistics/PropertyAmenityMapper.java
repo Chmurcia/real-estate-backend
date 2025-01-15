@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PropertyAmenityMapper {
-    @Mapping(source = "propertyStatistics.id", target = "propertyStatisticsId")
     PropertyAmenityDTO propertyAmenityToPropertyAmenityDTO(PropertyAmenity propertyAmenity);
 
     PropertyAmenityResponseDTO propertyAmenityToPropertyAmenityResponseDTO(PropertyAmenity propertyAmenity);

@@ -85,14 +85,15 @@ class PropertyAccessibilityServiceUnitTests {
 
     @Test
     void createPropertyAccessibility() {
+        UUID id = UUID.randomUUID();
+
         PropertyAccessibilityDTO propertyAccessibilityDTO = PropertyAccessibilityDTO
                 .builder()
-                .propertyStatisticsId(UUID.randomUUID())
                 .accessibilityType(AccessibilityType.SMART_HOME)
                 .build();
 
         PropertyStatistics propertyStatistics = PropertyStatistics.builder()
-                .id(propertyAccessibilityDTO.getPropertyStatisticsId())
+                .id(id)
                 .build();
 
         PropertyAccessibility propertyAccessibility = PropertyAccessibility
@@ -106,8 +107,7 @@ class PropertyAccessibilityServiceUnitTests {
                         .accessibilityType(AccessibilityType.SMART_HOME)
                         .build();
 
-        when(propertyStatisticsRepository.findById(propertyAccessibilityDTO
-                .getPropertyStatisticsId()))
+        when(propertyStatisticsRepository.findById(id))
                 .thenReturn(Optional.of(propertyStatistics));
 
         when(propertyAccessibilityRepository.save(any(PropertyAccessibility.class)))
@@ -119,10 +119,10 @@ class PropertyAccessibilityServiceUnitTests {
 
         PropertyAccessibilityResponseDTO createdPropertyAccessibility =
                 propertyAccessibilityService
-                        .createPropertyAccessibility(propertyAccessibilityDTO);
+                        .createPropertyAccessibility(id, propertyAccessibilityDTO);
 
         verify(propertyStatisticsRepository)
-                .findById(propertyAccessibilityDTO.getPropertyStatisticsId());
+                .findById(id);
 
         assertEquals(createdPropertyAccessibility.getAccessibilityType(),
                 propertyAccessibilityDTO.getAccessibilityType());
@@ -132,12 +132,12 @@ class PropertyAccessibilityServiceUnitTests {
     void createPropertyAccessibility_ShouldThrowNotFoundException() {
         PropertyAccessibilityDTO propertyAccessibilityDTO = PropertyAccessibilityDTO
                 .builder()
-                .propertyStatisticsId(UUID.randomUUID())
                 .build();
 
         assertThrows(NotFoundException.class, () ->
                 propertyAccessibilityService
-                        .createPropertyAccessibility(propertyAccessibilityDTO));
+                        .createPropertyAccessibility(UUID.randomUUID(),
+                                propertyAccessibilityDTO));
     }
 
     @Test

@@ -16,9 +16,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class PropertyDistanceToDTO {
-    @JsonProperty("property_id")
-    private UUID propertyId;
-
     @NotNull(message = "distance must be defined")
     @Min(value = 0, message = "distance must be at least 0")
     private Double distance;

@@ -5,6 +5,7 @@ import cloud.uwu.realestatebackend.entities.property.Property;
 import cloud.uwu.realestatebackend.entities.property.PropertyAreas;
 import cloud.uwu.realestatebackend.entities.property.PropertyDetails;
 import cloud.uwu.realestatebackend.entities.property.PropertyRooms;
+import cloud.uwu.realestatebackend.entities.property.location.PropertyLocation;
 import cloud.uwu.realestatebackend.entities.property.statistics.PropertyCounts;
 import cloud.uwu.realestatebackend.entities.property.statistics.PropertyStatistics;
 import jakarta.persistence.criteria.Join;
@@ -30,16 +31,18 @@ public class PropertySpecification {
 
             Join<PropertyDetails, PropertyRooms> roomsJoin = detailsJoin.join("rooms", JoinType.LEFT);
 
+            Join<Property, PropertyLocation> propertyLocationJoin = root.join("propertyLocation", JoinType.LEFT);
+
             if (filters.getCountry() != null) {
-                predicates.add(criteriaBuilder.equal(root.get("country"), filters.getCountry()));
+                predicates.add(criteriaBuilder.equal(propertyLocationJoin.get("country"), filters.getCountry()));
             }
 
             if (filters.getState() != null) {
-                predicates.add(criteriaBuilder.equal(root.get("state"), filters.getState()));
+                predicates.add(criteriaBuilder.equal(propertyLocationJoin.get("state"), filters.getState()));
             }
 
             if (filters.getCity() != null) {
-                predicates.add(criteriaBuilder.equal(root.get("city"), filters.getCity()));
+                predicates.add(criteriaBuilder.equal(propertyLocationJoin.get("city"), filters.getCity()));
             }
 
             if (filters.getMinPrice() != null) {

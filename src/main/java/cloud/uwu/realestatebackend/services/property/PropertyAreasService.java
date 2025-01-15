@@ -39,7 +39,7 @@ public class PropertyAreasService {
                 .poolArea(propertyAreasDTO.getPoolArea())
                 .build();
 
-        return propertyAreasRepository.save(propertyAreas);
+        return propertyAreasRepository.saveAndFlush(propertyAreas);
     }
 
     public void updatePropertyAreas(UUID id, PropertyAreasDTO propertyAreasDTO) {

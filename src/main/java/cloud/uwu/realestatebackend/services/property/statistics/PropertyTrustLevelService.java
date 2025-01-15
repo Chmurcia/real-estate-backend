@@ -24,11 +24,11 @@ public class PropertyTrustLevelService {
     private final PropertyStatisticsRepository propertyStatisticsRepository;
     private final PropertyTrustLevelMapper propertyTrustLevelMapper;
 
-    public Page<PropertyTrustLevelResponseDTO> getPropertyTrustLevelsByPropertyStatisticsId(UUID id, int page, int size) {
+    public Page<PropertyTrustLevelResponseDTO> getPropertyTrustLevelsByPropertyStatisticsId(UUID id, Integer page, Integer size) {
         getPropertyStatistics(id);
 
-        page = Math.max(page, 0);
-        size = size > 0 ? size : 50;
+        page = (page != null) ? Math.max(page, 0) : 0;
+        size = (size != null && size > 0) ? size : 50;
 
         PageRequest pageable = PageRequest.of(page, size);
 
@@ -36,9 +36,10 @@ public class PropertyTrustLevelService {
                 .map(propertyTrustLevelMapper::propertyTrustLevelToPropertyTrustLevelResponseDTO);
     }
 
-    public PropertyTrustLevelResponseDTO createPropertyTrustLevel(PropertyTrustLevelDTO propertyTrustLevelDTO) {
-        PropertyStatistics propertyStatistics = getPropertyStatistics(propertyTrustLevelDTO
-                .getPropertyStatisticsId());
+    public PropertyTrustLevelResponseDTO createPropertyTrustLevel(
+            UUID statisticsId,
+            PropertyTrustLevelDTO propertyTrustLevelDTO) {
+        PropertyStatistics propertyStatistics = getPropertyStatistics(statisticsId);
 
         PropertyTrustLevel propertyTrustLevel = PropertyTrustLevel.builder()
                 .propertyStatistics(propertyStatistics)
@@ -47,7 +48,7 @@ public class PropertyTrustLevelService {
                 .build();
 
         PropertyTrustLevel savedPropertyTrustLevel = propertyTrustLevelRepository
-                .save(propertyTrustLevel);
+                .saveAndFlush(propertyTrustLevel);
 
         return propertyTrustLevelMapper
                 .propertyTrustLevelToPropertyTrustLevelResponseDTO(savedPropertyTrustLevel);

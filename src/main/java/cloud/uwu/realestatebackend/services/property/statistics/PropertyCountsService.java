@@ -33,21 +33,15 @@ public class PropertyCountsService {
                 .propertyCountsToPropertyCountsResponseDTO(propertyCounts);
     }
 
-    public PropertyCountsResponseDTO createPropertyCounts(UUID propertyStatisticsID) {
-        PropertyStatistics propertyStatistics = getPropertyStatistics(propertyStatisticsID);
-
+    public PropertyCounts createPropertyCounts() {
         PropertyCounts propertyCounts = PropertyCounts.builder()
-                .propertyStatistics(propertyStatistics)
                 .visits(0)
                 .likes(0)
                 .dislikes(0)
                 .build();
 
-        PropertyCounts savedPropertyCounts = propertyCountsRepository
-                .save(propertyCounts);
+        return propertyCountsRepository.saveAndFlush(propertyCounts);
 
-        return propertyCountsMapper
-                .propertyCountsToPropertyCountsResponseDTO(savedPropertyCounts);
     }
 
     public void updatePropertyCounts(UUID id, PropertyCountsDTO propertyCountsDTO) {

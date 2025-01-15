@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PropertyPriceRecordMapper {
-    @Mapping(source = "property.id", target = "propertyId")
     PropertyPriceRecordDTO propertyPriceRecordToPropertyPriceRecordDTO(PropertyPriceRecord propertyPriceRecord);
 
     PropertyPriceRecordResponseDTO propertyPriceRecordToPropertyPriceRecordResponseDTO(PropertyPriceRecord propertyPriceRecord);

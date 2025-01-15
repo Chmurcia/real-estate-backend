@@ -30,11 +30,13 @@ public class PropertyMultimedia {
     private Property property;
 
     @Builder.Default
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "property_multimedia_id")
     private List<PropertyMultimediaImage> images = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "property_multimedia_id")
     private List<PropertyMultimediaVideo> videos = new ArrayList<>();
 
     @CreationTimestamp

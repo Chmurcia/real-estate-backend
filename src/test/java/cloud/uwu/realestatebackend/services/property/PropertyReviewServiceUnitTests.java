@@ -120,8 +120,9 @@ class PropertyReviewServiceUnitTests {
 
     @Test
     void createPropertyReview() {
+        UUID id = UUID.randomUUID();
+
         PropertyReviewDTO propertyReviewDTO = PropertyReviewDTO.builder()
-                .propertyId(UUID.randomUUID())
                 .evaluatorId(UUID.randomUUID())
                 .rate(9.4)
                 .description("Description")
@@ -140,7 +141,7 @@ class PropertyReviewServiceUnitTests {
                 .description("Description")
                 .build();
 
-        when(propertyRepository.findById(propertyReviewDTO.getPropertyId()))
+        when(propertyRepository.findById(id))
                 .thenReturn(Optional.of(Property.builder().build()));
 
         when(propertyReviewRepository.save(any(PropertyReview.class)))
@@ -151,9 +152,9 @@ class PropertyReviewServiceUnitTests {
                 .thenReturn(propertyReviewResponseDTO);
 
         PropertyReviewResponseDTO createdPropertyReview = propertyReviewService
-                .createPropertyReview(propertyReviewDTO);
+                .createPropertyReview(id, propertyReviewDTO);
 
-        verify(propertyRepository).findById(propertyReviewDTO.getPropertyId());
+        verify(propertyRepository).findById(id);
 
         assertNotNull(createdPropertyReview);
         assertEquals(createdPropertyReview.getEvaluatorId(),
@@ -169,9 +170,8 @@ class PropertyReviewServiceUnitTests {
     void createPropertyReview_ShouldThrowNotFoundException() {
         assertThrows(NotFoundException.class, () ->
                 propertyReviewService
-                        .createPropertyReview(PropertyReviewDTO.builder()
-                                .propertyId(UUID.randomUUID())
-                                .build()));
+                        .createPropertyReview(UUID.randomUUID(),
+                                PropertyReviewDTO.builder().build()));
     }
 
     @Test

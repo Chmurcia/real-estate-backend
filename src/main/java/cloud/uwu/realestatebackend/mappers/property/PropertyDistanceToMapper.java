@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PropertyDistanceToMapper {
-    @Mapping(source = "property.id", target = "propertyId")
     PropertyDistanceToDTO propertyDistanceToToPropertyDistanceToDTO(PropertyDistanceTo propertyDistanceTo);
 
     PropertyDistanceToResponseDTO propertyDistanceToToPropertyDistanceToResponseDTO(PropertyDistanceTo propertyDistanceTo);

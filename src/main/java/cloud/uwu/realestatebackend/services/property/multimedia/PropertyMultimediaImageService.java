@@ -22,9 +22,11 @@ public class PropertyMultimediaImageService {
     private final PropertyMultimediaRepository propertyMultimediaRepository;
     private final PropertyMultimediaImageMapper propertyMultimediaImageMapper;
 
-    public PropertyMultimediaImageResponseDTO createPropertyMultimediaImage(PropertyMultimediaImageDTO propertyMultimediaImageDTO) {
+    public PropertyMultimediaImageResponseDTO createPropertyMultimediaImage(
+            UUID propertyMultimediaId,
+            PropertyMultimediaImageDTO propertyMultimediaImageDTO) {
         PropertyMultimedia propertyMultimedia =
-                getPropertyMultimedia(propertyMultimediaImageDTO.getPropertyMultimediaId());
+                getPropertyMultimedia(propertyMultimediaId);
 
         PropertyMultimediaImage propertyMultimediaImage = PropertyMultimediaImage.builder()
                 .imageTitle(propertyMultimediaImageDTO.getImageTitle())
@@ -33,7 +35,7 @@ public class PropertyMultimediaImageService {
                 .build();
 
         PropertyMultimediaImage savedPropertyMultimediaImage =
-                propertyMultimediaImageRepository.save(propertyMultimediaImage);
+                propertyMultimediaImageRepository.saveAndFlush(propertyMultimediaImage);
 
         propertyMultimedia.getImages().add(savedPropertyMultimediaImage);
 

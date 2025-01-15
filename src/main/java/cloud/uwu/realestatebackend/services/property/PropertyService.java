@@ -8,6 +8,7 @@ import cloud.uwu.realestatebackend.dtos.property.neighbourhood.neighbourhood.Pro
 import cloud.uwu.realestatebackend.dtos.property.property.PropertyDTO;
 import cloud.uwu.realestatebackend.dtos.property.property.PropertyPatchDTO;
 import cloud.uwu.realestatebackend.dtos.property.property.PropertyResponseDTO;
+import cloud.uwu.realestatebackend.dtos.property.property.PropertySmallResponseDTO;
 import cloud.uwu.realestatebackend.dtos.property.statistics.propertyStatistics.PropertyStatisticsDTO;
 import cloud.uwu.realestatebackend.entities.profile.Profile;
 import cloud.uwu.realestatebackend.entities.property.Property;
@@ -49,11 +50,13 @@ public class PropertyService {
     private final PropertyLocationService propertyLocationService;
     private final PropertyStatisticsService propertyStatisticsService;
 
-    public Page<PropertyResponseDTO> getAllProperties(
-            PropertyFilterDTO filters, int page, int size,
+    public Page<PropertySmallResponseDTO> getAllProperties(
+            PropertyFilterDTO filters, Integer page, Integer size,
             String sortBy, String sortDirection) {
-        page = Math.max(page, 0);
-        size = size > 0 ? size : 50;
+        page = (page != null) ? Math.max(page, 0) : 0;
+        size = (size != null && size > 0) ? size : 50;
+
+        filters = (filters != null) ? filters : PropertyFilterDTO.builder().build();
 
         PropertySort sortField = (sortBy != null && PropertySort.isValid(sortBy))
                 ? PropertySort.valueOf(sortBy.toUpperCase())
@@ -70,14 +73,15 @@ public class PropertyService {
         var specification = PropertySpecification.createSpecification(filters);
 
         return propertyRepository.findAll(specification, pageable)
-                .map(propertyMapper::propertyToPropertyResponseDTO);
+                .map(propertyMapper::propertyToPropertySmallResponseDTO);
     }
 
-    public Page<PropertyResponseDTO> getPropertiesByProfileId(UUID id, int page, int size) {
+    public Page<PropertyResponseDTO> getPropertiesByProfileId(
+            UUID id, Integer page, Integer size) {
         getProfile(id);
 
-        page = Math.max(page, 0);
-        size = size > 0 ? size : 50;
+        page = (page != null) ? Math.max(page, 0) : 0;
+        size = (size != null && size > 0) ? size : 50;
 
         PageRequest pageable = PageRequest.of(page, size);
 
@@ -91,9 +95,10 @@ public class PropertyService {
                 .propertyToPropertyResponseDTO(getProperty(id));
     }
 
-    public PropertyResponseDTO createProperty(FullPropertyDTO fullPropertyDTO) {
+    public PropertyResponseDTO createProperty(
+            UUID profileId, FullPropertyDTO fullPropertyDTO) {
 
-        Profile profile = fetchProfile(fullPropertyDTO);
+        Profile profile = getProfile(profileId);
 
         PropertyNeighbourhood propertyNeighbourhood = createPropertyNeighbourhood(fullPropertyDTO
                 .getPropertyNeighbourhoodDTO());
@@ -111,7 +116,7 @@ public class PropertyService {
                 propertyNeighbourhood, propertyDetails, propertyLocation,
                 propertyMultimedia, propertyStatistics);
 
-        Property savedProperty = propertyRepository.save(property);
+        Property savedProperty = propertyRepository.saveAndFlush(property);
 
         return propertyMapper.propertyToPropertyResponseDTO(savedProperty);
     }
@@ -183,7 +188,6 @@ public class PropertyService {
 
         propertyRepository.deleteById(id);
     }
-
     // HELPERS
 
     private Property getProperty(UUID id) {
@@ -245,14 +249,5 @@ public class PropertyService {
                 .propertyMultimedia(propertyMultimedia)
                 .statistics(propertyStatistics)
                 .build();
-    }
-
-    private Profile fetchProfile(FullPropertyDTO fullPropertyDTO) {
-        if (fullPropertyDTO.getPropertyDTO().getProfileId() == null) {
-            throw new NullException("profile_id is null");
-        }
-
-        return getProfile(fullPropertyDTO
-                .getPropertyDTO().getProfileId());
     }
 }

@@ -15,10 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class PropertyAccessibilityDTO {
-    @NotNull(message = "property_statistics_id must be defined")
-    @JsonProperty("property_statistics_id")
-    private UUID propertyStatisticsId;
-
     @Enumerated(EnumType.STRING)
     @NotNull(message = "accessibility_type must be defined")
     @JsonProperty("accessibility_type")

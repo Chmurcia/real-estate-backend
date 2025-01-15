@@ -47,7 +47,7 @@ public class PropertyRoomsService {
                 .totalLibraries(propertyRoomsDTO.getTotalLibraries())
                 .build();
 
-        return propertyRoomsRepository.save(propertyRooms);
+        return propertyRoomsRepository.saveAndFlush(propertyRooms);
     }
 
     public void updatePropertyRooms(UUID id, PropertyRoomsDTO propertyRoomsDTO) {

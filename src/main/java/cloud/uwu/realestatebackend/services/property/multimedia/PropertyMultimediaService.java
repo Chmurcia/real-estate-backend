@@ -18,16 +18,9 @@ public class PropertyMultimediaService {
     private final PropertyMultimediaRepository propertyMultimediaRepository;
     private final PropertyMultimediaMapper propertyMultimediaMapper;
 
-
     public PropertyMultimediaResponseDTO getPropertyMultimediaById(UUID id) {
         return propertyMultimediaMapper
                 .propertyMultimediaToPropertyMultimediaResponseDTO(getPropertyMultimedia(id));
-    }
-
-    public void deletePropertyMultimedia(UUID id) {
-        getPropertyMultimedia(id);
-
-        propertyMultimediaRepository.deleteById(id);
     }
 
     //

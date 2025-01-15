@@ -40,11 +40,11 @@ class PropertyMultimediaVideoServiceUnitTests {
     @Test
     void createPropertyMultimediaVideo() {
         PropertyMultimedia propertyMultimedia = PropertyMultimedia.builder()
+                .id(UUID.randomUUID())
                 .build();
 
         PropertyMultimediaVideoDTO propertyMultimediaVideoDTO = PropertyMultimediaVideoDTO
                 .builder()
-                .propertyMultimediaId(UUID.randomUUID())
                 .videoTitle("Title")
                 .videoURL("url")
                 .build();
@@ -72,7 +72,8 @@ class PropertyMultimediaVideoServiceUnitTests {
 
         PropertyMultimediaVideoResponseDTO createdPropertyMultimediaVideo =
                 propertyMultimediaVideoService
-                        .createPropertyMultimediaVideo(propertyMultimediaVideoDTO);
+                        .createPropertyMultimediaVideo(propertyMultimedia.getId(),
+                                propertyMultimediaVideoDTO);
 
         verify(propertyMultimediaRepository).save(any(PropertyMultimedia.class));
         verify(propertyMultimediaVideoRepository).save(any(PropertyMultimediaVideo.class));
@@ -85,8 +86,6 @@ class PropertyMultimediaVideoServiceUnitTests {
 
     @Test
     void createPropertyMultimediaVideo_ShouldThrowNotFoundException() {
-        UUID id = UUID.randomUUID();
-
         PropertyMultimediaVideoDTO propertyMultimediaVideoDTO = PropertyMultimediaVideoDTO
                 .builder()
                 .propertyMultimediaId(UUID.randomUUID())
@@ -94,7 +93,8 @@ class PropertyMultimediaVideoServiceUnitTests {
 
         assertThrows(NotFoundException.class, () ->
                 propertyMultimediaVideoService
-                        .createPropertyMultimediaVideo(propertyMultimediaVideoDTO));
+                        .createPropertyMultimediaVideo(UUID.randomUUID(),
+                                propertyMultimediaVideoDTO));
     }
 
     @Test

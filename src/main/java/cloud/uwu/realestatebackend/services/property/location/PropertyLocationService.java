@@ -40,7 +40,7 @@ public class PropertyLocationService {
 
         propertyLocation.setGeolocation(propertyGeolocation);
 
-        return propertyLocationRepository.save(propertyLocation);
+        return propertyLocationRepository.saveAndFlush(propertyLocation);
     }
 
     public void updatePropertyLocation(UUID id, PropertyLocationDTO propertyLocationDTO) {

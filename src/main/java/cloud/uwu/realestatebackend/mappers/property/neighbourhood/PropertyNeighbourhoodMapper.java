@@ -4,6 +4,7 @@ import cloud.uwu.realestatebackend.dtos.property.neighbourhood.neighbourhood.Pro
 import cloud.uwu.realestatebackend.dtos.property.neighbourhood.neighbourhood.PropertyNeighbourhoodResponseDTO;
 import cloud.uwu.realestatebackend.entities.property.neighbourhood.PropertyNeighbourhood;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {PropertyNeighbourhoodReviewMapper.class})
 public interface PropertyNeighbourhoodMapper {

@@ -34,10 +34,10 @@ public class PropertyDetails {
     @Enumerated(EnumType.STRING)
     private ConditionStatus conditionStatus;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private PropertyAreas areas;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private PropertyRooms rooms;
 
     @CreationTimestamp

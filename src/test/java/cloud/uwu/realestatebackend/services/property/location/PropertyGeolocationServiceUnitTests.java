@@ -175,28 +175,4 @@ class PropertyGeolocationServiceUnitTests {
                 () -> propertyGeolocationService.patchPropertyGeolocation(id,
                         PropertyGeolocationPatchDTO.builder().build()));
     }
-
-    @Test
-    void deletePropertyGeolocation() {
-        UUID id = UUID.randomUUID();
-        PropertyGeolocation propertyGeolocation = PropertyGeolocation.builder()
-                .latitude(54.6)
-                .longitude(65.1)
-                .build();
-
-        when(propertyGeolocationRepository.findById(id))
-                .thenReturn(Optional.of(propertyGeolocation));
-
-        propertyGeolocationService.deletePropertyGeolocation(id);
-
-        verify(propertyGeolocationRepository).deleteById(id);
-    }
-
-    @Test
-    void deletePropertyGeolocation_ShouldThrowNotFoundException() {
-        UUID id = UUID.randomUUID();
-
-        assertThrows(NotFoundException.class,
-                () -> propertyGeolocationService.deletePropertyGeolocation(id));
-    }
 }

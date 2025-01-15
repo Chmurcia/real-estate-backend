@@ -32,12 +32,12 @@ public class PropertyNeighbourhoodReviewService {
     }
 
     public Page<PropertyNeighbourhoodReviewResponseDTO> getPropertyNeighbourhoodReviewsByNeighbourhoodId(
-            UUID id, int page, int size
+            UUID id, Integer page, Integer size
     ) {
         getPropertyNeighbourhood(id);
 
-        page = Math.max(page, 0);
-        size = size > 0 ? size : 50;
+        page = (page != null) ? Math.max(page, 0) : 0;
+        size = (size != null && size > 0) ? size : 50;
 
         PageRequest pageable = PageRequest.of(page, size);
 
@@ -48,10 +48,11 @@ public class PropertyNeighbourhoodReviewService {
     }
 
     public PropertyNeighbourhoodReviewResponseDTO createPropertyNeighbourhoodReview(
+            UUID neighbourhoodId,
             PropertyNeighbourhoodReviewDTO propertyNeighbourhoodReviewDTO
     ) {
         PropertyNeighbourhood propertyNeighbourhood =
-                getPropertyNeighbourhood(propertyNeighbourhoodReviewDTO.getNeighbourhoodId());
+                getPropertyNeighbourhood(neighbourhoodId);
 
         PropertyNeighbourhoodReview propertyNeighbourhoodReview = PropertyNeighbourhoodReview
                 .builder()

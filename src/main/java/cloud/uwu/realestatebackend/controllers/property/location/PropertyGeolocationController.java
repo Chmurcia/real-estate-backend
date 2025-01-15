@@ -31,7 +31,7 @@ public class PropertyGeolocationController {
     }
 
     @PatchMapping("/{propertyGeolocationId}")
-    public ResponseEntity<Object> updatePropertyGeolocation(
+    public ResponseEntity<Object> patchPropertyGeolocation(
             @PathVariable("propertyGeolocationId") @NotNull UUID id,
             @RequestBody @Validated PropertyGeolocationPatchDTO propertyGeolocationPatchDTO) {
         propertyGeolocationService.patchPropertyGeolocation(id, propertyGeolocationPatchDTO);

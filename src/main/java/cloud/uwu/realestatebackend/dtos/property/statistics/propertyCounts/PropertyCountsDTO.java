@@ -13,10 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class PropertyCountsDTO {
-    @NotNull(message = "property_statistics_id must be defined")
-    @JsonProperty("property_statistics_id")
-    private UUID propertyStatisticsId;
-
     @NotNull(message = "visits must be defined")
     @Min(value = 0, message = "visits must be at least 0")
     private Integer visits;

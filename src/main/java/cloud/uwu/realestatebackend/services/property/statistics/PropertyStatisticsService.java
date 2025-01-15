@@ -3,6 +3,7 @@ package cloud.uwu.realestatebackend.services.property.statistics;
 import cloud.uwu.realestatebackend.dtos.property.statistics.propertyStatistics.PropertyStatisticsDTO;
 import cloud.uwu.realestatebackend.dtos.property.statistics.propertyStatistics.PropertyStatisticsPatchDTO;
 import cloud.uwu.realestatebackend.dtos.property.statistics.propertyStatistics.PropertyStatisticsResponseDTO;
+import cloud.uwu.realestatebackend.entities.property.statistics.PropertyCounts;
 import cloud.uwu.realestatebackend.entities.property.statistics.PropertyStatistics;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
 import cloud.uwu.realestatebackend.exceptions.NullException;
@@ -30,18 +31,16 @@ public class PropertyStatisticsService {
     }
 
     public PropertyStatistics createPropertyStatistics(PropertyStatisticsDTO propertyStatisticsDTO) {
+
+        PropertyCounts propertyCounts = propertyCountsService.createPropertyCounts();
+
         PropertyStatistics propertyStatistics = PropertyStatistics.builder()
                 .rating(propertyStatisticsDTO.getRating())
                 .lastVisitedAt(propertyStatisticsDTO.getLastVisitedAt())
+                .counts(propertyCounts)
                 .build();
 
-        PropertyStatistics savedPropertyStatistics = propertyStatisticsRepository
-                .saveAndFlush(propertyStatistics);
-
-        propertyCountsService.createPropertyCounts(savedPropertyStatistics.getId());
-
-        return savedPropertyStatistics;
-
+        return propertyStatisticsRepository.saveAndFlush(propertyStatistics);
     }
 
     public void updatePropertyStatistics(UUID id, PropertyStatisticsDTO propertyStatisticsDTO) {
