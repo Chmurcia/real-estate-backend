@@ -21,9 +21,14 @@ public class ProfileDTO {
     private String firstName;
 
     @NotBlank(message = "last_name must be defined")
-    @Size(min = 2, max = 100, message = "Last name must contain between 2 and 100 characters")
+    @Size(min = 2, max = 100, message = "last_name must contain between 2 and 100 characters")
     @JsonProperty("last_name")
     private String lastName;
+
+    @NotBlank(message = "nick_name must be defined")
+    @Size(min=3, max = 50, message = "nick_name must contain between 3 and 50 characters")
+    @JsonProperty("nick_name")
+    private String nickName;
 
     @NotBlank(message = "phone_number must be defined")
     @Size(min = 9, max = 9, message = "phone_number must be 9 characters long")

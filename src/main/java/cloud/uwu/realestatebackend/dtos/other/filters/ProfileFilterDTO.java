@@ -6,6 +6,8 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ProfileFilterDTO {
+    private String nickName;
+
     private String country;
 
     private String state;

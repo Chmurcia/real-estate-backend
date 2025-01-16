@@ -36,8 +36,8 @@ public class ProfileService {
     private final ProfileMapper profileMapper;
 
     public Page<ProfileResponseDTO> getProfiles(
-            String country, String state, String city, Integer page,
-            Integer size, String sortBy, String sortDirection) {
+            String nickName, String country, String state, String city,
+            Integer page, Integer size, String sortBy, String sortDirection) {
         page = (page != null) ? Math.max(page, 0) : 0;
         size = (size != null && size > 0)  ? size : 50;
 
@@ -55,6 +55,7 @@ public class ProfileService {
 
         var specification = ProfileSpecification
                 .createSpecification(ProfileFilterDTO.builder()
+                        .nickName(nickName)
                         .country(country)
                         .state(state)
                         .city(city)

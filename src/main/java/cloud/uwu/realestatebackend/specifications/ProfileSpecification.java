@@ -14,6 +14,10 @@ public class ProfileSpecification {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
+            if (filters.getNickName() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("nickName"), "%" + filters.getNickName() + "%"));
+            }
+
             if (filters.getCountry() != null) {
                 predicates.add(criteriaBuilder.equal(root.get("country"), filters.getCountry()));
             }

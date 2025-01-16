@@ -54,6 +54,8 @@ public class Profile {
 
     private String lastName;
 
+    private String nickName;
+
     private String phoneNumber;
 
     private String avatarURL;

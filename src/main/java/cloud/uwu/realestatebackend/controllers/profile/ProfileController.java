@@ -1,6 +1,5 @@
 package cloud.uwu.realestatebackend.controllers.profile;
 
-import cloud.uwu.realestatebackend.dtos.other.filters.ProfileFilterDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profile.ProfileDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profile.ProfilePatchDTO;
 import cloud.uwu.realestatebackend.dtos.profile.profile.ProfileResponseDTO;
@@ -25,6 +24,7 @@ public class ProfileController {
 
     @GetMapping()
     public ResponseEntity<Page<ProfileResponseDTO>> getProfiles(
+            @RequestParam String nickName,
             @RequestParam(required = false) String country,
             @RequestParam(required = false) String state,
             @RequestParam(required = false) String city,
@@ -34,7 +34,7 @@ public class ProfileController {
             @RequestParam(required = false) String sortDirection
     ) {
         Page<ProfileResponseDTO> foundProfiles = profileService
-                    .getProfiles(country, state, city , page, size, sortBy, sortDirection);
+                    .getProfiles(nickName, country, state, city , page, size, sortBy, sortDirection);
 
         return ResponseEntity.ok(foundProfiles);
     }
