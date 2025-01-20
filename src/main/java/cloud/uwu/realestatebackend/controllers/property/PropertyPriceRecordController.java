@@ -1,4 +1,4 @@
-package cloud.uwu.realestatebackend.controllers.property.history;
+package cloud.uwu.realestatebackend.controllers.property;
 
 import cloud.uwu.realestatebackend.dtos.property.propertyPriceRecord.PropertyPriceRecordDTO;
 import cloud.uwu.realestatebackend.dtos.property.propertyPriceRecord.PropertyPriceRecordResponseDTO;
@@ -32,15 +32,6 @@ public class PropertyPriceRecordController {
                 .getPropertyPriceRecordsByPropertyId(id, page, size);
 
         return ResponseEntity.ok(foundPriceRecords);
-    }
-
-    @GetMapping("/{priceRecordId}")
-    public ResponseEntity<PropertyPriceRecordResponseDTO> getPropertyPriceRecordById(
-            @PathVariable("priceRecordId") @NotNull UUID id) {
-        PropertyPriceRecordResponseDTO foundPriceRecord = propertyPriceRecordService
-                .getPropertyPriceRecordById(id);
-
-        return ResponseEntity.ok(foundPriceRecord);
     }
 
     @PostMapping
