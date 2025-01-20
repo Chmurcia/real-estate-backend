@@ -1,16 +1,16 @@
-package cloud.uwu.realestatebackend.controllers.property;
+package cloud.uwu.realestatebackend.controllers.property.history;
 
 import cloud.uwu.realestatebackend.dtos.property.propertyPriceRecord.PropertyPriceRecordDTO;
 import cloud.uwu.realestatebackend.dtos.property.propertyPriceRecord.PropertyPriceRecordResponseDTO;
 import cloud.uwu.realestatebackend.services.property.PropertyPriceRecordService;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 import static cloud.uwu.realestatebackend.controllers.property.PropertyController.PropertyURL;
@@ -24,10 +24,12 @@ public class PropertyPriceRecordController {
     private final PropertyPriceRecordService propertyPriceRecordService;
 
     @GetMapping("/property/{propertyId}")
-    public ResponseEntity<List<PropertyPriceRecordResponseDTO>> getPropertyPriceRecordsByPropertyId(
-            @PathVariable("propertyId") @NotNull UUID id) {
-        List<PropertyPriceRecordResponseDTO> foundPriceRecords = propertyPriceRecordService
-                .getPropertyPriceRecordsByPropertyId(id);
+    public ResponseEntity<Page<PropertyPriceRecordResponseDTO>> getPropertyPriceRecordsByPropertyId(
+            @PathVariable("propertyId") @NotNull UUID id,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        Page<PropertyPriceRecordResponseDTO> foundPriceRecords = propertyPriceRecordService
+                .getPropertyPriceRecordsByPropertyId(id, page, size);
 
         return ResponseEntity.ok(foundPriceRecords);
     }
