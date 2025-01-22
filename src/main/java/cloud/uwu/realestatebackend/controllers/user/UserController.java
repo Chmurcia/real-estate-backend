@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.UUID;
 
 
@@ -37,15 +36,6 @@ public class UserController {
 
         return ResponseEntity.ok(foundUser);
     }
-
-//    @PostMapping
-//    public ResponseEntity<UserResponseDTO> createUser(
-//            @RequestBody @Validated UserDTO userDTO) {
-//        UserResponseDTO createdUser = userService.createUser(userDTO);
-//
-//        URI url = URI.create(UserURL + "/" + createdUser.getId());
-//        return ResponseEntity.created(url).body(createdUser);
-//    }
 
     @PutMapping("/{userId}")
     public ResponseEntity<Object> updateUser(

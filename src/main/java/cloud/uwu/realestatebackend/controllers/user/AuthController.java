@@ -1,11 +1,11 @@
 package cloud.uwu.realestatebackend.controllers.user;
 
+import cloud.uwu.realestatebackend.dtos.user.auth.IsSuccessResponseDTO;
+import cloud.uwu.realestatebackend.dtos.user.auth.TokenResponseDTO;
 import cloud.uwu.realestatebackend.dtos.user.user.UserDTO;
 import cloud.uwu.realestatebackend.services.user.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,19 +16,24 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<Boolean> registerUser(
+    public ResponseEntity<IsSuccessResponseDTO> registerUser(
             @RequestBody @Validated UserDTO userDTO) {
-        Boolean success = authService.registerUser(userDTO);
+        IsSuccessResponseDTO success = IsSuccessResponseDTO.builder()
+                .success(authService.registerUser(userDTO))
+                .build();
 
         return ResponseEntity.ok(success);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(
+    public ResponseEntity<TokenResponseDTO> login(
             @RequestBody @Validated UserDTO userDTO) {
-        String success = authService.loginUser(userDTO);
 
-        return ResponseEntity.ok(success);
+        TokenResponseDTO token = TokenResponseDTO.builder()
+                .token(authService.loginUser(userDTO))
+                .build();
+
+        return ResponseEntity.ok(token);
     }
 
 }

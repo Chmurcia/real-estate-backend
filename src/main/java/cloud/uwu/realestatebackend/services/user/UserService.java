@@ -4,6 +4,7 @@ import cloud.uwu.realestatebackend.dtos.user.user.UserDTO;
 import cloud.uwu.realestatebackend.dtos.user.user.UserPatchDTO;
 import cloud.uwu.realestatebackend.dtos.user.user.UserResponseDTO;
 import cloud.uwu.realestatebackend.entities.user.User;
+import cloud.uwu.realestatebackend.exceptions.AlreadyExistException;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
 import cloud.uwu.realestatebackend.exceptions.NullException;
 import cloud.uwu.realestatebackend.mappers.user.UserMapper;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -39,6 +39,10 @@ public class UserService {
 
     public void updateUser(UUID id, UserDTO userDTO) {
         User user = getUser(id);
+
+        if (userRepository.findUserByEmail(userDTO.getEmail()).isPresent()) {
+            throw new AlreadyExistException("User with the email already exists");
+        }
 
         if (userDTO.getEmail() != null && StringUtils.hasText(userDTO.getEmail())) {
             user.setEmail(userDTO.getEmail());
