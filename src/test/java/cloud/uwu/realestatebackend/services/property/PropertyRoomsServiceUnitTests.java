@@ -5,7 +5,7 @@ import cloud.uwu.realestatebackend.dtos.property.propertyRooms.PropertyRoomsPatc
 import cloud.uwu.realestatebackend.dtos.property.propertyRooms.PropertyRoomsResponseDTO;
 import cloud.uwu.realestatebackend.entities.property.PropertyRooms;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
-import cloud.uwu.realestatebackend.factories.PropertyRoomsFactory;
+import cloud.uwu.realestatebackend.other.factories.PropertyRoomsFactory;
 import cloud.uwu.realestatebackend.mappers.property.PropertyRoomsMapper;
 import cloud.uwu.realestatebackend.repositories.property.PropertyRoomsRepository;
 import org.junit.jupiter.api.Test;

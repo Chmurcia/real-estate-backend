@@ -1,21 +1,22 @@
-package cloud.uwu.realestatebackend.sorts;
+package cloud.uwu.realestatebackend.other.sorts;
 
 import lombok.Getter;
 
 @Getter
-public enum ProfileSort {
-    COUNTRY("country"),
-    STATE("state"),
-    CITY("city");
+public enum PropertySort {
+    PRICE("price"),
+    CREATED_AT("created_at"),
+    VISITS("visits"),
+    LIKES("likes");
 
     private final String field;
 
-    ProfileSort(String field) {
+    PropertySort(String field) {
         this.field = field;
     }
 
     public static boolean isValid(String field) {
-        for (ProfileSort sortField : values()) {
+        for (PropertySort sortField : values()) {
             if (sortField.getField().equalsIgnoreCase(field)) {
                 return true;
             }

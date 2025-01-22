@@ -8,14 +8,15 @@ import cloud.uwu.realestatebackend.entities.profile.Profile;
 import cloud.uwu.realestatebackend.entities.profile.ProfileSettings;
 import cloud.uwu.realestatebackend.entities.profile.ProfileStatistics;
 import cloud.uwu.realestatebackend.entities.profile.profileEnums.Theme;
+import cloud.uwu.realestatebackend.exceptions.AlreadyExistException;
 import cloud.uwu.realestatebackend.exceptions.NotFoundException;
 import cloud.uwu.realestatebackend.exceptions.NullException;
 import cloud.uwu.realestatebackend.mappers.profile.ProfileMapper;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileRepository;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileSettingsRepository;
 import cloud.uwu.realestatebackend.repositories.profile.ProfileStatisticsRepository;
-import cloud.uwu.realestatebackend.sorts.ProfileSort;
-import cloud.uwu.realestatebackend.specifications.ProfileSpecification;
+import cloud.uwu.realestatebackend.other.sorts.ProfileSort;
+import cloud.uwu.realestatebackend.other.specifications.ProfileSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -72,6 +74,10 @@ public class ProfileService {
     }
 
     public ProfileResponseDTO createProfile(ProfileDTO profileDTO) {
+        if (getProfileByNickName(profileDTO.getNickName()).isPresent()) {
+            throw new AlreadyExistException("Profile with the nick_name already exists");
+        }
+
         ProfileSettings profileSettings = ProfileSettings.builder()
                 .profileVisibility(true)
                 .theme(Theme.LIGHT)
@@ -95,6 +101,7 @@ public class ProfileService {
         Profile profile = Profile.builder()
                 .firstName(profileDTO.getFirstName())
                 .lastName(profileDTO.getLastName())
+                .nickName(profileDTO.getNickName())
                 .phoneNumber(profileDTO.getPhoneNumber())
                 .avatarURL(profileDTO.getAvatarURL())
                 .bio(profileDTO.getBio())
@@ -223,5 +230,9 @@ public class ProfileService {
     private Profile getProfile(UUID id) {
         return profileRepository.findById(id)
                     .orElseThrow(() -> new NotFoundException("Profile not found"));
+    }
+
+    private Optional<Profile> getProfileByNickName(String nickName) {
+        return profileRepository.getProfileByNickName(nickName);
     }
 }

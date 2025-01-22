@@ -13,6 +13,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,6 +46,11 @@ class PropertyPriceRecordServiceUnitTests {
     void getPropertyPriceRecordsByPropertyId() {
         UUID id = UUID.randomUUID();
 
+        int page = 0;
+        int size = 50;
+
+        PageRequest pageable = PageRequest.of(page, size);
+
         List<PropertyPriceRecord> propertyPriceRecords = Arrays.asList(
                 PropertyPriceRecord.builder().build(),
                 PropertyPriceRecord.builder().build(),
@@ -50,22 +58,28 @@ class PropertyPriceRecordServiceUnitTests {
                 PropertyPriceRecord.builder().build()
         );
 
+        Page<PropertyPriceRecord > priceRecords = new PageImpl<>(
+                propertyPriceRecords,
+                pageable, 2
+        );
+
         when(propertyRepository.findById(id))
                 .thenReturn(Optional.of(Property.builder().build()));
 
-        when(propertyPriceRecordRepository.getPropertyPriceRecordsByPropertyId(id))
-                .thenReturn(propertyPriceRecords);
+        when(propertyPriceRecordRepository
+                .getPropertyPriceRecordsByPropertyIdOrderByCreatedAtAsc(id, pageable))
+                .thenReturn(priceRecords);
 
         when(propertyPriceRecordMapper
                 .propertyPriceRecordToPropertyPriceRecordResponseDTO(any(PropertyPriceRecord.class)))
                 .thenReturn(PropertyPriceRecordResponseDTO.builder().build());
 
-        List<PropertyPriceRecordResponseDTO> foundPropertyPriceRecords =
-                propertyPriceRecordService.getPropertyPriceRecordsByPropertyId(id);
+        Page<PropertyPriceRecordResponseDTO> foundPropertyPriceRecords =
+                propertyPriceRecordService.getPropertyPriceRecordsByPropertyId(id, page, size);
 
         verify(propertyRepository).findById(id);
-        assertEquals(foundPropertyPriceRecords.size(),
-                propertyPriceRecords.size());
+        assertEquals(foundPropertyPriceRecords.getContent().size(),
+                priceRecords.getContent().size());
     }
 
     @Test
@@ -74,7 +88,7 @@ class PropertyPriceRecordServiceUnitTests {
 
         assertThrows(NotFoundException.class, () ->
                 propertyPriceRecordService
-                        .getPropertyPriceRecordsByPropertyId(id));
+                        .getPropertyPriceRecordsByPropertyId(id, 0, 50));
     }
 
     @Test

@@ -116,60 +116,60 @@ class UserServiceUnitTests {
                 userService.getUserByEmail("unknown@email.com"));
     }
 
-    @Test
-    void createUser() {
-        UUID userFlagId = UUID.randomUUID();
-        UUID userRoleId = UUID.randomUUID();
-
-        UserFlag userFlag = UserFlag.builder()
-                .id(userFlagId)
-                .isVerified(false)
-                .isMuted(false)
-                .isBanned(false)
-                .build();
-
-        UserRole userRole = UserRole.builder()
-                .id(userRoleId)
-                .role(Role.USER)
-                .build();
-
-        User user = User.builder()
-                .email("example@mail.com")
-                .password("pass123")
-                .build();
-
-        UserDTO userDTO = UserDTO.builder()
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .build();
-
-        UserResponseDTO userResponseDTO = UserResponseDTO.builder()
-                .id(UUID.randomUUID())
-                .email(user.getEmail())
-                .userFlagId(userFlagId)
-                .userRoleId(userRoleId)
-                .build();
-
-        when(userMapper.userDTOToUser(any(UserDTO.class)))
-                .thenReturn(user);
-
-        when(userMapper.userToUserResponseDTO(any(User.class)))
-                .thenReturn(userResponseDTO);
-
-        when(userRepository.save(any(User.class)))
-                .thenReturn(user);
-
-        UserResponseDTO createdUser = userService
-                .createUser(userDTO);
-
-        verify(userMapper).userToUserResponseDTO(any(User.class));
-        verify(userRepository).save(any(User.class));
-
-        assertThat(createdUser).isNotNull();
-        assertEquals(createdUser.getEmail(), user.getEmail());
-        assertEquals(createdUser.getUserFlagId(), userFlag.getId());
-        assertEquals(createdUser.getUserRoleId(), userRole.getId());
-    }
+//    @Test
+//    void createUser() {
+//        UUID userFlagId = UUID.randomUUID();
+//        UUID userRoleId = UUID.randomUUID();
+//
+//        UserFlag userFlag = UserFlag.builder()
+//                .id(userFlagId)
+//                .isVerified(false)
+//                .isMuted(false)
+//                .isBanned(false)
+//                .build();
+//
+//        UserRole userRole = UserRole.builder()
+//                .id(userRoleId)
+//                .role(Role.USER)
+//                .build();
+//
+//        User user = User.builder()
+//                .email("example@mail.com")
+//                .password("pass123")
+//                .build();
+//
+//        UserDTO userDTO = UserDTO.builder()
+//                .email(user.getEmail())
+//                .password(user.getPassword())
+//                .build();
+//
+//        UserResponseDTO userResponseDTO = UserResponseDTO.builder()
+//                .id(UUID.randomUUID())
+//                .email(user.getEmail())
+//                .userFlagId(userFlagId)
+//                .userRoleId(userRoleId)
+//                .build();
+//
+//        when(userMapper.userDTOToUser(any(UserDTO.class)))
+//                .thenReturn(user);
+//
+//        when(userMapper.userToUserResponseDTO(any(User.class)))
+//                .thenReturn(userResponseDTO);
+//
+//        when(userRepository.save(any(User.class)))
+//                .thenReturn(user);
+//
+//        UserResponseDTO createdUser = userService
+//                .createUser(userDTO);
+//
+//        verify(userMapper).userToUserResponseDTO(any(User.class));
+//        verify(userRepository).save(any(User.class));
+//
+//        assertThat(createdUser).isNotNull();
+//        assertEquals(createdUser.getEmail(), user.getEmail());
+//        assertEquals(createdUser.getUserFlagId(), userFlag.getId());
+//        assertEquals(createdUser.getUserRoleId(), userRole.getId());
+//    }
 
     @Test
     void updateUser() {

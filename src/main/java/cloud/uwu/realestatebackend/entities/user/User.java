@@ -38,7 +38,7 @@ public class User {
     @JoinColumn(name = "user_role_id", referencedColumnName = "id")
     private UserRole userRole;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Profile profile;
 
     @CreationTimestamp

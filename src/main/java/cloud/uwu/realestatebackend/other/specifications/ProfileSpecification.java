@@ -1,4 +1,4 @@
-package cloud.uwu.realestatebackend.specifications;
+package cloud.uwu.realestatebackend.other.specifications;
 
 import cloud.uwu.realestatebackend.dtos.other.filters.ProfileFilterDTO;
 import cloud.uwu.realestatebackend.entities.profile.Profile;

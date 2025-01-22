@@ -45,6 +45,10 @@ public class PropertyStatistics {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "propertyStatistics", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PropertyTrustLevel> propertyTrustLevels = new ArrayList<>();
 
+    @Builder.Default
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "propertyStatistics", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PropertyCountsHistory> propertyCountsHistory = new ArrayList<>();
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private PropertyCounts counts;
 

@@ -1,4 +1,4 @@
-package cloud.uwu.realestatebackend.factories;
+package cloud.uwu.realestatebackend.other.factories;
 
 import cloud.uwu.realestatebackend.dtos.property.propertyRooms.PropertyRoomsDTO;
 import cloud.uwu.realestatebackend.dtos.property.propertyRooms.PropertyRoomsPatchDTO;

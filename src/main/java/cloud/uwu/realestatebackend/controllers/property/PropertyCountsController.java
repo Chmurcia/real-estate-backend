@@ -1,4 +1,4 @@
-package cloud.uwu.realestatebackend.controllers.property.statistics;
+package cloud.uwu.realestatebackend.controllers.property;
 
 import cloud.uwu.realestatebackend.dtos.property.statistics.propertyCounts.PropertyCountsDTO;
 import cloud.uwu.realestatebackend.dtos.property.statistics.propertyCounts.PropertyCountsPatchDTO;
@@ -15,10 +15,10 @@ import java.util.UUID;
 import static cloud.uwu.realestatebackend.controllers.property.statistics.PropertyStatisticsController.StatisticsURL;
 
 @RestController
-@RequestMapping(PropertyCountsController.URL)
+@RequestMapping(PropertyCountsController.CountsURL)
 @RequiredArgsConstructor
 public class PropertyCountsController {
-    public static final String URL = StatisticsURL + "/counts";
+    public static final String CountsURL = StatisticsURL + "/counts";
 
     private final PropertyCountsService propertyCountsService;
 

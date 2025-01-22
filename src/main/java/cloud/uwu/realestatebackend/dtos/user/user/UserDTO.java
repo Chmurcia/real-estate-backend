@@ -13,8 +13,8 @@ import lombok.*;
 @AllArgsConstructor
 public class UserDTO {
 
+    //    @Pattern(regexp = "^[\\w-]+@([\\w-]+\\.)+[\\w-]{2,}$", message = "Invalid email format")
     @NotBlank(message = "email must be defined")
-    @Pattern(regexp = "^[\\w-]+@([\\w-]+\\.)+[\\w-]{2,}$", message = "Invalid email format")
     private String email;
 
     @NotBlank(message = "password must be defined")

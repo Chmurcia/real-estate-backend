@@ -9,10 +9,11 @@ import cloud.uwu.realestatebackend.mappers.property.PropertyPriceRecordMapper;
 import cloud.uwu.realestatebackend.repositories.property.PropertyPriceRecordRepository;
 import cloud.uwu.realestatebackend.repositories.property.PropertyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -23,13 +24,19 @@ public class PropertyPriceRecordService {
     private final PropertyRepository propertyRepository;
     private final PropertyPriceRecordMapper propertyPriceRecordMapper;
 
-    public List<PropertyPriceRecordResponseDTO> getPropertyPriceRecordsByPropertyId(UUID id) {
+    public Page<PropertyPriceRecordResponseDTO> getPropertyPriceRecordsByPropertyId(
+            UUID id, Integer page, Integer size) {
         getProperty(id);
 
+        page = (page != null) ? Math.max(page, 0) : 0;
+        size = (size != null && size > 0) ? size : 50;
+
+        PageRequest pageable = PageRequest.of(page, size);
+
         return propertyPriceRecordRepository
-                .getPropertyPriceRecordsByPropertyId(id).stream()
-                .map(propertyPriceRecordMapper::propertyPriceRecordToPropertyPriceRecordResponseDTO)
-                .toList();
+                .getPropertyPriceRecordsByPropertyIdOrderByCreatedAtAsc(id, pageable)
+                .map(propertyPriceRecordMapper::propertyPriceRecordToPropertyPriceRecordResponseDTO);
+
     }
 
     public PropertyPriceRecordResponseDTO getPropertyPriceRecordById(UUID id) {
