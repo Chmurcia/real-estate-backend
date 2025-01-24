@@ -74,7 +74,7 @@ public class ProfileRateController {
     }
 
     @DeleteMapping("/{profileRateId}")
-    public ResponseEntity<Object> patchProfileRate(
+    public ResponseEntity<Object> deleteProfileRate(
             @PathVariable("profileRateId") @NotNull UUID id) {
         profileRateService.deleteProfileRate(id);
 

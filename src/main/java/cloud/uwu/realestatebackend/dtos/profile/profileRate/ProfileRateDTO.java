@@ -18,11 +18,11 @@ public class ProfileRateDTO {
     private UUID evaluatorId;
 
     @NotBlank(message = "title must be defined")
-    @Size(min = 2, max = 50, message = "Title of a rate must contain between 2 and 50 characters")
+    @Size(min = 2, max = 50, message = "title of a rate must contain between 2 and 50 characters")
     private String title;
 
     @NotBlank(message = "description must be defined")
-    @Size(min = 2, max = 100, message = "Title of a rate must contain between 2 and 100 characters")
+    @Size(min = 2, max = 100, message = "description of a rate must contain between 2 and 100 characters")
     private String description;
 
     @NotNull(message = "rate must be defined")

@@ -22,9 +22,6 @@ public class ProfileFollowResponseDTO {
     @UuidGenerator
     private UUID id;
 
-    @Version
-    private int version;
-
     @JsonProperty("follower_id")
     private UUID followerId;
 
@@ -32,8 +29,10 @@ public class ProfileFollowResponseDTO {
     private UUID followingId;
 
     @CreationTimestamp
+    @JsonProperty("created_at")
     private ZonedDateTime createdAt;
 
     @UpdateTimestamp
+    @JsonProperty("updated_at")
     private ZonedDateTime updatedAt;
 }

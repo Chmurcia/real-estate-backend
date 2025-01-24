@@ -1,6 +1,7 @@
 package cloud.uwu.realestatebackend.dtos.profile.profile;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -20,6 +21,10 @@ public class ProfilePatchDTO {
     @Size(min = 2, max = 100, message = "Last name must contain between 2 and 100 characters")
     @JsonProperty("last_name")
     private String lastName;
+
+    @Size(min=3, max = 50, message = "nick_name must contain between 3 and 50 characters")
+    @JsonProperty("nick_name")
+    private String nickName;
 
     @Size(min = 9, max = 9, message = "Phone number must be 9 characters long")
     @JsonProperty("phone_number")

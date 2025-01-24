@@ -125,54 +125,63 @@ public class ProfileService {
                 StringUtils.hasText(profileDTO.getFirstName())) {
             profile.setFirstName(profileDTO.getFirstName());
         } else {
-            throw new NullException("firstName is Null");
+            throw new NullException("firstName is null");
         }
         if (profileDTO.getLastName() != null &&
                 StringUtils.hasText(profileDTO.getLastName())) {
             profile.setLastName(profileDTO.getLastName());
         } else {
-            throw new NullException("lastName is Null");
+            throw new NullException("lastName is null");
+        }
+        if (profileDTO.getNickName() != null &&
+            StringUtils.hasText(profileDTO.getNickName())) {
+            if (getProfileByNickName(profileDTO.getNickName()).isPresent()) {
+                throw new AlreadyExistException("Profile with the nick_name already exists");
+            }
+            profile.setNickName(profileDTO.getNickName());
+        } else {
+            throw new NullException("nick_name is null");
         }
         if (profileDTO.getPhoneNumber() != null &&
                 StringUtils.hasText(profileDTO.getPhoneNumber())) {
             profile.setPhoneNumber(profileDTO.getPhoneNumber());
         } else {
-            throw new NullException("phoneNumber is Null");
+            throw new NullException("phone_number is null");
         }
         if (profileDTO.getAvatarURL() != null &&
                 StringUtils.hasText(profileDTO.getAvatarURL())) {
             profile.setAvatarURL(profileDTO.getAvatarURL());
         } else {
-            throw new NullException("avatarURL is Null");
+            throw new NullException("avatar_url is null");
         }
         if (profileDTO.getBio() != null &&
                 StringUtils.hasText(profileDTO.getBio())) {
             profile.setBio(profileDTO.getBio());
         } else {
-            throw new NullException("Bio is Null");
+            throw new NullException("bio is null");
         }
         if (profileDTO.getCountry() != null &&
                 StringUtils.hasText(profileDTO.getCountry())) {
             profile.setCountry(profileDTO.getCountry());
         } else {
-            throw new NullException("Country is Null");
+            throw new NullException("country is null");
         }
         if (profileDTO.getState() != null &&
                 StringUtils.hasText(profileDTO.getState())) {
             profile.setState(profileDTO.getState());
         } else {
-            throw new NullException("State is Null");
+            throw new NullException("state is null");
         }
         if (profileDTO.getCity() != null &&
                 StringUtils.hasText(profileDTO.getCity())) {
             profile.setCity(profileDTO.getCity());
         } else {
-            throw new NullException("City is Null");
+            throw new NullException("city is null");
         }
         if (profileDTO.getBirthDate() != null) {
             profile.setBirthDate(profileDTO.getBirthDate());
         } else {
-            throw new NullException("BirthDate is Null");
+            throw new NullException("birth_date is null");
         }
 
         profileRepository.save(profile);
@@ -188,6 +197,13 @@ public class ProfileService {
         if (profilePatchDTO.getLastName() != null &&
                 StringUtils.hasText(profilePatchDTO.getLastName())) {
             profile.setLastName(profilePatchDTO.getLastName());
+        }
+        if (profilePatchDTO.getNickName() != null &&
+                StringUtils.hasText(profilePatchDTO.getNickName())) {
+            if (getProfileByNickName(profilePatchDTO.getNickName()).isPresent()) {
+                throw new AlreadyExistException("Profile with the nick_name already exists");
+            }
+            profile.setNickName(profilePatchDTO.getNickName());
         }
         if (profilePatchDTO.getPhoneNumber() != null &&
                 StringUtils.hasText(profilePatchDTO.getPhoneNumber())) {
